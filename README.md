@@ -1,2 +1,2 @@
-# Generisches-Dashboard-zur-berwachung-der-Abl-ufe-in-der-Cinderella-Modellfabrik
+# Generisches-Dashboard-zur-Ueberwachung-der-Ablaeufe-in-der-Cinderella-Modellfabrik
 Die Cinderella-Modellfabrik der HTW Dresden besteht aus 40 Maschinen, Fertigungsplänen mit bis zu 100 Arbeitsschritten und einem durchschnittlichen Materialbestand von 3000-5000 Teilen. Ziel dieses Projekts ist die Entwicklung eines leicht handhabbaren, automatisch laufenden und flexibel anpassbaren Überwachungsinstrument für jene Modellfabrik.
