@@ -6,10 +6,7 @@ TODO:
     -printStackTrace() ersetzen durch ordentliches Logging ->entspricht sendeLog()
     -Connection conn ordentlich definieren
  */
-/**
- *
- * @author Ben
- */
+
 public class JDBCModel implements LogHandler {
 
     //JDBC Aufbau DB_URL "jdbc:[SqlTyp]://[Host]:[Port]/[DB_Name]"
