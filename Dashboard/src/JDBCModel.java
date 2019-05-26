@@ -6,12 +6,11 @@ TODO:
     -printStackTrace() ersetzen durch ordentliches Logging ->entspricht sendeLog()
     -Connection conn ordentlich definieren
  */
-
 /**
  *
  * @author Ben
  */
-public class JDBCModel implements LogHandler{
+public class JDBCModel implements LogHandler {
 
     //JDBC Aufbau DB_URL "jdbc:[SqlTyp]://[Host]:[Port]/[DB_Name]"
     private String JDBC_Treiber;
@@ -68,16 +67,16 @@ public class JDBCModel implements LogHandler{
             }
         }
     }
-    
+
     //alternativ als public boolean
-    public void ermittleStatus(){
+    public void ermittleStatus() {
         Connection testConn = null;
-        try{
+        try {
             Class.forName(JDBC_Treiber);
             testConn = DriverManager.getConnection(DB_URL);
-        }catch(ClassNotFoundException | SQLException StatusE){
-        StatusE.printStackTrace();//hier fehlt noch die Rückgabe des Status
-        }finally {
+        } catch (ClassNotFoundException | SQLException StatusE) {
+            StatusE.printStackTrace();//hier fehlt noch die Rückgabe des Status
+        } finally {
             try {
                 if (testConn != null) {
                     testConn.close();
@@ -87,8 +86,8 @@ public class JDBCModel implements LogHandler{
             }
         }
     }
-    
-    public void ladeServereinstellung(){
+
+    public void ladeServereinstellung() {
         //entweder hier File laden und an setter geben, oder Übergabe der 
         //Parameter bei Aufruf von JDBCModel
     }
