@@ -7,7 +7,7 @@ TODO:
     -Connection conn ordentlich definieren
  */
 
-public class JDBCModel implements LogHandler {
+public class JDBCModel {
 
     //JDBC Aufbau DB_URL "jdbc:[SqlTyp]://[Host]:[Port]/[DB_Name]"
     private String JDBC_Treiber;
@@ -65,14 +65,14 @@ public class JDBCModel implements LogHandler {
         }
     }
 
-    //alternativ als public boolean
-    public void ermittleStatus() {
+    public boolean ermittleStatus() {
         Connection testConn = null;
         try {
             Class.forName(JDBC_Treiber);
             testConn = DriverManager.getConnection(DB_URL);
+            return true;
         } catch (ClassNotFoundException | SQLException StatusE) {
-            StatusE.printStackTrace();//hier fehlt noch die Rückgabe des Status
+            return false;
         } finally {
             try {
                 if (testConn != null) {
