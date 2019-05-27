@@ -15,7 +15,7 @@ public class LogHandler {
     public static void hinzufuegen(String Fehler) {
         FehlerLog.add(Fehler);
         
-        //saebern der List auf 10 Elemente
+        //saeubern der List auf 10 Elemente
         if(FehlerLog.size()>=10){
             while(FehlerLog.size()>=10){
                 FehlerLog.remove(0);
