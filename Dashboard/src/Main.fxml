@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="MainView" prefHeight="700.0" prefWidth="690.0" style="-fx-background-color: #EEE9E9;" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+   <children>
+      <VBox prefHeight="700.0" prefWidth="271.0" style="-fx-background-color: #97DBED;" stylesheets="@StyleSheet.css">
+         <children>
+            <Pane prefHeight="238.0" prefWidth="290.0">
+               <children>
+                  <ImageView fitHeight="53.0" fitWidth="126.0" layoutX="41.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icons/logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="167.0" layoutY="43.0" text="Cinderella">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 1" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="95.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 2" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="135.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 3" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="175.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 4" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="215.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 5" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="255.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 6" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="295.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 7" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="335.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 8" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="375.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 9" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="415.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" styleClass="btns">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Report 10" textFill="#7c8184" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="290.0">
+               <children>
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#deleteReport" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="29.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/minus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#changeReport" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/baseline_settings_black_18dp.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="70.0" right="70.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#addReport" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/icons8-plus-32.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <TextArea prefHeight="281.0" prefWidth="291.0" promptText="Log:" stylesheets="@StyleSheet.css">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextArea>
+         </children></VBox>
+      <VBox layoutX="290.0" prefHeight="700.0" prefWidth="703.0">
+         <children>
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="703.0" style="-fx-background-color: lightgrey;">
+               <children>
+                  <Label layoutX="14.0" layoutY="23.0" text="Dashboard" textFill="#7c8184">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ToggleButton layoutX="603.0" layoutY="10.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="49.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/lamp.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></ToggleButton>
+                  <Button layoutX="651.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#databaseConnect" prefHeight="31.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/baseline_settings_black_18dp.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+               </children>
+            </Pane>
+            <Pane fx:id="PaneView" prefHeight="638.0" prefWidth="675.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="DatabaseView" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DatabaseViewController">
+
+   <children>
+
+      <TextField layoutX="91.0" layoutY="84.0" prefHeight="25.0" prefWidth="223.0" promptText="CinderellaDB-Name" />
+
+      <TextField layoutX="410.0" layoutY="190.0" prefHeight="25.0" prefWidth="223.0" promptText="*******" />
+
+      <TextField layoutX="91.0" layoutY="152.0" prefHeight="25.0" prefWidth="223.0" promptText="Test" />
+
+      <Button layoutX="542.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Test" />
+
+      <Label layoutX="38.0" layoutY="88.0" prefHeight="21.0" prefWidth="53.0" text="Name:" />
+
+      <Label layoutX="24.0" layoutY="24.0" text="Datenbankstatus">
+
+         <font>
+
+            <Font name="System Bold" size="18.0" />
+
+         </font>
+
+      </Label>
+
+      <Label layoutX="38.0" layoutY="156.0" text="Host:" />
+
+      <Label layoutX="40.0" layoutY="194.0" text="User:" />
+
+      <Label layoutX="363.0" layoutY="156.0" text="Port:" />
+
+      <Label layoutX="333.0" layoutY="194.0" text="Passwort:" />
+
+      <TextField layoutX="91.0" layoutY="190.0" prefHeight="25.0" prefWidth="223.0" promptText="Mustermann" />
+
+      <TextField layoutX="410.0" layoutY="152.0" prefHeight="25.0" prefWidth="223.0" promptText="80" />
+
+      <Button layoutX="542.0" layoutY="316.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Speichern" />
+
+   </children>
+
+</AnchorPane>
