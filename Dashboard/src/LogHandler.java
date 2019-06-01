@@ -10,22 +10,22 @@ TODO:
 public class LogHandler {
     
 //ArrayList notwendig für dynamisches add() von Strings
-    private static ArrayList<String> FehlerLog = new ArrayList<>();
+    private static ArrayList<String> ErrorLog = new ArrayList<>();
 
-    public static void hinzufuegen(String Fehler) {
-        FehlerLog.add(Fehler);
+    public static void add(String Fehler) {
+        ErrorLog.add(Fehler);
         
         //saeubern der List auf 10 Elemente
-        if(FehlerLog.size()>=10){
-            while(FehlerLog.size()>=10){
-                FehlerLog.remove(0);
+        if(ErrorLog.size()>=10){
+            while(ErrorLog.size()>=10){
+                ErrorLog.remove(0);
             }
         }
     }
     
-    public static String[] anzeigen(){
+    public static String[] show(){
         String LogFenster [] = new String [10];
-        LogFenster = FehlerLog.toArray(LogFenster);
+        LogFenster = ErrorLog.toArray(LogFenster);
         return LogFenster;
     }
 }

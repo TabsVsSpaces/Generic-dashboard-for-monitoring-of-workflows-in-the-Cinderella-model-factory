@@ -15,15 +15,15 @@ public class JDBCModel {
     private String JDBC_Treiber;
     private String DB_URL;
     private String Username;
-    private String Passwort;
+    private String Password;
     
-    public JDBCModel(String JDBC_Treiber, String DB_URL, String Username, String Passwort) {
+    public JDBCModel(String JDBC_Treiber, String DB_URL, String Username, String Password) {
         this.conn = null;
         this.testConn = null;
         this.JDBC_Treiber = JDBC_Treiber;
         this.DB_URL = DB_URL;
         this.Username = Username;
-        this.Passwort = Passwort;
+        this.Password = Password;
     }
 
     public void setJDBC_Treiber(String JDBC_Treiber) {
@@ -38,41 +38,41 @@ public class JDBCModel {
         this.Username = Username;
     }
 
-    public void setPasswort(String Passwort) {
-        this.Passwort = Passwort;
+    public void setPasswort(String Password) {
+        this.Password = Password;
     }
 
-    public void verbinden() {
+    public void connect() {
         try {
             Class.forName(JDBC_Treiber);
-            conn = DriverManager.getConnection(DB_URL, Username, Passwort);
+            conn = DriverManager.getConnection(DB_URL, Username, Password);
         } catch (ClassNotFoundException | SQLException ConnE) {
-            LogHandler.hinzufuegen(ConnE.getMessage());
+            LogHandler.add(ConnE.getMessage());
         }
     }
 
-    public void trennen() {
+    public void disconnect() {
         try {
             conn.close();
         } catch (SQLException se) {
-            LogHandler.hinzufuegen(se.getMessage());
+            LogHandler.add(se.getMessage());
         } finally {
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException se) {
-                LogHandler.hinzufuegen(se.getMessage());
+                LogHandler.add(se.getMessage());
             }
         }
     }
 
-    public boolean ermittleStatus() {
+    public boolean getState() {
         try {
             Class.forName(JDBC_Treiber);
             testConn = DriverManager.getConnection(DB_URL);
             return true;
-        } catch (ClassNotFoundException | SQLException StatusE) {
+        } catch (ClassNotFoundException | SQLException se) {
             return false;
         } finally {
             try {
@@ -80,7 +80,7 @@ public class JDBCModel {
                     testConn.close();
                 }
             } catch (SQLException se) {
-                LogHandler.hinzufuegen(se.getMessage());
+                LogHandler.add(se.getMessage());
             }
         }
     }
