@@ -1,5 +1,8 @@
 /*
 Manages properties and report files
+
+TODO
+    -Properties encryption
  */
 package Helper;
 
