@@ -1,5 +1,6 @@
 /*
-TODO: 
+TODO:
+    -close() and getState() are missing!
     -Docs for JDBC Pooling
         http://commons.apache.org/proper/commons-dbcp/
         http://commons.apache.org/proper/commons-pool/
@@ -10,14 +11,14 @@ package Model;
 import Helper.*;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-public class DataSource {
+public class JDBCPool {
 
     private static final String PROP_NAME = "DBconnection.properties";
 
-    private static DataSource ds;
+    private static JDBCPool pool;
     private BasicDataSource basicDS = new BasicDataSource();
 
-    private DataSource() {
+    private JDBCPool() {
 
         basicDS.setDriverClassName(DataManager.getProperties(PROP_NAME).getProperty("JDBC_DRIVER"));
         basicDS.setUsername(DataManager.getProperties(PROP_NAME).getProperty("USER"));
@@ -31,11 +32,11 @@ public class DataSource {
 
     }
 
-    public static DataSource getInstance() {
-        if (ds == null) {
-            ds = new DataSource();
+    public static JDBCPool getInstance() {
+        if (pool == null) {
+            pool = new JDBCPool();
         }
-        return ds;
+        return pool;
     }
 
     public BasicDataSource getBasicDS() {
@@ -48,3 +49,4 @@ public class DataSource {
 }
 
 //public void close()
+//Public void getState()

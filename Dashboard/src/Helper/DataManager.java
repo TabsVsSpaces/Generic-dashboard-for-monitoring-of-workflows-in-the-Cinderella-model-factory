@@ -28,7 +28,7 @@ public class DataManager {
         return props;
     }
 
-    public void saveReport() {
+    public static void saveReport() {
         ReportObject reportObj = new ReportObject();
         reportObj.setReportName("");
         reportObj.setUpdateRate(0);

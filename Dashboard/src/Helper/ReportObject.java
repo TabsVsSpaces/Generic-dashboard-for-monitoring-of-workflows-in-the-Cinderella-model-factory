@@ -10,7 +10,8 @@ TODO
             int updateRate;
             {
                 DisplayElement{
-                    int id; //alternative String name;
+                    int id;
+                    String name;
                     String sqlStatement;
                     ...
                 }
