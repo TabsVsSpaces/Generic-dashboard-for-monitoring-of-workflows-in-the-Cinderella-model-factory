@@ -11,7 +11,7 @@ TODO:
 
 public class LogHandler {
     
-//ArrayList notwendig für dynamisches add() von Strings
+    //ArrayList notwendig für dynamisches add() von Strings
     private static ArrayList<String> ErrorLog = new ArrayList<>();
 
     public static void add(String Fehler) {

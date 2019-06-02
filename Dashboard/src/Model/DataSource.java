@@ -19,15 +19,15 @@ public class DataSource {
 
     private DataSource() {
 
-        basicDS.setDriverClassName(DataManager.getPropFile(PROP_NAME).getProperty("JDBC_DRIVER"));
-        basicDS.setUsername(DataManager.getPropFile(PROP_NAME).getProperty("USER"));
-        basicDS.setPassword(DataManager.getPropFile(PROP_NAME).getProperty("PASS"));
-        basicDS.setUrl(DataManager.getPropFile(PROP_NAME).getProperty("DB_URL"));
+        basicDS.setDriverClassName(DataManager.getProperties(PROP_NAME).getProperty("JDBC_DRIVER"));
+        basicDS.setUsername(DataManager.getProperties(PROP_NAME).getProperty("USER"));
+        basicDS.setPassword(DataManager.getProperties(PROP_NAME).getProperty("PASS"));
+        basicDS.setUrl(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
 
-        basicDS.setInitialSize(Integer.parseInt(DataManager.getPropFile(PROP_NAME).getProperty("initialSize")));
-        basicDS.setMaxTotal(Integer.parseInt(DataManager.getPropFile(PROP_NAME).getProperty("maxSize")));
-        basicDS.setMinIdle(Integer.parseInt(DataManager.getPropFile(PROP_NAME).getProperty("minIdle")));
-        basicDS.setMaxIdle(Integer.parseInt(DataManager.getPropFile(PROP_NAME).getProperty("maxIdle")));
+        basicDS.setInitialSize(Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("initialSize")));
+        basicDS.setMaxTotal(Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("maxSize")));
+        basicDS.setMinIdle(Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("minIdle")));
+        basicDS.setMaxIdle(Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("maxIdle")));
 
     }
 
