@@ -11,7 +11,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class SQLHandler {
 
-    public static void queryStatement(String sqlStatement) {
+    public void queryStatement(String sqlStatement) {
         SQLHandler sqlHandler = new SQLHandler();
         try {
             sqlHandler.handleStatement(sqlStatement);

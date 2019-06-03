@@ -1,6 +1,6 @@
 /*
 TODO:
-    -close() and getState() are missing!
+    -getState and close() are missing!
     -Docs for JDBC Pooling
         http://commons.apache.org/proper/commons-dbcp/
         http://commons.apache.org/proper/commons-pool/
@@ -46,7 +46,10 @@ public class JDBCPool {
     public void setBasicDS(BasicDataSource basicDS) {
         this.basicDS = basicDS;
     }
+    
+    
 }
 
 //public void close()
-//Public void getState()
+//public void getState()
+
