@@ -27,7 +27,7 @@ public class SQLHandler {
         try {
             BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
             conn = basicDS.getConnection();
-            stmt = conn.prepareStatement(sqlStatement);
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sqlStatement);
             /*
             while(rs.next()) {

@@ -1,6 +1,7 @@
 /*
 TODO:
-    -getState and close() are missing!
+    -better solution for determining pool health?
+    -pooling prepared statements
     -Docs for JDBC Pooling
         http://commons.apache.org/proper/commons-dbcp/
         http://commons.apache.org/proper/commons-pool/
@@ -9,6 +10,7 @@ TODO:
 package Model;
 
 import Helper.*;
+import java.sql.SQLException;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 public class JDBCPool {
@@ -46,10 +48,15 @@ public class JDBCPool {
     public void setBasicDS(BasicDataSource basicDS) {
         this.basicDS = basicDS;
     }
-    
-    
+
+    public void close() throws SQLException {
+        if (basicDS.isClosed() == false) {
+            basicDS.close();
+        }
+    }
+
+    public boolean getPoolHealth() {
+        //true if connections created by this datasource will fast fail validation
+        return basicDS.getFastFailValidation() != true;
+    }
 }
-
-//public void close()
-//public void getState()
-
