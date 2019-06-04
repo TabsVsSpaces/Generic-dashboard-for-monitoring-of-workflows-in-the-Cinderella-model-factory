@@ -11,7 +11,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class SQLHandler {
 
-    public static void queryStatement(String sqlStatement) {
+    public void queryStatement(String sqlStatement) {
         SQLHandler sqlHandler = new SQLHandler();
         try {
             sqlHandler.handleStatement(sqlStatement);
@@ -27,7 +27,7 @@ public class SQLHandler {
         try {
             BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
             conn = basicDS.getConnection();
-            stmt = conn.prepareStatement(sqlStatement);
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sqlStatement);
             /*
             while(rs.next()) {
