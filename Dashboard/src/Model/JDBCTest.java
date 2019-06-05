@@ -15,9 +15,9 @@ public class JDBCTest {
         try {
             Class.forName(JDBC_Driver);
             testConn = DriverManager.getConnection(DB_URL,User, Password);
-            LogHandler.add("Verbindung zur Datenbank war erfolgreich.");
+            LogHandler.add("Verbindungstest erfolgreich.");
         } catch (ClassNotFoundException | SQLException se) {
-            LogHandler.add(se.getMessage());
+            LogHandler.add("Verbindungstest fehlgeschlagen!");
         } finally {
             try {
                 if (testConn != null) {
