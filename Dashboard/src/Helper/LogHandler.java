@@ -1,33 +1,42 @@
 
 package Helper;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.text.*;
 
 /*
 TODO: 
     - Erklärung Liste: https://docs.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html ; http://www.codeadventurer.de/?p=1751
-    - Timestamp für Fehlermeldung
  */
 
 public class LogHandler {
+    private static final String PROP_NAME = "Application.properties";
+    private static final int LOG_SIZE = Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("LogSize"));
     
-    //ArrayList notwendig für dynamisches add() von Strings
-    private static ArrayList<String> ErrorLog = new ArrayList<>();
-
+    //ArrayList for dynamic add of strings
+    private static final ArrayList<String> ERROR_LOG = new ArrayList<>();
+    
+    
     public static void add(String Fehler) {
-        ErrorLog.add(Fehler);
+        ERROR_LOG.add(getCurrDate()+"    "+Fehler);
         
-        //saeubern der List auf 10 Elemente
-        if(ErrorLog.size()>10){
-            while(ErrorLog.size()>10){
-                ErrorLog.remove(0);
+        //prune the list to n elements (n=LOG_SIZE)     
+        if(ERROR_LOG.size()>LOG_SIZE){
+            while(ERROR_LOG.size()>LOG_SIZE){
+                ERROR_LOG.remove(0);
             }
         }
     }
     
     public static String[] show(){
-        String LogFenster [] = new String [ErrorLog.size()];
-        LogFenster = ErrorLog.toArray(LogFenster);
+        String LogFenster [] = new String [ERROR_LOG.size()];
+        LogFenster = ERROR_LOG.toArray(LogFenster);
         return LogFenster;
+    }
+    
+    public static String getCurrDate(){
+        Date dNow = new Date();
+        SimpleDateFormat simpleForm = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+        return simpleForm.format(dNow);
     }
 }
