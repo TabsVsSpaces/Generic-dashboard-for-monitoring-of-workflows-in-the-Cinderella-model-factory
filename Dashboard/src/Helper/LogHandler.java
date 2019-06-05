@@ -18,15 +18,15 @@ public class LogHandler {
         ErrorLog.add(Fehler);
         
         //saeubern der List auf 10 Elemente
-        if(ErrorLog.size()>=10){
-            while(ErrorLog.size()>=10){
+        if(ErrorLog.size()>10){
+            while(ErrorLog.size()>10){
                 ErrorLog.remove(0);
             }
         }
     }
     
     public static String[] show(){
-        String LogFenster [] = new String [10];
+        String LogFenster [] = new String [ErrorLog.size()];
         LogFenster = ErrorLog.toArray(LogFenster);
         return LogFenster;
     }
