@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -11,87 +17,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ChangeReport" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChangeReportController">
+<AnchorPane fx:id="ChangeReport" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChangeReportController">
 
    <children>
+
+      <Label layoutX="24.0" layoutY="35.0" prefHeight="27.0" prefWidth="169.0" text="Report">
+
+         <font>
+
+            <Font name="System Bold" size="18.0" />
+
+         </font>
+
+      </Label>
 
       <VBox layoutX="60.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0">
 
          <children>
 
-            <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="379.0" promptText="Reportname">
+            <TextField fx:id="Reportname" prefHeight="33.0" prefWidth="418.0" promptText="Reportname">
 
                <VBox.margin>
 
-                  <Insets bottom="50.0" left="10.0" />
+                  <Insets bottom="50.0" top="10.0" />
 
                </VBox.margin>
 
             </TextField>
-
-            <Button maxWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="428.0" style="-fx-background-color: transparent;">
-
-               <graphic>
-
-                  <TextField maxWidth="-Infinity" prefHeight="33.0" prefWidth="412.0" promptText="Abfrage 1" />
-
-               </graphic>
-
+            <ListView fx:id="ListViewReport" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="285.0" prefWidth="400.0">
                <VBox.margin>
-
-                  <Insets bottom="20.0" />
-
-               </VBox.margin>
-
-            </Button>
-
-            <Button layoutX="10.0" layoutY="93.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="421.0" style="-fx-background-color: transparent;">
-
-               <graphic>
-
-                  <TextField prefHeight="33.0" prefWidth="431.0" promptText="Abfrage 2" />
-
-               </graphic>
-
-               <VBox.margin>
-
-                  <Insets bottom="20.0" />
-
-               </VBox.margin>
-
-            </Button>
-
-            <Button layoutX="10.0" layoutY="154.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="409.0" style="-fx-background-color: transparent;">
-
-               <graphic>
-
-                  <TextField maxWidth="-Infinity" prefHeight="33.0" prefWidth="448.0" promptText="Abfrage 3" />
-
-               </graphic>
-
-               <VBox.margin>
-
-                  <Insets bottom="20.0" />
-
-               </VBox.margin>
-
-            </Button>
-
-            <Button layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="437.0" style="-fx-background-color: transparent;">
-
-               <graphic>
-
-                  <TextField prefHeight="33.0" prefWidth="351.0" promptText="Abfrage 4" />
-
-               </graphic>
-
-               <VBox.margin>
-
-                  <Insets bottom="20.0" />
-
-               </VBox.margin>
-
-            </Button>
+                  <Insets bottom="10.0" />
+               </VBox.margin></ListView>
 
             <HBox prefHeight="32.0" prefWidth="261.0">
 
@@ -101,11 +57,11 @@
 
                      <graphic>
 
-                        <ImageView fitHeight="29.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
 
                            <image>
 
-                              <Image url="@V1.5/Icons/minus.png" />
+                              <Image url="@Icons/icons8-minus-24.png" />
 
                            </image>
 
@@ -119,11 +75,11 @@
 
                      <graphic>
 
-                        <ImageView fitHeight="50.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="50.0" fitWidth="20.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
 
                            <image>
 
-                              <Image url="@V1.5/Icons/baseline_settings_black_18dp.png" />
+                              <Image url="@Icons/icons8-plus-24.png" />
 
                            </image>
 
@@ -133,7 +89,7 @@
 
                      <HBox.margin>
 
-                        <Insets />
+                        <Insets right="50.0" />
 
                      </HBox.margin>
 
@@ -143,47 +99,43 @@
 
                      <graphic>
 
-                        <ImageView fitHeight="50.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
 
                            <image>
 
-                              <Image url="@V1.5/Icons/icons8-plus-32.png" />
+                              <Image url="@Icons/icons8-bearbeiten-26.png" />
 
                            </image>
 
                         </ImageView>
 
                      </graphic>
+                     <HBox.margin>
+                        <Insets left="120.0" />
+                     </HBox.margin>
 
                   </Button>
 
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="117.0" text="Speichern">
+                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="130.0" text="Speichern">
 
                      <HBox.margin>
 
-                        <Insets left="120.0" />
+                        <Insets />
 
                      </HBox.margin>
 
                   </Button>
 
                </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
 
             </HBox>
 
          </children>
 
       </VBox>
-
-      <Label layoutX="24.0" layoutY="35.0" prefHeight="27.0" prefWidth="169.0" text="Report bearbeiten">
-
-         <font>
-
-            <Font name="System Bold" size="18.0" />
-
-         </font>
-
-      </Label>
 
    </children>
 
