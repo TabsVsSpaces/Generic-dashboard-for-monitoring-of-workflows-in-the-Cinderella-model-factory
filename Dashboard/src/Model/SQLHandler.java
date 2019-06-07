@@ -19,7 +19,8 @@ public class SQLHandler {
             LogHandler.add(e.getMessage());
         }
     }
-
+    
+    //Method to handle SQLExceptions primarily //returns an resultSet
     private void handleStatement(String sqlStatement) {
 
         Connection conn = null;
