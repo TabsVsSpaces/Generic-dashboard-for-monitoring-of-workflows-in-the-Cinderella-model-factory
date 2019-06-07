@@ -1,8 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+TODO
+    -event which registrates the closing of the application
+        -poolClose() is missing 
  */
+import Model.*;
 
 import java.lang.*;
 import javafx.application.Application;
@@ -11,10 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- *
- * @author Tom
- */
 public class Main extends Application {
     
 
@@ -33,6 +30,9 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //initiates the JDBC ConnectionPool
+        JDBCPool pool = JDBCPool.getInstance();
+        
         launch(args);
     }
     

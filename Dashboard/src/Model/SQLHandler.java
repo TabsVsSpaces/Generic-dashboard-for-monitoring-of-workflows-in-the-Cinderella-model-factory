@@ -15,12 +15,13 @@ public class SQLHandler {
 
     private static ResultSet rs = null;
     public static Map<String, List<Object>> map;
-
-    public void queryStatement(String sqlStatement) {
+    
+    //returns a HashMap, which contains the resultSet content
+    public void getResultMap(String sqlStatement) {
 
         SQLHandler sqlHandler = new SQLHandler();;
 
-        sqlHandler.getResultSet(sqlStatement);
+        sqlHandler.queryStatement(sqlStatement);
         if (map != null) {
             try {
                 Iterator<Map.Entry<String, List<Object>>> entries = map.entrySet().iterator();
@@ -37,8 +38,8 @@ public class SQLHandler {
         }
     }
 
-    //Method to handle SQLExceptions primarily //returns an resultSet
-    private void getResultSet(String sqlStatement) {
+    //Method to handle SQLExceptions primarily
+    private void queryStatement(String sqlStatement) {
 
         Connection conn = null;
         Statement stmt = null;
