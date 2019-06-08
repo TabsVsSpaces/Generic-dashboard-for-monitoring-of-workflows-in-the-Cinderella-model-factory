@@ -34,6 +34,8 @@ public class Main extends Application {
         JDBCPool pool = JDBCPool.getInstance();
         
         launch(args);
+        
+        //if exit ->pool.close();
     }
     
 }

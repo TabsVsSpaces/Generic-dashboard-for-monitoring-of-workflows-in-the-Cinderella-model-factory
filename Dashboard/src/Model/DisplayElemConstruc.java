@@ -1,37 +1,50 @@
 /*
 TODO
-    -examineResultSet() is missing! 
-*/
+    -creatElement is not implemented yet
+ */
 package Model;
 
 import Helper.LogHandler;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DisplayElemConstruc {
-    
+
+    private final String sqlStatement;
     private Map<String, List<Object>> map;
+    private String[] columns;
+
+    public DisplayElemConstruc(String sqlStatement) {
+        this.sqlStatement = sqlStatement;
+        this.map = null;
+        this.columns = null;
+    }
     
-    //returns a HashMap, which contains the resultSet content
-    public void createElement (String sqlStatement) {
+    public String[] getColumns(){
+        examineResultMap();
+        return columns;
+    }
+
+    private void examineResultMap() {
 
         SQLHandler sqlHandler = new SQLHandler(sqlStatement);
         map = sqlHandler.getResultMap();
-        //sqlHandler.queryStatement(sqlStatement);
+
         if (map != null) {
-            try {
-                Iterator<Map.Entry<String, List<Object>>> entries = map.entrySet().iterator();
-                while (entries.hasNext()) {
-                    Map.Entry<String, List<Object>> entry = entries.next();
-                    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-                }
-                System.out.println("Erfolg");
-            } catch (Exception se) {
-                LogHandler.add(se.getMessage());
-            }
+            this.columns = map.keySet().toArray(new String[0]);
+            /*
+            Iterator<Map.Entry<String, List<Object>>> entries = map.entrySet().iterator();
+            while (entries.hasNext()) {
+                Map.Entry<String, List<Object>> entry = entries.next();
+                //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            }*/
+            //System.out.println(Arrays.toString(columns));
+
         } else {
-            System.out.println("Fehler");
+            LogHandler.add("ERROR: Map is null!");
         }
+    }
+
+    private void createElement() {
+
     }
 }
