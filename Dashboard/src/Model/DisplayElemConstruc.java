@@ -1,6 +1,9 @@
 /*
 TODO
     -creatElement is not implemented yet
+    -setter for selected Columns, which should be used displayed in the element
+    -https://www.baeldung.com/convert-map-values-to-array-list-set
+    -https://www.techiedelight.com/convert-map-array-java/
  */
 package Model;
 

@@ -1,7 +1,8 @@
 /*
 TODO
     -implements runnable
-    -possible solution for saving the resultSet http://commons.apache.org/proper/commons-beanutils/apidocs/org/apache/commons/beanutils/RowSetDynaClass.html
+    -useful to export the number of columns?
+    -one possible solution for saving the resultSet http://commons.apache.org/proper/commons-beanutils/apidocs/org/apache/commons/beanutils/RowSetDynaClass.html
  */
 package Model;
 
@@ -37,7 +38,7 @@ public class SQLHandler {
             BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
             conn = basicDS.getConnection();
             stmt = conn.createStatement();
-            this.rs = stmt.executeQuery(sqlStatement);
+            rs = stmt.executeQuery(sqlStatement);
             resultSetToArrayList();
         } catch (SQLException se) {
             LogHandler.add(se.getMessage());
@@ -63,13 +64,13 @@ public class SQLHandler {
         try {
             ResultSetMetaData md = rs.getMetaData();
             int columns = md.getColumnCount();
-            this.map = new HashMap<>(columns);
+            map = new HashMap<>(columns);
             for (int i = 1; i <= columns; ++i) {
-                this.map.put(md.getColumnName(i), new ArrayList<>());
+                map.put(md.getColumnName(i), new ArrayList<>());
             }
             while (rs.next()) {
                 for (int i = 1; i <= columns; ++i) {
-                    this.map.get(md.getColumnName(i)).add(rs.getObject(i));
+                    map.get(md.getColumnName(i)).add(rs.getObject(i));
                 }
             }
         } catch (SQLException se) {
