@@ -1,7 +1,6 @@
 /*
 TODO
-    -setter for map is mising
-    -examineResultSet() is missing! ->extra class mit new SQLHandler and getMap()
+    -implements runnable
     -possible solution for saving the resultSet http://commons.apache.org/proper/commons-beanutils/apidocs/org/apache/commons/beanutils/RowSetDynaClass.html
  */
 package Model;
@@ -13,33 +12,23 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class SQLHandler {
 
-    private static ResultSet rs = null;
-    public static Map<String, List<Object>> map;
-    
-    //returns a HashMap, which contains the resultSet content
-    public void getResultMap(String sqlStatement) {
+    private final String sqlStatement;
+    private ResultSet rs;
+    private Map<String, List<Object>> map;
 
-        SQLHandler sqlHandler = new SQLHandler();;
-
-        sqlHandler.queryStatement(sqlStatement);
-        if (map != null) {
-            try {
-                Iterator<Map.Entry<String, List<Object>>> entries = map.entrySet().iterator();
-                while (entries.hasNext()) {
-                    Map.Entry<String, List<Object>> entry = entries.next();
-                    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-                }
-                System.out.println("Erfolg");
-            } catch (Exception se) {
-                LogHandler.add(se.getMessage());
-            }
-        } else {
-            System.out.println("Fehler");
-        }
+    public SQLHandler(String sqlStatement) {
+        this.sqlStatement = sqlStatement;
+        this.rs = null;
+        this.map = null;
     }
 
-    //Method to handle SQLExceptions primarily
-    private void queryStatement(String sqlStatement) {
+    public Map<String, List<Object>> getResultMap() {
+        queryStatement();
+        return map;
+    }
+
+    //Query SQLStatement + SQLException handling
+    private void queryStatement() {
 
         Connection conn = null;
         Statement stmt = null;
@@ -48,8 +37,8 @@ public class SQLHandler {
             BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
             conn = basicDS.getConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(sqlStatement);
-            resultSetToArrayList(rs);
+            this.rs = stmt.executeQuery(sqlStatement);
+            resultSetToArrayList();
         } catch (SQLException se) {
             LogHandler.add(se.getMessage());
         } finally {
@@ -70,18 +59,21 @@ public class SQLHandler {
     }
 
     //converts the resultSet to a map of list
-    private Map<String, List<Object>> resultSetToArrayList(ResultSet rs) throws SQLException {
-        ResultSetMetaData md = rs.getMetaData();
-        int columns = md.getColumnCount();
-        map = new HashMap<>(columns);
-        for (int i = 1; i <= columns; ++i) {
-            map.put(md.getColumnName(i), new ArrayList<>());
-        }
-        while (rs.next()) {
+    private void resultSetToArrayList() {
+        try {
+            ResultSetMetaData md = rs.getMetaData();
+            int columns = md.getColumnCount();
+            this.map = new HashMap<>(columns);
             for (int i = 1; i <= columns; ++i) {
-                map.get(md.getColumnName(i)).add(rs.getObject(i));
+                this.map.put(md.getColumnName(i), new ArrayList<>());
             }
+            while (rs.next()) {
+                for (int i = 1; i <= columns; ++i) {
+                    this.map.get(md.getColumnName(i)).add(rs.getObject(i));
+                }
+            }
+        } catch (SQLException se) {
+            LogHandler.add(se.getMessage());
         }
-        return map;
     }
 }
