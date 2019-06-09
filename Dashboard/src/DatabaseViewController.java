@@ -1,4 +1,5 @@
 
+
 import Helper.LogHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,11 +28,7 @@ public class DatabaseViewController implements Initializable {
     @FXML
     private TextField jdbcPort;
 
-    /**
-     * Initializes the controller class.
-     */
 
-   // TextField[] field = {dbURL,jdbcPort,user,password };
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,19 +44,6 @@ public class DatabaseViewController implements Initializable {
         connection[2] = user.getText();
         connection[3] = password.getText();
        
-        /*
-        for(int i = 0; i<4; i++)
-        {
-            connection[i] = field[i].getText();
-         if ((field[i].getText() != null && !field[i].getText().isEmpty())) {
-           connection[i] = field[i].getText();
-            } 
-         else {
-            return null;
-            
-        }
-       } 
-        */
        
         return connection;
     }

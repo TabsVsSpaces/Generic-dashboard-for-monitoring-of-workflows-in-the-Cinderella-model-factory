@@ -6,6 +6,7 @@ TODO
 import Model.*;
 
 import java.lang.*;
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    
+
 
   @Override
     public void start(Stage stage) throws Exception {
@@ -35,7 +36,20 @@ public class Main extends Application {
         
         launch(args);
         
+        
+        
         //if exit ->pool.close();
+    }
+    
+    @Override
+    public void stop(){
+    System.out.println("Stage is closing");
+    
+    JDBCPool pool = JDBCPool.getInstance();
+    try{pool.close();}
+    catch(SQLException e)
+    { System.out.println(e.toString());}
+    
     }
     
 }

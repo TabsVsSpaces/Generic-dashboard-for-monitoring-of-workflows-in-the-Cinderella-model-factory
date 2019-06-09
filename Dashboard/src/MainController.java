@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,6 +23,11 @@ import javafx.scene.control.ListView;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 
 /**
@@ -37,16 +44,41 @@ public class MainController implements Initializable {
 
     protected ListProperty<String> listProperty = new SimpleListProperty<>();
     
-    @FXML
-    private ListView myLog;
+    public static final ObservableList reportName = 
+        FXCollections.observableArrayList();
     
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private VBox VBox;
+    @FXML
+    private ListView ListViewReports;
+    @FXML
+    private ListView Log;
+    @FXML
+    private ImageView ToggleStatus;
+    
+    private int ReportNum = 0;
+    
+
     @Override
     public void initialize(URL url, ResourceBundle rb)  {
+      
+      for(int i = 1; i <= 10;i++)
+      {
+          reportName.add("Report: " + Integer.toString(i));
+      }
+        
+      ListViewReports.setItems(reportName);
        
-      myLog.itemsProperty().bind(listProperty);
+      // Register Change in selected Report used for determining which report should be displayed and which is choosen with the cahnge option
+      ListViewReports.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<String>() {
+                public void changed(ObservableValue<? extends String> ov, 
+                    String old_val, String new_val) {
+                        LogHandler.add(new_val);
+            }
+        });
+        
+      Log.itemsProperty().bind(listProperty);
       LogHandler.add("Clicked");
       listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
       
@@ -70,13 +102,13 @@ public class MainController implements Initializable {
 
     @FXML
     private void changeReport(MouseEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("ChangeReport.fxml"));  
+        Parent root = FXMLLoader.load(getClass().getResource("AddViewElement.fxml"));  
         PaneView.getChildren().addAll(root);
     }
 
     @FXML
     private void addReport(MouseEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("AddReport.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Report.fxml"));
         PaneView.getChildren().addAll(root);
     }
 
@@ -86,7 +118,16 @@ public class MainController implements Initializable {
         PaneView.getChildren().addAll(root);
     }
 
+    
+    public int getReportNum()
+    {return ReportNum;}
+    
+    public void SetReportNum(int ReportNum)
+    {this.ReportNum = ReportNum;}
 
+    
+    
+    
 }
 
     
