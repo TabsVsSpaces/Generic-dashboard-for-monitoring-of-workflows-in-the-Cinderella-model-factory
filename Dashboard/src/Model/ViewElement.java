@@ -8,6 +8,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.chart.Chart;
 
 /**
  *
@@ -25,6 +26,7 @@ public class ViewElement {
     private String YAxisMeasure;
     private List<String> XAxisValues= new ArrayList<>();
     private List<String> YAxisValues = new ArrayList<>();
+    private Chart viewElementChart;
 
     //setter -----------------------------------------------------
     public void setDiagramId(int diagramId) {
@@ -71,6 +73,10 @@ public class ViewElement {
         this.YAxisValues = YAxisValues;
     }
         
+    public void setViewElementChart(Chart newChart){
+        this.viewElementChart = newChart;
+    }
+    
     // getter -----------------------------------------------------
     public int getDiagramId() {
         return diagramId;
@@ -116,8 +122,7 @@ public class ViewElement {
         return YAxisValues;
     }
 
-    public void getRefreshRate(Object value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Chart getViewElementChart(){
+        return viewElementChart;
     }
-
 }

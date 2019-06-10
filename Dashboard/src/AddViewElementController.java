@@ -16,11 +16,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import Model.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.SubScene;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -34,11 +41,11 @@ public class AddViewElementController implements Initializable {
     @FXML
     private TextField Diagrammname;
     @FXML
-    private ComboBox<?> Aktualisierungsrate;
+    private ComboBox<Integer> Aktualisierungsrate;
     @FXML
     private TextField SQLStatement;
     @FXML
-    private ComboBox<?> Diagrammtyp;
+    private ComboBox<String> Diagrammtyp;
     @FXML
     private ListView<?> X_Achse;
     @FXML
@@ -51,15 +58,35 @@ public class AddViewElementController implements Initializable {
     private TextField NameY;
     @FXML
     private TextField MaßeinheitY;
+    @FXML
+    private SubScene chartArea;
 
+    
+    
     private Map<String, List<Object>> map;
     
     private ReportController reportController;
     private ViewElement element;
+    private DisplayElemConstruc sqlResult;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        Aktualisierungsrate.getItems().addAll(2,60,120,240,300,600,900,1800);
+        
+        Diagrammtyp.getItems().addAll(
+                "Kreisdiagramm",
+                "Balkendiagramm",
+                "Säulendiagramm",
+                "Tabelle"
+                ); 
+        
+        X_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
+        disableFields();
+        
+        createPieChart();
     }
 
     private String getText(TextField target)
@@ -71,15 +98,39 @@ public class AddViewElementController implements Initializable {
 
     @FXML
     private void testSQL(MouseEvent event) {
-        
-        SQLHandler handler = new SQLHandler(getText(SQLStatement));
-        map = handler.getResultMap();
-        
+        disableFields();
+        this.sqlResult = new DisplayElemConstruc(SQLStatement.getText());
+        fillAxis();
+        activateFields();
         LogHandler.add("Statment Korrekt");
     }
 
     @FXML
     private void genChart(MouseEvent event) {
+        List<String> selectedItemsXAxis =  (List<String>) X_Achse.getSelectionModel().getSelectedItems();
+        List<String> selectedItemsYAxis =  (List<String>) Y_Achse.getSelectionModel().getSelectedItems();
+        
+        switch(Diagrammtyp.getValue()){ 
+        case "Kreisdiagramm": 
+            createPieChart(); 
+            break; 
+        case "Balkendiagramm": 
+            System.out.println("i ist eins"); 
+            break; 
+        case "Säulendiagramm": 
+            System.out.println("i ist zwei"); 
+            break; 
+        case "Tabelle": 
+            System.out.println("i ist drei"); 
+            break; 
+        default: 
+            LogHandler.add("Diagrammtyp konnte nicht erkannt werden im AddViewElmentController.");
+        } 
+        
+        selectedItemsXAxis.forEach((s) -> {
+            System.out.println("selected item " + s);
+        });
+
     }
 
     @FXML
@@ -98,7 +149,7 @@ public class AddViewElementController implements Initializable {
     
     public void setElement(ViewElement element){
         this.element = element;
-        loadElmentData();
+        if (element.getDiagramId() > 0) loadElmentData();
     }
     
     private void loadElmentData(){
@@ -108,13 +159,12 @@ public class AddViewElementController implements Initializable {
         NameY.setText(element.getyAxisName());
         MaßeinheitX.setText(element.getxAxisMeasure());
         MaßeinheitY.setText(element.getYAxisMeasure());
-        
-        //X_Achse.setItems((ObservableList<?>) element.getXAxisValues());
-        //Y_Achse.setItems((ObservableList<?>) element.getYAxisValues());
-        
-        //Aktualisierungsrate -> aktivate value
-        //Diagrammtyp -> aktivate  value   
-    
+        element.getXAxisValues();
+        Aktualisierungsrate.setValue(element.getRefreshRate());
+        Diagrammtyp.setValue(element.getDiagramtName());
+        this.sqlResult = new DisplayElemConstruc(SQLStatement.getText());
+        fillAxis();
+        activateFields();
     }
     
     private void saveViewElementData() throws Exception{
@@ -124,8 +174,8 @@ public class AddViewElementController implements Initializable {
         }
         
         element.setDiagramtName(Diagrammname.getText());
-        //element.setRefreshRate(Integer.parseInt(String.valueOf(Aktualisierungsrate.getValue())));
-        //element.setDiagramType(String.valueOf(Diagrammtyp.getValue()));
+        element.setRefreshRate(Aktualisierungsrate.getValue());
+        element.setDiagramType(Diagrammtyp.getValue());
         element.setSqlStatement(SQLStatement.getText());
         element.setxAxisName(NameX.getText());
         element.setyAxisName(NameY.getText());
@@ -138,4 +188,53 @@ public class AddViewElementController implements Initializable {
         reportController.redraw();
     }
     
+    public void fillAxis(){
+      final ObservableList columnsList = FXCollections.observableArrayList();  
+      
+      columnsList.addAll(Arrays.asList(sqlResult.getColumns()));
+      X_Achse.setItems(columnsList);
+      Y_Achse.setItems(columnsList);
+    }
+    
+    public void disableFields(){
+        Diagrammtyp.setDisable(true);
+        X_Achse.setDisable(true);
+        Y_Achse.setDisable(true);
+        MaßeinheitX.setDisable(true);
+        MaßeinheitY.setDisable(true);
+        NameX.setDisable(true);
+        NameY.setDisable(true);
+    }
+    
+    public void activateFields(){
+        Diagrammtyp.setDisable(false);
+        X_Achse.setDisable(false);
+        Y_Achse.setDisable(false);
+        MaßeinheitX.setDisable(false);
+        MaßeinheitY.setDisable(false);
+        NameX.setDisable(false);
+        NameY.setDisable(false);
+    }
+    
+    public void createPieChart() {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList( 
+            new PieChart.Data("Iphone 5S", 13), 
+            new PieChart.Data("Samsung Grand", 25), 
+            new PieChart.Data("MOTO G", 10), 
+            new PieChart.Data("Nokia Lumia", 22));
+        
+        //Creating a Pie chart 
+        PieChart pieChart = new PieChart(pieChartData);
+        
+        //Setting the title of the Pie chart 
+        pieChart.setTitle("Mobile Sales");
+        
+        //Setting the labels of the pie chart visible  
+        pieChart.setLabelsVisible(true);
+        
+        //Setting the start angle of the pie chart 
+        pieChart.setStartAngle(180); 
+
+        //wie in anzeigen lassen?
+    }
 }
