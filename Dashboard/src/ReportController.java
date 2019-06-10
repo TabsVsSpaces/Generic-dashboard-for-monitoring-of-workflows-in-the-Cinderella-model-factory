@@ -9,6 +9,7 @@ import Model.Report;
 import Model.ViewElement;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -100,7 +103,18 @@ public class ReportController implements Initializable {
 
     @FXML
     private void deleteViewElement(MouseEvent event) {
-    
+        ViewElement element = ListViewElement.getSelectionModel().getSelectedItem();
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("VieElement löschen bestätigen Dialog");
+        alert.setHeaderText("Sie sind dabei das ViewElement mit dem Namen: " + 
+                element.getDiagramtName()+ " zu löschen.");
+        alert.setContentText("Wollen Sie das ViewElement wirklich löschen?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            deleteViewElement(element);
+        } 
     }
 
     @FXML
@@ -155,5 +169,14 @@ public class ReportController implements Initializable {
     
     public void redraw() throws Exception{
         MainC.loadReportView(report);
+    }
+    
+    private void deleteViewElement(ViewElement element){
+        for (int i = 0 ; i < elementList.size(); i++) {
+                if (elementList.get(i).getDiagramId()== element.getDiagramId()) {
+                    elementList.remove(i);
+                    LogHandler.add("ViewElement " + element.getDiagramtName() + " wurde gelöscht.");
+                };
+        }
     }
 }

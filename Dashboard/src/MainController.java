@@ -20,6 +20,7 @@ import Model.Report;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -31,6 +32,9 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ToggleButton;
 
@@ -71,12 +75,12 @@ public class MainController implements Initializable {
       
       tempRep = new Report();
       tempRep.setReportName("Default Report 2");
-      tempRep.setReportId(1);
+      tempRep.setReportId(2);
       reportList.add(tempRep);
       
       tempRep = new Report();
       tempRep.setReportName("Default Report 3");
-      tempRep.setReportId(1);
+      tempRep.setReportId(3);
       reportList.add(tempRep);
       
       ListViewReports.setItems(reportList);
@@ -123,6 +127,18 @@ public class MainController implements Initializable {
 
     @FXML
     private void deleteReport(MouseEvent event) throws Exception{
+        Report removeReport = ListViewReports.getSelectionModel().getSelectedItem();
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Report löschen bestätigen Dialog");
+        alert.setHeaderText("Sie sind dabei den Report mit dem Namen: " + 
+                removeReport.getReportName() + " zu löschen.");
+        alert.setContentText("Wollen Sie den Report wirklich löschen?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            deleteReport(removeReport);
+        } 
     }
 
     @FXML
@@ -191,6 +207,14 @@ public class MainController implements Initializable {
         return id;
     }
   
+    private void deleteReport(Report report){
+        for (int i = 0 ; i < reportList.size(); i++) {
+                if (reportList.get(i).getReportId()== report.getReportId()) {
+                    reportList.remove(i);
+                    LogHandler.add("Report " + report.getReportName() + " wurde gelöscht.");
+                };
+        }
+    }
 }
 
     
