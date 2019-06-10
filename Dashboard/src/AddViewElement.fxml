@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -16,18 +15,18 @@
    <children>
       <TextField fx:id="Diagrammname" layoutX="37.0" layoutY="66.0" prefHeight="31.0" prefWidth="276.0" promptText="Diagrammname" />
       <ComboBox fx:id="Aktualisierungsrate" layoutX="574.0" layoutY="68.0" prefHeight="25.0" prefWidth="97.0" />
-      <TextArea fx:id="SQLStatement" layoutX="37.0" layoutY="109.0" prefHeight="126.0" prefWidth="527.0" promptText="SELECT * FROM &lt;tabelle&gt; &#10;WHERE ...&#10;" />
-      <Button layoutX="574.0" layoutY="210.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Test" />
+      <Button layoutX="574.0" layoutY="210.0" mnemonicParsing="false" onMouseClicked="#testSQL" prefHeight="25.0" prefWidth="97.0" text="Test" />
       <ComboBox fx:id="Diagrammtyp" layoutX="163.0" layoutY="249.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField fx:id="SQLStatement" alignment="TOP_LEFT" layoutX="36.0" layoutY="116.0" prefHeight="112.0" prefWidth="509.0" promptText="SELECT * FROM &lt;tabelle&gt; WHERE ..." />
       <ListView fx:id="X_Achse" layoutX="36.0" layoutY="312.0" prefHeight="132.0" prefWidth="117.0" />
       <TextField fx:id="NameX" layoutX="164.0" layoutY="312.0" prefHeight="25.0" prefWidth="150.0" promptText="Name der X-Achse" />
       <TextField fx:id="MaßeinheitX" layoutX="165.0" layoutY="352.0" prefHeight="31.0" prefWidth="150.0" promptText="Maßeinheit" />
       <ListView fx:id="Y_Achse" layoutX="37.0" layoutY="480.0" prefHeight="132.0" prefWidth="117.0" />
       <TextField fx:id="NameY" layoutX="164.0" layoutY="480.0" prefHeight="25.0" prefWidth="150.0" promptText="Name der Y-Achse" />
       <TextField fx:id="MaßeinheitY" layoutX="164.0" layoutY="518.0" prefHeight="25.0" prefWidth="151.0" promptText="Maßeinheit" />
-      <Button layoutX="225.0" layoutY="580.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" text="Vorschau" />
-      <Button layoutX="463.0" layoutY="580.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="98.0" text="Abbrechen" />
-      <Button layoutX="574.0" layoutY="580.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="97.0" text="Hinzufügen" />
+      <Button layoutX="225.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#genChart" prefHeight="31.0" prefWidth="89.0" text="Vorschau" />
+      <Button layoutX="463.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="31.0" prefWidth="98.0" text="Abbrechen" />
+      <Button layoutX="574.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#addViewElement" prefHeight="31.0" prefWidth="97.0" text="Hinzufügen" />
       <BarChart layoutX="313.0" layoutY="300.0" prefHeight="287.0" prefWidth="370.0">
          <xAxis>
             <CategoryAxis side="BOTTOM" />

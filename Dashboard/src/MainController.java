@@ -69,7 +69,7 @@ public class MainController implements Initializable {
         
       ListViewReports.setItems(reportName);
        
-      // Register Change in selected Report used for determining which report should be displayed and which is choosen with the cahnge option
+      // Register Change in selected Report used for determining which report should be displayed and which is choosen with the change option
       ListViewReports.getSelectionModel().selectedItemProperty().addListener(
             new ChangeListener<String>() {
                 public void changed(ObservableValue<? extends String> ov, 

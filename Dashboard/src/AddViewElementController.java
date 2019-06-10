@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import Helper.LogHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -12,7 +13,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import Model.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * FXML Controller class
@@ -28,7 +33,7 @@ public class AddViewElementController implements Initializable {
     @FXML
     private ComboBox<?> Aktualisierungsrate;
     @FXML
-    private TextArea SQLStatement;
+    private TextField SQLStatement;
     @FXML
     private ComboBox<?> Diagrammtyp;
     @FXML
@@ -44,12 +49,39 @@ public class AddViewElementController implements Initializable {
     @FXML
     private TextField MaßeinheitY;
 
-    /**
-     * Initializes the controller class.
-     */
+    private Map<String, List<Object>> map;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
+
+    private String getText(TextField target)
+    {
+        return target.getText();
+    }
+
+    
+
+    @FXML
+    private void testSQL(MouseEvent event) {
+        
+        SQLHandler handler = new SQLHandler(getText(SQLStatement));
+        map = handler.getResultMap();
+        
+        LogHandler.add("Statment Korrekt");
+    }
+
+    @FXML
+    private void genChart(MouseEvent event) {
+    }
+
+    @FXML
+    private void cancel(MouseEvent event) {
+    }
+
+    @FXML
+    private void addViewElement(MouseEvent event) {
+    }
     
 }
