@@ -36,7 +36,7 @@ public class Report {
         return reportName;
     }
 
-    public int getReportId(int id){
+    public int getReportId(){
         return reportId;
     }
     

@@ -5,6 +5,7 @@
  */
 
 import Helper.LogHandler;
+import Model.Report;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -30,7 +31,10 @@ public class ReportController implements Initializable {
     private AnchorPane Report;
     @FXML
     private TextField Reportname;
+    
+    private Report report;
 
+    private MainController MainC;
     /**
      * Initializes the controller class.
      */
@@ -46,7 +50,7 @@ public class ReportController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // get ID from current Report
         
-        viewElements.add("Anzeige Element View");
+        
         ListViewElement.setItems(viewElements);
         
             ListViewElement.getSelectionModel().selectedItemProperty().addListener(
@@ -72,6 +76,9 @@ public class ReportController implements Initializable {
     @FXML
     private void addReport(MouseEvent event) {
         
+        report.setReportName(Reportname.getText());
+        //to -do Addview Elements 
+        MainC.SaveReport(report);
         LogHandler.add("Report gespeichert");
     }
 
@@ -83,8 +90,13 @@ public class ReportController implements Initializable {
     private void changeViewElement(MouseEvent event) {
     }
     
-    public void Tester(String value)
+    public void setReport(Report report)
     {
-        LogHandler.add(value);
+        this.report = report;
+    }
+    
+    public void SetMainControleller(MainController Main)
+    {
+        MainC = Main;
     }
 }

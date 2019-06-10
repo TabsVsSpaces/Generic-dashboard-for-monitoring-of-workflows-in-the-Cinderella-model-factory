@@ -16,6 +16,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import Helper.*;
+import Model.Report;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -27,8 +30,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 
 
 /**
@@ -55,17 +56,19 @@ public class MainController implements Initializable {
     @FXML
     private ToggleButton ToggleStatus;
     
-    private int ReportNum = 0;
     
+    private List<Report> reportList = new ArrayList<>();
+    
+    private Report newReport;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)  {
       
-      for(int i = 1; i <= 10;i++)
-      {
-          reportName.add("Report: " + Integer.toString(i));
-      }
-        
+      Report tempRep = new Report();
+      tempRep.setReportName("Default Report");
+      tempRep.setReportId(1);
+      
+      reportName.add(tempRep.getReportName()+" ID: " + Integer.toString(tempRep.getReportId()));
       ListViewReports.setItems(reportName);
        
       // Register Change in selected Report used for determining which report should be displayed and which is choosen with the change option
@@ -104,7 +107,9 @@ public class MainController implements Initializable {
     private void changeReport(MouseEvent event) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AddViewElement.fxml"));
         Parent root = loader.load();
-        ReportController repcon = loader.getController();
+        ReportController viewcon = loader.getController();
+        
+        
 
         PaneView.getChildren().addAll(root);
     }
@@ -115,7 +120,8 @@ public class MainController implements Initializable {
         Parent root = loader.load();
         ReportController repcon = loader.getController();
         
-       
+        repcon.SetMainControleller(this);
+        repcon.setReport(newReport = new Report());
         
         PaneView.getChildren().addAll(root);
     }
@@ -125,18 +131,35 @@ public class MainController implements Initializable {
        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseView.fxml"));
         Parent root = loader.load();
-        ReportController repcon = loader.getController();
+        ReportController databasecon = loader.getController();
     
         PaneView.getChildren().addAll(root);
        
     }
+    
+    private void refreshReportList()
+    {
+        reportName.clear();
+        for(int i = 0; i<reportList.size();i++)
+        {
+            reportName.add(reportList.get(i).getReportName());
+        }
+        ListViewReports.setItems(reportName);
+    
+    }
 
-    
-    public int getReportNum()
-    {return ReportNum;}
-    
-    public void SetReportNum(int ReportNum)
-    {this.ReportNum = ReportNum;}
+    public void SaveReport(Report toSaveReport)
+    {
+        if(toSaveReport.getReportId() == 0)
+        {
+            toSaveReport.setReportId(65);
+            reportList.add(toSaveReport);
+        }
+        
+       refreshReportList();
+        
+    }
+   
 
     
     
