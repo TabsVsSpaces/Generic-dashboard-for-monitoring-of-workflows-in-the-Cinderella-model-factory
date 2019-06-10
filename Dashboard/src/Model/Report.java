@@ -6,16 +6,18 @@
 
 package Model;
 
+import Model.ViewElement;
 import Helper.LogHandler;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 public class Report {
     private final int maxElements;
     private String reportName;
     private int reportId;
-    private List<ViewElement> viewElement = new ArrayList<>();
+    private List<ViewElement> elementList = new ArrayList<>();
 
     //Constructor
     public Report() {
@@ -40,10 +42,19 @@ public class Report {
         return reportId;
     }
     
+    public int getListElementSize(){
+        return this.elementList.size();
+    }
+    
+    public ViewElement getViewEelementbyIndex(int index){
+        return this.elementList.get(index);
+    }
+    
     //Methods
     public boolean addViewElement(ViewElement newElement){
-        if (viewElement.size() < maxElements) {
-            viewElement.add(newElement);
+        if (elementList.size() < maxElements) {
+            newElement.setDiagramId(createViewElementID());
+            elementList.add(newElement);
             return true;
         } else {
             LogHandler.add("Maximale Anzahl ("+ Integer.toString(maxElements)+ ") an Einzeigeelemente erreicht.");
@@ -51,9 +62,27 @@ public class Report {
         }
     }
     
+    private int createViewElementID(){
+        int id = 1;
+        boolean search=true;
+        
+        while(search){ 
+            for (int i = 0 ; i < getListElementSize(); i++) {
+                if (getViewEelementbyIndex(i).getDiagramId() == id) {
+                    id++;
+                    break;
+                };
+            }
+            
+            search=false;
+        }
+
+        return id;
+    }
+    
     public boolean removeViewElement(ViewElement removeElement){
-        if (viewElement.size() > 0) {
-            viewElement.remove(removeElement);
+        if (elementList.size() > 0) {
+            elementList.remove(removeElement);
             return true;
         } else {
             LogHandler.add("Keine Einzeigeelemente vorhanden.");
