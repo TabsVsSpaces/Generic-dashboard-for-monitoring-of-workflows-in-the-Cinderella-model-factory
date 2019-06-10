@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="DatabaseView" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DatabaseViewController">
+<AnchorPane fx:id="DatabaseView" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DatabaseViewController">
 
    <children>
 
@@ -36,13 +36,13 @@
                </VBox.margin>
             </TextField>
       
-            <TextField fx:id="user" prefHeight="25.0" prefWidth="223.0" promptText="*******">
+            <TextField fx:id="user" prefHeight="25.0" prefWidth="223.0" promptText="Mustermann">
                <VBox.margin>
                   <Insets bottom="40.0" />
                </VBox.margin>
             </TextField>
       
-            <TextField fx:id="password" prefHeight="25.0" prefWidth="223.0" promptText="Mustermann">
+            <TextField fx:id="password" prefHeight="25.0" prefWidth="223.0" promptText="*******">
                <VBox.margin>
                   <Insets bottom="40.0" />
                </VBox.margin>
@@ -97,5 +97,3 @@
    </children>
 
 </AnchorPane>
-
-

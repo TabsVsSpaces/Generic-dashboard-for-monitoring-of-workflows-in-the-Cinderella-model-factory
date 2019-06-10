@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Report" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ReportController">
+<AnchorPane fx:id="Report" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ReportController">
 
    <children>
 
@@ -39,7 +39,7 @@
                </VBox.margin>
 
             </TextField>
-            <ListView fx:id="ListViewReport" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="285.0" prefWidth="400.0">
+            <ListView fx:id="ListViewElement" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="285.0" prefWidth="400.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></ListView>
@@ -48,7 +48,7 @@
 
                <children>
 
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#deleteViewElement" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
 
                      <graphic>
 
@@ -66,11 +66,11 @@
 
                   </Button>
 
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#addViewElement" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
 
                      <graphic>
 
-                        <ImageView fitHeight="50.0" fitWidth="20.0" onMouseClicked="#addViewElement" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="50.0" fitWidth="20.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
 
                            <image>
 
@@ -90,7 +90,7 @@
 
                   </Button>
 
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#changeViewElement" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
 
                      <graphic>
 

@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
@@ -48,13 +49,11 @@ public class MainController implements Initializable {
         FXCollections.observableArrayList();
     
     @FXML
-    private VBox VBox;
-    @FXML
     private ListView ListViewReports;
     @FXML
     private ListView Log;
     @FXML
-    private ImageView ToggleStatus;
+    private ToggleButton ToggleStatus;
     
     private int ReportNum = 0;
     
@@ -75,6 +74,7 @@ public class MainController implements Initializable {
                 public void changed(ObservableValue<? extends String> ov, 
                     String old_val, String new_val) {
                         LogHandler.add(new_val);
+                        //Get Report Num
             }
         });
         
@@ -102,20 +102,33 @@ public class MainController implements Initializable {
 
     @FXML
     private void changeReport(MouseEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("AddViewElement.fxml"));  
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AddViewElement.fxml"));
+        Parent root = loader.load();
+        ReportController repcon = loader.getController();
+
         PaneView.getChildren().addAll(root);
     }
 
     @FXML
     private void addReport(MouseEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Report.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Report.fxml"));
+        Parent root = loader.load();
+        ReportController repcon = loader.getController();
+        
+       
+        
         PaneView.getChildren().addAll(root);
     }
 
     @FXML
     private void databaseConnect(MouseEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("DatabaseView.fxml"));
+       
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseView.fxml"));
+        Parent root = loader.load();
+        ReportController repcon = loader.getController();
+    
         PaneView.getChildren().addAll(root);
+       
     }
 
     
@@ -125,7 +138,6 @@ public class MainController implements Initializable {
     public void SetReportNum(int ReportNum)
     {this.ReportNum = ReportNum;}
 
-    
     
     
 }
