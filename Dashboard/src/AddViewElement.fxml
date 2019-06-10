@@ -26,7 +26,7 @@
       <TextField fx:id="MaßeinheitY" layoutX="164.0" layoutY="518.0" prefHeight="25.0" prefWidth="151.0" promptText="Maßeinheit" />
       <Button layoutX="225.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#genChart" prefHeight="31.0" prefWidth="89.0" text="Vorschau" />
       <Button layoutX="463.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="31.0" prefWidth="98.0" text="Abbrechen" />
-      <Button layoutX="574.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#addViewElement" prefHeight="31.0" prefWidth="97.0" text="Hinzufügen" />
+      <Button fx:id="saveButton" layoutX="574.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#addViewElement" prefHeight="31.0" prefWidth="97.0" text="Hinzufügen" />
       <BarChart layoutX="313.0" layoutY="300.0" prefHeight="287.0" prefWidth="370.0">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
