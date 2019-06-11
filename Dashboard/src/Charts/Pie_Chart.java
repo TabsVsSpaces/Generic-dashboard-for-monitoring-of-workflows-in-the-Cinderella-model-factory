@@ -13,10 +13,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.chart.PieChart;
 
-public class Pie_Chart extends Application {
+public class Pie_Chart {
 
-    @Override
-    public void start(Stage stage) {
+    
+    public Scene createPieChart() {
         //Preparing ObservbleList object         
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data("Iphone 5S", 13),
@@ -46,16 +46,10 @@ public class Pie_Chart extends Application {
         Group root = new Group(pieChart);
 
         //Creating a scene object 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 350, 330);
 
-        //Setting title to the Stage 
-        stage.setTitle("Pie chart");
+        return scene; 
 
-        //Adding scene to the stage 
-        stage.setScene(scene);
-
-        //Displaying the contents of the stage 
-        stage.show();
     }
     /*
     public static void main(String args[]) {

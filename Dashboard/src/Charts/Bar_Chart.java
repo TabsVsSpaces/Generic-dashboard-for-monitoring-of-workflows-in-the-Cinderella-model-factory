@@ -16,10 +16,10 @@ import javafx.stage.Stage;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
-public class Bar_Chart extends Application {
+public class Bar_Chart  {
 
-    @Override
-    public void start(Stage stage) {
+   
+    public Scene createBarChart() {
         //Defining the axes              
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList("Speed", "User rating", "Milage", "Safety")));
@@ -61,16 +61,9 @@ public class Bar_Chart extends Application {
         Group root = new Group(barChart);
 
         //Creating a scene object
-        Scene scene = new Scene(root, 600, 400);
-
-        //Setting title to the Stage
-        stage.setTitle("Bar Chart");
-
-        //Adding scene to the stage
-        stage.setScene(scene);
-
-        //Displaying the contents of the stage
-        stage.show();
+        Scene scene = new Scene(root, 350, 330);
+        
+        return scene;
     }
 
     /*

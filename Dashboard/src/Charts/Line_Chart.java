@@ -13,10 +13,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
-public class Line_Chart extends Application {
+public class Line_Chart  {
 
-    @Override
-    public void start(Stage stage) {
+   
+    public Scene createLineChart() {
         //Defining the x axis             
         NumberAxis xAxis = new NumberAxis(1960, 2020, 10); //X-Achse (min, max, steps)
         xAxis.setLabel("Years");
@@ -46,16 +46,11 @@ public class Line_Chart extends Application {
         Group root = new Group(linechart);
 
         //Creating a scene object 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 350, 330);
+       
 
-        //Setting title to the Stage 
-        stage.setTitle("Line Chart");
-
-        //Adding scene to the stage 
-        stage.setScene(scene);
-
-        //Displaying the contents of the stage 
-        stage.show();
+        return scene;
+       
     }
     /*
     public static void main(String args[]) {

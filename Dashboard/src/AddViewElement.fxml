@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.SubScene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="AddReport" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddViewElementController">
@@ -35,10 +34,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <SubScene fx:id="chartArea" height="322.0" layoutX="327.0" layoutY="249.0" width="348.0">
-        <root>
-          <Region />
-        </root>
-      </SubScene>
+      <Pane fx:id="chartArea" layoutX="333.0" layoutY="249.0" prefHeight="330.0" prefWidth="350.0" />
    </children>
 </AnchorPane>

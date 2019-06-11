@@ -16,10 +16,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 
-public class StackedBar_Chart extends Application {
+public class StackedBar_Chart  {
 
-    @Override
-    public void start(Stage stage) {
+
+    public Scene createStackedBarChart() {
         //Defining the axes               
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList("Africa", "America", "Asia", "Europe", "Oceania")));
@@ -65,16 +65,9 @@ public class StackedBar_Chart extends Application {
         Group root = new Group(stackedBarChart);
 
         //Creating a scene object 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root,350, 330);
 
-        //Setting title to the Stage 
-        stage.setTitle("stackedBarChart");
-
-        //Adding scene to the stage 
-        stage.setScene(scene);
-
-        //Displaying the contents of the stage 
-        stage.show();
+        return scene;
     }
     /*
     public static void main(String args[]) {

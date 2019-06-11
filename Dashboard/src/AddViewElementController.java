@@ -28,6 +28,7 @@ import javafx.scene.SubScene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
+import Charts.*;
 
 /**
  * FXML Controller class
@@ -59,7 +60,7 @@ public class AddViewElementController implements Initializable {
     @FXML
     private TextField MaßeinheitY;
     @FXML
-    private SubScene chartArea;
+    private Pane chartArea;
 
     
     
@@ -84,7 +85,7 @@ public class AddViewElementController implements Initializable {
         X_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
-        disableFields();
+       // disableFields();
         
         createPieChart();
     }
@@ -116,9 +117,15 @@ public class AddViewElementController implements Initializable {
             break; 
         case "Balkendiagramm": 
             System.out.println("i ist eins"); 
+            chartArea.getChildren().clear();
+            Bar_Chart b = new Bar_Chart();  
+            chartArea.getChildren().addAll(b.createBarChart().getRoot());
             break; 
         case "Säulendiagramm": 
-            System.out.println("i ist zwei"); 
+            System.out.println("i ist zwei");
+            chartArea.getChildren().clear();
+            Line_Chart l = new Line_Chart();  
+            chartArea.getChildren().addAll(l.createLineChart().getRoot());
             break; 
         case "Tabelle": 
             System.out.println("i ist drei"); 

@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 
+import Charts.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -17,9 +18,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import Helper.*;
 import Model.Report;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -28,9 +26,6 @@ import javafx.scene.control.ListView;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -66,7 +61,8 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb)  {
-      
+        
+
       Report tempRep = new Report();
       tempRep.setReportName("Default Report 1");
       tempRep.setReportId(1);
@@ -108,7 +104,6 @@ public class MainController implements Initializable {
         });
         */
       Log.itemsProperty().bind(listProperty);
-      LogHandler.add("Clicked");
       listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
       
       Runnable runnable = new Runnable() {
@@ -156,7 +151,7 @@ public class MainController implements Initializable {
        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseView.fxml"));
         Parent root = loader.load();
-        ReportController databasecon = loader.getController();
+        DatabaseViewController databasecon = loader.getController();
     
         PaneView.getChildren().addAll(root);
        
