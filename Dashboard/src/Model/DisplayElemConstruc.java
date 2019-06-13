@@ -2,8 +2,7 @@
 TODO
     -creatElement is not implemented yet
     -setter for selected Columns, which should be used displayed in the element
-    -https://www.baeldung.com/convert-map-values-to-array-list-set
-    -https://www.techiedelight.com/convert-map-array-java/
+    -https://alvinalexander.com/java/edu/pj/jdbc/recipes/ResultSet-ColumnType.shtml
  */
 package Model;
 
@@ -12,15 +11,17 @@ import java.util.*;
 
 public class DisplayElemConstruc {
 
-    private SQLHandler sqlHandler;
-    private Map<String, List<Object>> resultMap;
+    private final SQLHandler sqlHandler;
+    private final Map<String, List<Object>> resultMap;
+    private final Map<String, Integer> columnTypes;
+    private final int[] SQLDataTypes;
     private String[] columns;
-    private double[] XValues;
-    private String[] YValues;
 
     public DisplayElemConstruc(String sqlStatement) {
         this.sqlHandler = new SQLHandler(sqlStatement);
         this.resultMap = sqlHandler.getResultMap();
+        this.columnTypes = sqlHandler.getColumnTypes();
+        this.SQLDataTypes = new int[]{-6, -5, 2, 3, 4, 5, 6, 7, 8};
         this.columns = null;
     }
 
@@ -28,51 +29,28 @@ public class DisplayElemConstruc {
         if (resultMap != null) {
             columns = resultMap.keySet().toArray(new String[0]);
         } else {
-            LogHandler.add("ERROR: Map is null!");
+            LogHandler.add("ERROR: ResultMap is null!");
         }
         return columns;
     }
 
-    public double[] getXValues(String XColumn) {
-        if (resultMap != null) {
-            try {
-                String[] temp = resultMap.get(XColumn).toArray(new String[0]);
-                for (int i = 0; i < temp.length; i++) {
-                    XValues[i] = Double.parseDouble(temp[i]);
-                }
-            } catch (NumberFormatException e) {
-                LogHandler.add("ERROR: X-Werte in "+XColumn+" sind nicht numerisch!");
-            }
+    public boolean isColumnNumeric(String column) {
+        if (columnTypes != null) {
+            return contains(SQLDataTypes, columnTypes.get(column));
         } else {
-            LogHandler.add("ERROR: Map is null!");
+            LogHandler.add("ERROR: ColumnTypesMap is null!");
         }
-        return XValues;
+        return false;
     }
 
-    public String[] getYValues(String YColumn) {
-        if (resultMap != null) {
-            try {
-                YValues = resultMap.get(YColumn).toArray(new String[0]);
-            } catch (Exception e) {
-                LogHandler.add(e.getMessage());
+    private boolean contains(final int[] array, final int v) {
+        boolean result = false;
+        for (int i : array) {
+            if (i == v) {
+                result = true;
+                break;
             }
-        } else {
-            LogHandler.add("ERROR: Map is null!");
         }
-        return YValues;
+        return result;
     }
-/*
-    private void examineResultMap() {
-            Iterator<Map.Entry<String, List<Object>>> entries = resultMap.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry<String, List<Object>> entry = entries.next();
-                //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-            }
-        //System.out.println(Arrays.toString(columns));
-    }
-
-    private void createElement() {
-
-    }
-*/
 }
