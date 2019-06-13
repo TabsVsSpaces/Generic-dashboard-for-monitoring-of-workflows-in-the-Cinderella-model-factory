@@ -1,7 +1,6 @@
 /*
 TODO
     -implements runnable
-    -useful to export the number of columns?
     -one possible solution for saving the resultSet http://commons.apache.org/proper/commons-beanutils/apidocs/org/apache/commons/beanutils/RowSetDynaClass.html
  */
 package Model;
@@ -15,17 +14,17 @@ public class SQLHandler {
 
     private final String sqlStatement;
     private ResultSet rs;
-    private Map<String, List<Object>> map;
+    private Map<String, List<Object>> resultMap;
 
     public SQLHandler(String sqlStatement) {
         this.sqlStatement = sqlStatement;
         this.rs = null;
-        this.map = null;
+        this.resultMap = null;
     }
 
     public Map<String, List<Object>> getResultMap() {
         queryStatement();
-        return map;
+        return resultMap;
     }
 
     //Query SQLStatement + SQLException handling
@@ -59,18 +58,19 @@ public class SQLHandler {
         }
     }
 
-    //converts the resultSet to a map of list
+    //converts the resultSet to a resultMap of list
     private void resultSetToArrayList() {
         try {
             ResultSetMetaData md = rs.getMetaData();
             int columns = md.getColumnCount();
-            map = new HashMap<>(columns);
+            resultMap = new HashMap<>(columns);
             for (int i = 1; i <= columns; ++i) {
-                map.put(md.getColumnName(i), new ArrayList<>());
+                resultMap.put(md.getColumnName(i), new ArrayList<>());
             }
             while (rs.next()) {
                 for (int i = 1; i <= columns; ++i) {
-                    map.get(md.getColumnName(i)).add(rs.getObject(i));
+                    //add values
+                    resultMap.get(md.getColumnName(i)).add(rs.getObject(i));
                 }
             }
         } catch (SQLException se) {
