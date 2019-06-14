@@ -40,7 +40,8 @@ public class Bar_Chart  {
     
     private BarChart createChart(ViewElement element) {
         DisplayElemConstruc resultSet = new DisplayElemConstruc(element.getSqlStatement());
-        //Defining the axes              
+        
+//Defining the axes              
         CategoryAxis xAxis = new CategoryAxis();
         
         //Arrays.asList(resultSet.getValues(element.getXAxisValues().get(0)));
