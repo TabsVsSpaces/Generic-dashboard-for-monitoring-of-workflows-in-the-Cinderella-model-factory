@@ -29,6 +29,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import Charts.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 
 /**
@@ -70,18 +72,13 @@ public class AddViewElementController implements Initializable {
     private ReportController reportController;
     private ViewElement element;
     private DisplayElemConstruc sqlResult;
-
+    
+    private ObservableList<String> diagrammList = FXCollections.observableArrayList();
+            
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         Aktualisierungsrate.getItems().addAll(2,60,120,240,300,600,900,1800);
-        
-        Diagrammtyp.getItems().addAll(
-                "Kreisdiagramm",
-                "Balkendiagramm",
-                "Säulendiagramm",
-                "Tabelle"
-                ); 
         
         X_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -91,7 +88,20 @@ public class AddViewElementController implements Initializable {
         Aktualisierungsrate.setValue(2);
        // disableFields();
         
-        createPieChart();
+       diagrammList.addAll(
+                "Kreisdiagramm",
+                "Balkendiagramm",
+                "Säulendiagramm",
+                "Tabelle"
+       );
+       
+       Diagrammtyp.getItems().addAll(diagrammList); 
+       Diagrammtyp.valueProperty().addListener(new ChangeListener<String>(){
+           public void changed(ObservableValue<? extends String> ov, String old_val, String new_val){
+               LogHandler.add(new_val);
+           }
+       
+       });
     }
 
     private String getText(TextField target)
