@@ -80,9 +80,6 @@ public class AddViewElementController implements Initializable {
         
         Aktualisierungsrate.getItems().addAll(2,60,120,240,300,600,900,1800);
         
-        X_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
         //test
         SQLStatement.setText("select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;");
         Aktualisierungsrate.setValue(2);
@@ -98,12 +95,58 @@ public class AddViewElementController implements Initializable {
        Diagrammtyp.getItems().addAll(diagrammList); 
        Diagrammtyp.valueProperty().addListener(new ChangeListener<String>(){
            public void changed(ObservableValue<? extends String> ov, String old_val, String new_val){
-               LogHandler.add(new_val);
+                clearDiagrammPropertys();
+                
+                switch(Diagrammtyp.getValue()){ 
+                case "Kreisdiagramm": 
+
+                    break; 
+                case "Balkendiagramm": 
+                    setViewForBalkendiagramm();
+                    break; 
+                case "Säulendiagramm": 
+
+                    break; 
+                case "Tabelle": 
+
+                    break; 
+                default: 
+                    LogHandler.add("Diagrammtyp konnte nicht erkannt werden im Event für Combobox");
+                } 
+               
            }
        
        });
     }
 
+    private void setViewForBalkendiagramm(){
+        X_Achse.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        final ObservableList XcolumnsList = FXCollections.observableArrayList();
+        final ObservableList YcolumnsList = FXCollections.observableArrayList();
+        ObservableList columnsList = getColumnList();
+        
+        for (int i = 0; i < columnsList.size(); i++) {
+            if (sqlResult.isColumnNumeric(columnsList.get(i).toString())){
+                YcolumnsList.add(columnsList.get(i).toString());
+            } else {
+                XcolumnsList.add(columnsList.get(i).toString());
+            }
+        }
+        
+        Y_Achse.setItems(YcolumnsList);
+        X_Achse.setItems(XcolumnsList);
+        activateFields();
+    }
+    
+    private ObservableList getColumnList(){
+        final ObservableList columnsList = FXCollections.observableArrayList();  
+      
+        columnsList.addAll(Arrays.asList(sqlResult.getColumns()));
+        return columnsList;
+    }
+    
+    
     private String getText(TextField target)
     {
         return target.getText();
@@ -115,9 +158,8 @@ public class AddViewElementController implements Initializable {
     private void testSQL(MouseEvent event) {
         disableFields();
         this.sqlResult = new DisplayElemConstruc(SQLStatement.getText());
-        fillAxis();
-        activateFields();
         LogHandler.add("Statment Korrekt");
+        Diagrammtyp.setDisable(false);
     }
 
     @FXML
@@ -243,6 +285,13 @@ public class AddViewElementController implements Initializable {
         NameX.setDisable(false);
         NameY.setDisable(false);
     }
+    
+    private void clearDiagrammPropertys(){
+        Y_Achse.setItems(null);
+        X_Achse.setItems(null);
+    
+    }
+    
     
     public void createPieChart() {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList( 
