@@ -29,6 +29,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import Charts.*;
+import javafx.scene.Scene;
 
 /**
  * FXML Controller class
@@ -85,6 +86,9 @@ public class AddViewElementController implements Initializable {
         X_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
+        //test
+        SQLStatement.setText("select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;");
+        Aktualisierungsrate.setValue(2);
        // disableFields();
         
         createPieChart();
@@ -107,28 +111,32 @@ public class AddViewElementController implements Initializable {
     }
 
     @FXML
-    private void genChart(MouseEvent event) {
+    private void genChart(MouseEvent event) throws Exception {
         List<String> selectedItemsXAxis =  (List<String>) X_Achse.getSelectionModel().getSelectedItems();
         List<String> selectedItemsYAxis =  (List<String>) Y_Achse.getSelectionModel().getSelectedItems();
         
+        saveViewElementData();
         switch(Diagrammtyp.getValue()){ 
         case "Kreisdiagramm": 
             createPieChart(); 
             break; 
         case "Balkendiagramm": 
-            System.out.println("i ist eins"); 
+            System.out.println("Balkendiagramm"); 
             chartArea.getChildren().clear();
-            Bar_Chart b = new Bar_Chart();  
-            chartArea.getChildren().addAll(b.createBarChart().getRoot());
+            //Bar_Chart b = new Bar_Chart();  
+            
+            Bar_Chart b = new Bar_Chart(element); 
+            
+            chartArea.getChildren().addAll(b.getSceneWithChart().getRoot());
             break; 
         case "Säulendiagramm": 
-            System.out.println("i ist zwei");
+            System.out.println("Säulendiagramm");
             chartArea.getChildren().clear();
             Line_Chart l = new Line_Chart();  
             chartArea.getChildren().addAll(l.createLineChart().getRoot());
             break; 
         case "Tabelle": 
-            System.out.println("i ist drei"); 
+            System.out.println("Tabelle"); 
             break; 
         default: 
             LogHandler.add("Diagrammtyp konnte nicht erkannt werden im AddViewElmentController.");
@@ -148,6 +156,7 @@ public class AddViewElementController implements Initializable {
     @FXML
     private void addViewElement(MouseEvent event) throws Exception { 
         saveViewElementData();
+        closeWithSave();
     }
     
     public void setReportController(ReportController reportController){
@@ -190,7 +199,9 @@ public class AddViewElementController implements Initializable {
         element.setYAxisMeasure(MaßeinheitY.getText());
         element.setXAxisValues((List<String>) X_Achse.getSelectionModel().getSelectedItems());
         element.setYAxisValues((List<String>) Y_Achse.getSelectionModel().getSelectedItems());
-
+    }
+    
+    private void closeWithSave() throws Exception{
         this.reportController.addViewElement(element);
         reportController.redraw();
     }
