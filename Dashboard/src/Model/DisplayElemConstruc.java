@@ -42,6 +42,18 @@ public class DisplayElemConstruc {
         }
         return false;
     }
+    
+    public List<Object> getValues(String ColumnName){
+        if (resultMap.isEmpty()) return null;
+        for (int i = 0; i <= resultMap.size(); ++i) {
+            if (resultMap.containsKey(ColumnName)){
+                return resultMap.get(ColumnName);
+            } else {
+                 LogHandler.add("ERROR: ColumnTypesMap is null!");
+            }   
+        }
+        return null;
+    }
 
     private boolean contains(final int[] array, final int v) {
         boolean result = false;
@@ -52,18 +64,5 @@ public class DisplayElemConstruc {
             }
         }
         return result;
-    }
-    
-    public List<Object> getValues(String ColumnName){
-        if (resultMap.isEmpty()) return null;
-        for (int i = 0; i <= resultMap.size(); ++i) {
-            if (resultMap.containsKey(ColumnName)){
-                return resultMap.get(ColumnName);
-            } else {
-                //loghandler
-            }   
-            
-        }
-        return null;
     }
 }
