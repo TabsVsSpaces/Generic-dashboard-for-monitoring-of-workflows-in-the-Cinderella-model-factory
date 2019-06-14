@@ -53,4 +53,17 @@ public class DisplayElemConstruc {
         }
         return result;
     }
+    
+    public List<Object> getValues(String ColumnName){
+        if (resultMap.isEmpty()) return null;
+        for (int i = 0; i <= resultMap.size(); ++i) {
+            if (resultMap.containsKey(ColumnName)){
+                return resultMap.get(ColumnName);
+            } else {
+                //loghandler
+            }   
+            
+        }
+        return null;
+    }
 }

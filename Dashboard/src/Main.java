@@ -14,12 +14,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
+    Thread logThread;
 
   @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-    
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
+        Parent root = loader.load();
+        MainController mainController = loader.getController();
+        
+        mainController.startLogThread(logThread = null);
+        
         Scene scene = new Scene(root, 1000, 690);
     
         stage.setTitle("Generic Dashboard");
@@ -44,7 +48,7 @@ public class Main extends Application {
     @Override
     public void stop(){
     System.out.println("Stage is closing");
-    
+    logThread.interrupt();
     JDBCPool pool = JDBCPool.getInstance();
     try{pool.close();}
     catch(SQLException e)
