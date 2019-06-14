@@ -57,9 +57,9 @@ public class DisplayElemConstrucTest {
         for(int i=0;i<result.length;i++){
             System.out.println(result[i]);
         }
-        assertEquals(expResult, result,"notEqual");
+        assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -72,14 +72,15 @@ public class DisplayElemConstrucTest {
         DisplayElemConstruc instance = null;
         boolean expResult = false;
         boolean result = instance.isColumnNumeric(column);
-        assertEquals(expResult, result);
+        assertNotEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+ 
     
     public static void main(String[] args){
         System.out.println("Hallo");
+        //String sqlSt = "select P.tool, sum(L.pieces) as pieces, L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
         DisplayElemConstrucTest testClass = new DisplayElemConstrucTest();
         testClass.testGetColumns();
         System.out.println("Ende");
