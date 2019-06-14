@@ -26,6 +26,8 @@ import javafx.scene.control.ListView;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -119,6 +121,26 @@ public class MainController implements Initializable {
     service.scheduleAtFixedRate(runnable, 0, 5, TimeUnit.SECONDS);
 
     }    
+    
+    
+    public void startLogThread(Thread logThread){
+        logThread = new Thread(){
+            public void run() {
+                
+                while (true) {                    
+                    listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
+                    
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            }
+        };
+    
+    }
 
     @FXML
     private void deleteReport(MouseEvent event) throws Exception{
