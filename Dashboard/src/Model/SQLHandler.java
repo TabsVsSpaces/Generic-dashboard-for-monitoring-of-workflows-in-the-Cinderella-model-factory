@@ -1,7 +1,7 @@
 /*
 TODO
     -implements runnable
-    -one possible solution for saving the resultSet http://commons.apache.org/proper/commons-beanutils/apidocs/org/apache/commons/beanutils/RowSetDynaClass.html
+    -secure queryStatement(); call
  */
 package Model;
 
