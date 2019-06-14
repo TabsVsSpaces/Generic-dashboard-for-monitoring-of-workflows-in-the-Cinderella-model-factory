@@ -4,6 +4,8 @@ Manages properties and report files
 TODO
     -Properties encryption
     -https://www.tutorialspoint.com/java/lang/system_setproperty.htm
+    -https://www.tutorialspoint.com/xstream/
+    -http://x-stream.github.io/tutorial.html
  */
 package Helper;
 
