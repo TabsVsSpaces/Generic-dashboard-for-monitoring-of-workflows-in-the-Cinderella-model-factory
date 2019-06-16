@@ -32,8 +32,19 @@ public class SQLHandler {
         this.SQLDataTypes = new int[]{-6, -5, 2, 3, 4, 5, 6, 7, 8};
         queryStatement();
     }
-
+    //only temporary!
     public ResultSet getResultSet() {
+        Connection conn = null;
+        Statement stmt = null;
+
+        try {
+            BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
+            conn = basicDS.getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sqlStatement);
+        } catch (SQLException se) {
+            LogHandler.add(se.getMessage());
+        } 
         return rs;
     }
 
