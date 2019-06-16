@@ -87,4 +87,19 @@ public class SQLHandler {
             LogHandler.add(se.getMessage());
         }
     }
+    
+    public ResultSet getResultSet(){
+        Connection conn = null;
+        Statement stmt = null;
+
+        try {
+            BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
+            conn = basicDS.getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sqlStatement);
+        } catch (SQLException se) {
+            LogHandler.add(se.getMessage());
+        } 
+        return rs;
+    }
 }

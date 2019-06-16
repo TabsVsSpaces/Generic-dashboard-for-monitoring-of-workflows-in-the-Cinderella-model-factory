@@ -108,7 +108,7 @@ public class AddViewElementController implements Initializable {
                     setViewForLineChart();
                     break; 
                 case "Tabelle": 
-                    setViewForTable();
+                    //setViewForTable();
                     break; 
                 default: 
                     LogHandler.add("Diagrammtyp konnte nicht erkannt werden im Event für Combobox");
@@ -182,16 +182,6 @@ public class AddViewElementController implements Initializable {
         activateFields();
     }
     
-    private void setViewForTable(){
-        X_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        X_Achse.setItems(getColumnList());
-        Y_Achse.setItems(null);
-        activateFields();
-        Y_Achse.setDisable(true);
-        MaßeinheitY.setDisable(true);
-        NameY.setDisable(true);
-    }
-    
     private ObservableList getColumnList(){
         final ObservableList columnsList = FXCollections.observableArrayList();  
       
@@ -210,6 +200,7 @@ public class AddViewElementController implements Initializable {
     @FXML
     private void testSQL(MouseEvent event) {
         disableFields();
+        chartArea.getChildren().clear();
         Y_Achse.setItems(null);
         X_Achse.setItems(null);
         Diagrammtyp.setValue(null);

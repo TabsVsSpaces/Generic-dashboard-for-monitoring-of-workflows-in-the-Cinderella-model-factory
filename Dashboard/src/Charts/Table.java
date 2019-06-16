@@ -8,19 +8,25 @@ TODO
 package Charts;
 
 import Model.DisplayElemConstruc;
+import Model.SQLHandler;
 import Model.ViewElement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class Table {
     ViewElement element;
@@ -32,11 +38,7 @@ public class Table {
     public Scene getSceneWithChart() {
         //Creating a Group object 
         //Group root = new Group(createTable(element));
-
-        VBox vbox = new VBox(createTable(element));
-
-        Scene scene = new Scene(vbox, 350, 300);
-
+        Scene scene = new Scene(createTable(element)); 
         //Creating a scene object
         //Scene scene = new Scene(root, 350, 330);
         
@@ -45,33 +47,56 @@ public class Table {
     
     
     private TableView createTable(ViewElement element){
-        DisplayElemConstruc resultSet = new DisplayElemConstruc(element.getSqlStatement());
-        TableView tableView = new TableView();
+        try{
+            SQLHandler sql = new SQLHandler(element.getSqlStatement());
+            ResultSet resultSet = sql.getResultSet();
+            ObservableList<ObservableList> data = FXCollections.observableArrayList();
         
-        List<TableColumn<String, String>> coulumnList= new ArrayList<>();
-        for(int i=0; i < element.getXAxisValues().size(); i++) {
-            String name = element.getXAxisValues().get(i).toString();
-            TableColumn<String, String> column = new TableColumn<>(name);
-            coulumnList.add(column);
-        }
-        
-        tableView.getColumns().addAll(coulumnList);
-        
-        ObservableList row = FXCollections.observableArrayList();
+            TableView tableView = new TableView();
 
-        List<String> valueList = new ArrayList<>();
-        for (int j = 0; j < resultSet.getValues(element.getXAxisValues().get(0)).size(); j++) {
-            valueList.clear();
-            for(int k=0; k < element.getXAxisValues().size(); k++) {
-                valueList.add(resultSet.getValues(element.getXAxisValues().get(k)).get(j).toString());
+            /**********************************
+            * TABLE COLUMN ADDED DYNAMICALLY *
+            **********************************/
+            for(int i=0 ; i<resultSet.getMetaData().getColumnCount(); i++){
+                //We are using non property style for making dynamic table
+                final int j = i;                
+                TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i+1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList,String>,ObservableValue<String>>(){                    
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {                                                                                              
+                        return new SimpleStringProperty(param.getValue().get(j).toString());                        
+                    }                    
+                });
+
+                tableView.getColumns().addAll(col);
             }
-            row.addAll(valueList);
-        }
-        
-        tableView.getItems().addAll(row);
-    
-        return tableView;
-    }
+            
+            /********************************
+             * Data added to ObservableList *
+             ********************************/
+            while(resultSet.next()){
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for(int i=1 ; i<=resultSet.getMetaData().getColumnCount(); i++){
+                    //Iterate Column
+                    row.add(resultSet.getString(i));
+                }
+                System.out.println("Row [1] added "+row );
+                data.add(row);
+            }
 
+            //FINALLY ADDED TO TableView
+            tableView.setItems(data); 
+            if (resultSet != null) {
+                    resultSet.close();
+            }
+            return tableView;
+            
+            
+         }catch(Exception e){
+              e.printStackTrace();
+              System.out.println("Error on Building Data");             
+        }   
+        return null;
+    }
 }
 
