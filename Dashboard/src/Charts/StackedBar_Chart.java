@@ -5,6 +5,7 @@ TODO
  */
 package Charts;
 
+import Model.ViewElement;
 import java.util.Arrays;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -17,7 +18,27 @@ import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 
 public class StackedBar_Chart  {
+    ViewElement element;
+    
+    public StackedBar_Chart(ViewElement element){
+        this.element=element;
+    }
+    
+    public Scene getSceneWithChart() {
+        
+        //Creating a Group object 
+        Group root = new Group(createChart(element));
 
+        //Creating a scene object
+        Scene scene = new Scene(root, 350, 330);
+        
+        return scene;
+    }
+    
+    private StackedBarChart createChart(ViewElement element) {
+        
+        return null;
+    }
 
     public Scene createStackedBarChart() {
         //Defining the axes               

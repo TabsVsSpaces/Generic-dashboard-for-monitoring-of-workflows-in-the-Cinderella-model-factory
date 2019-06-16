@@ -88,7 +88,7 @@ public class AddViewElementController implements Initializable {
        diagrammList.addAll(
                 "Kreisdiagramm",
                 "Balkendiagramm",
-                "Säulendiagramm",
+                "Liniendiagramm",
                 "Tabelle"
        );
        
@@ -104,8 +104,8 @@ public class AddViewElementController implements Initializable {
                 case "Balkendiagramm": 
                     setViewForBalkendiagramm();
                     break; 
-                case "Säulendiagramm": 
-
+                case "Liniendiagramm": 
+                    setViewForLineChart();
                     break; 
                 case "Tabelle": 
 
@@ -139,6 +139,27 @@ public class AddViewElementController implements Initializable {
         activateFields();
     }
     
+    private void setViewForLineChart(){
+        X_Achse.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        final ObservableList XcolumnsList = FXCollections.observableArrayList();
+        final ObservableList YcolumnsList = FXCollections.observableArrayList();
+        ObservableList columnsList = getColumnList();
+        
+        for (int i = 0; i < columnsList.size(); i++) {
+            if (sqlResult.isColumnNumeric(columnsList.get(i).toString())){
+                YcolumnsList.add(columnsList.get(i).toString());
+                XcolumnsList.add(columnsList.get(i).toString());
+            } else {
+                XcolumnsList.add(columnsList.get(i).toString());
+            }
+        }
+        
+        Y_Achse.setItems(YcolumnsList);
+        X_Achse.setItems(XcolumnsList);
+        activateFields();
+    }
+    
     private ObservableList getColumnList(){
         final ObservableList columnsList = FXCollections.observableArrayList();  
       
@@ -157,6 +178,9 @@ public class AddViewElementController implements Initializable {
     @FXML
     private void testSQL(MouseEvent event) {
         disableFields();
+        Y_Achse.setItems(null);
+        X_Achse.setItems(null);
+        Diagrammtyp.setValue(null);
         this.sqlResult = new DisplayElemConstruc(SQLStatement.getText());
         LogHandler.add("Statment Korrekt");
         Diagrammtyp.setDisable(false);
@@ -181,11 +205,13 @@ public class AddViewElementController implements Initializable {
             
             chartArea.getChildren().addAll(b.getSceneWithChart().getRoot());
             break; 
-        case "Säulendiagramm": 
-            System.out.println("Säulendiagramm");
+        case "Liniendiagramm": 
+            System.out.println("Liniendiagramm");
             chartArea.getChildren().clear();
-            Line_Chart l = new Line_Chart();  
-            chartArea.getChildren().addAll(l.createLineChart().getRoot());
+            //Line_Chart l = new Line_Chart(); 
+            
+            Line_Chart l = new Line_Chart(element); 
+            chartArea.getChildren().addAll(l.getSceneWithChart().getRoot());
             break; 
         case "Tabelle": 
             System.out.println("Tabelle"); 

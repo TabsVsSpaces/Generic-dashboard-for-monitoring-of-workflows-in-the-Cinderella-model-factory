@@ -5,15 +5,82 @@ TODO
  */
 package Charts;
 
+import Model.DisplayElemConstruc;
+import Model.ViewElement;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
 import javafx.stage.Stage;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 
 public class Line_Chart  {
+    ViewElement element;
+    
+    public Line_Chart(ViewElement element){
+        this.element=element;
+    }
+    
+    public Scene getSceneWithChart() {
+        //Creating a Group object 
+        Group root = new Group(createChart(element));
+
+        //Creating a scene object
+        Scene scene = new Scene(root, 350, 330);
+        
+        return scene;
+    }
+    
+    private LineChart createChart(ViewElement element) {
+        LineChart lineChart = createWithStringAndNumber();
+        return lineChart;
+    }
+    
+    private LineChart createWithStringAndNumber(){
+        DisplayElemConstruc resultSet = new DisplayElemConstruc(element.getSqlStatement());
+        
+        //Defining the x axis             
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel(element.getxAxisName());
+
+        //Defining the y axis   
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel(element.getyAxisName());
+
+        //Creating the line chart 
+        LineChart linechart = new LineChart(xAxis, yAxis);
+        linechart.setTitle(element.getDiagramtName());
+    
+        List<XYChart.Series<String, Number>> seriesList = new ArrayList<>();
+        
+        
+        for(int i=0; i < element.getYAxisValues().size(); i++){
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            //Series<String, Number> series = new Series<String, Number>();
+            String name = element.getYAxisValues().get(i).toString();
+            series.setName(name);
+            
+            for (int j = 0; j < resultSet.getValues(element.getYAxisValues().get(0)).size(); j++) {
+                Number vNumber = (Number) resultSet.getValues(element.getYAxisValues().get(i)).get(j);
+                series.getData().add(new XYChart.Data<>(
+                        resultSet.getValues(element.getXAxisValues().get(0)).get(j).toString(), 
+                        vNumber
+                ));
+            }
+            
+            seriesList.add(series);
+        }
+    
+        linechart.getData().addAll(seriesList);
+        return linechart;
+    }
+            
+            
 
    
     public Scene createLineChart() {
