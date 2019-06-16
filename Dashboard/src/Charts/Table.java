@@ -7,75 +7,96 @@ TODO
  */
 package Charts;
 
+import Model.DisplayElemConstruc;
+import Model.SQLHandler;
+import Model.ViewElement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-/*
-public class Table extends Application {
+import javafx.util.Callback;
 
-    @Override
-    public void start(Stage primaryStage) {
-
-        TableView tableView = new TableView();
-
-        TableColumn<String, Person> column1 = new TableColumn<>("First Name");
-        column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-
-
-        TableColumn<String, Person> column2 = new TableColumn<>("Last Name");
-        column2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-
-
-        tableView.getColumns().add(column1);
-        tableView.getColumns().add(column2);
-
-        tableView.getItems().add(new Person("John", "Doe"));
-        tableView.getItems().add(new Person("Jane", "Deer"));
-
-        VBox vbox = new VBox(tableView);
-
-        Scene scene = new Scene(vbox);
-
-        primaryStage.setScene(scene);
-
-        primaryStage.show();
+public class Table {
+    ViewElement element;
+    
+    public Table(ViewElement element){
+        this.element=element;
     }
+    
+    public Scene getSceneWithChart() {
+        //Creating a Group object 
+        //Group root = new Group(createTable(element));
+        Scene scene = new Scene(createTable(element)); 
+        //Creating a scene object
+        //Scene scene = new Scene(root, 350, 330);
+        
+        return scene;
+    }
+    
+    
+    private TableView createTable(ViewElement element){
+        try{
+            SQLHandler sql = new SQLHandler(element.getSqlStatement());
+            ResultSet resultSet = sql.getResultSet();
+            ObservableList<ObservableList> data = FXCollections.observableArrayList();
+        
+            TableView tableView = new TableView();
 
-    public static void main(String[] args) {
-        launch(args);
+            /**********************************
+            * TABLE COLUMN ADDED DYNAMICALLY *
+            **********************************/
+            for(int i=0 ; i<resultSet.getMetaData().getColumnCount(); i++){
+                //We are using non property style for making dynamic table
+                final int j = i;                
+                TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i+1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList,String>,ObservableValue<String>>(){                    
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {                                                                                              
+                        return new SimpleStringProperty(param.getValue().get(j).toString());                        
+                    }                    
+                });
+
+                tableView.getColumns().addAll(col);
+            }
+            
+            /********************************
+             * Data added to ObservableList *
+             ********************************/
+            while(resultSet.next()){
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for(int i=1 ; i<=resultSet.getMetaData().getColumnCount(); i++){
+                    //Iterate Column
+                    row.add(resultSet.getString(i));
+                }
+                System.out.println("Row [1] added "+row );
+                data.add(row);
+            }
+
+            //FINALLY ADDED TO TableView
+            tableView.setItems(data); 
+            if (resultSet != null) {
+                    resultSet.close();
+            }
+            return tableView;
+            
+            
+         }catch(Exception e){
+              e.printStackTrace();
+              System.out.println("Error on Building Data");             
+        }   
+        return null;
     }
 }
-/*
-public class Person {
 
-    private String firstName = null;
-    private String lastName = null;
-
-    public Person() {
-    }
-
-    public Person(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-}*/
