@@ -5,7 +5,7 @@ TODO
  */
 package Charts;
 
-import Model.DisplayElemConstruc;
+import Model.SQLHandler;
 import Model.ViewElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class Line_Chart  {
     }
     
     private LineChart createWithStringAndNumber(){
-        DisplayElemConstruc resultSet = new DisplayElemConstruc(element.getSqlStatement());
+        SQLHandler resultSet = new SQLHandler(element.getSqlStatement());
         
         //Defining the x axis             
         CategoryAxis xAxis = new CategoryAxis();
