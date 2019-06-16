@@ -99,7 +99,7 @@ public class AddViewElementController implements Initializable {
                 
                 switch(Diagrammtyp.getValue()){ 
                 case "Kreisdiagramm": 
-
+                    setViewForPieChart();
                     break; 
                 case "Balkendiagramm": 
                     setViewForBalkendiagramm();
@@ -108,7 +108,7 @@ public class AddViewElementController implements Initializable {
                     setViewForLineChart();
                     break; 
                 case "Tabelle": 
-
+                    setViewForTable();
                     break; 
                 default: 
                     LogHandler.add("Diagrammtyp konnte nicht erkannt werden im Event für Combobox");
@@ -139,6 +139,28 @@ public class AddViewElementController implements Initializable {
         activateFields();
     }
     
+    private void setViewForPieChart(){
+        X_Achse.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    
+        final ObservableList XcolumnsList = FXCollections.observableArrayList();
+        final ObservableList YcolumnsList = FXCollections.observableArrayList();
+        ObservableList columnsList = getColumnList();
+        
+        for (int i = 0; i < columnsList.size(); i++) {
+            if (sqlResult.isColumnNumeric(columnsList.get(i).toString())){
+                YcolumnsList.add(columnsList.get(i).toString());
+            } else {
+                XcolumnsList.add(columnsList.get(i).toString());
+            }
+        }
+        
+        Y_Achse.setItems(YcolumnsList);
+        X_Achse.setItems(XcolumnsList);
+        activateFields();
+    
+    }
+    
     private void setViewForLineChart(){
         X_Achse.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         Y_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -158,6 +180,16 @@ public class AddViewElementController implements Initializable {
         Y_Achse.setItems(YcolumnsList);
         X_Achse.setItems(XcolumnsList);
         activateFields();
+    }
+    
+    private void setViewForTable(){
+        X_Achse.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        X_Achse.setItems(getColumnList());
+        Y_Achse.setItems(null);
+        activateFields();
+        Y_Achse.setDisable(true);
+        MaßeinheitY.setDisable(true);
+        NameY.setDisable(true);
     }
     
     private ObservableList getColumnList(){
@@ -194,7 +226,13 @@ public class AddViewElementController implements Initializable {
         saveViewElementData();
         switch(Diagrammtyp.getValue()){ 
         case "Kreisdiagramm": 
-            createPieChart(); 
+            System.out.println("Kreisdiagramm"); 
+            chartArea.getChildren().clear();
+            //Bar_Chart b = new Bar_Chart();  
+            
+            Pie_Chart p = new Pie_Chart(element); 
+            
+            chartArea.getChildren().addAll(p.getSceneWithChart().getRoot());
             break; 
         case "Balkendiagramm": 
             System.out.println("Balkendiagramm"); 
@@ -215,6 +253,10 @@ public class AddViewElementController implements Initializable {
             break; 
         case "Tabelle": 
             System.out.println("Tabelle"); 
+            chartArea.getChildren().clear();
+            
+            Table t = new Table(element);
+            chartArea.getChildren().addAll(t.getSceneWithChart().getRoot());
             break; 
         default: 
             LogHandler.add("Diagrammtyp konnte nicht erkannt werden im AddViewElmentController.");
@@ -318,26 +360,4 @@ public class AddViewElementController implements Initializable {
     
     }
     
-    
-    public void createPieChart() {
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList( 
-            new PieChart.Data("Iphone 5S", 13), 
-            new PieChart.Data("Samsung Grand", 25), 
-            new PieChart.Data("MOTO G", 10), 
-            new PieChart.Data("Nokia Lumia", 22));
-        
-        //Creating a Pie chart 
-        PieChart pieChart = new PieChart(pieChartData);
-        
-        //Setting the title of the Pie chart 
-        pieChart.setTitle("Mobile Sales");
-        
-        //Setting the labels of the pie chart visible  
-        pieChart.setLabelsVisible(true);
-        
-        //Setting the start angle of the pie chart 
-        pieChart.setStartAngle(180); 
-
-        //wie in anzeigen lassen?
-    }
 }
