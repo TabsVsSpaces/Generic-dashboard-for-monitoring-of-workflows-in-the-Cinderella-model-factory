@@ -1,8 +1,9 @@
 /*
 TODO
-    -creatElement is not implemented yet
-    -setter for selected Columns, which should be used displayed in the element
     -https://alvinalexander.com/java/edu/pj/jdbc/recipes/ResultSet-ColumnType.shtml
+    -grouping by missing 
+        ->möglich über collectors https://www.mkyong.com/java8/java-8-collectors-groupingby-and-mapping-example/
+    select sum(L.pieces) as pieces, L.route from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.pieces, L.route order by pieces desc;
  */
 package Model;
 
