@@ -38,6 +38,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ToggleButton;
 import Charts.*;
 import Model.ViewElement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -68,23 +71,10 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)  {
         
+      if (reportList.isEmpty()){
+          createDefaultReport();
+      }
 
-      Report tempRep = new Report();
-      tempRep.setReportName("Default Report 1");
-      tempRep.setReportId(1);
-      
-      reportList.add(tempRep);
-      
-      tempRep = new Report();
-      tempRep.setReportName("Default Report 2");
-      tempRep.setReportId(2);
-      reportList.add(tempRep);
-      
-      tempRep = new Report();
-      tempRep.setReportName("Default Report 3");
-      tempRep.setReportId(3);
-      reportList.add(tempRep);
-      
       ListViewReports.setItems(reportList);
       ListViewReports.setCellFactory(param -> new ListCell<Report>() {
             @Override
@@ -267,6 +257,74 @@ public class MainController implements Initializable {
         DatabaseViewController databasecon = loader.getController();
     
         PaneView.getChildren().addAll(root);
+    }
+    
+    public void createDefaultReport(){
+      String sqlStm = "select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
+        
+      ViewElement e_1 = new ViewElement();
+      e_1.setDiagramtName("Element 1");
+      e_1.setDiagramType("Kreisdiagramm");
+      e_1.setRefreshRate(2);
+      e_1.setSqlStatement(sqlStm);
+      e_1.setxAxisName("x Achse");
+      e_1.setyAxisName("y Achse");
+      e_1.setYAxisMeasure("Y Mess");
+      e_1.setxAxisMeasure("X Mess");
+      e_1.setXAxisValues(Arrays.asList("route"));
+      e_1.setYAxisValues(Arrays.asList("pieces"));
+        
+      ViewElement e_2 = new ViewElement();
+      e_2.setDiagramtName("Element 2");
+      e_2.setDiagramType("Balkendiagramm");
+      e_2.setRefreshRate(2);
+      e_2.setSqlStatement(sqlStm);
+      e_2.setxAxisName("x Achse");
+      e_2.setyAxisName("y Achse");
+      e_2.setYAxisMeasure("Y Mess");
+      e_2.setxAxisMeasure("X Mess");
+      e_2.setXAxisValues(Arrays.asList("route"));
+      e_2.setYAxisValues(Arrays.asList("pieces"));
+      
+      ViewElement e_3 = new ViewElement();
+      e_3.setDiagramtName("Element 3");
+      e_3.setDiagramType("Liniendiagramm");
+      e_3.setRefreshRate(2);
+      e_3.setSqlStatement(sqlStm);
+      e_3.setxAxisName("x Achse");
+      e_3.setyAxisName("y Achse");
+      e_3.setYAxisMeasure("Y Mess");
+      e_3.setxAxisMeasure("X Mess");
+      e_3.setXAxisValues(Arrays.asList("pieces"));
+      e_3.setYAxisValues(Arrays.asList("pieces"));
+      
+      ViewElement e_4 = new ViewElement();
+      e_4.setDiagramtName("Element 4");
+      e_4.setDiagramType("Tabelle");
+      e_4.setRefreshRate(2);
+      e_4.setSqlStatement(sqlStm);
+      e_4.setxAxisName("x Achse");
+      e_4.setyAxisName("y Achse");
+      e_4.setYAxisMeasure("Y Mess");
+      e_4.setxAxisMeasure("X Mess");
+      e_4.setXAxisValues(Arrays.asList("route"));
+      e_4.setYAxisValues(Arrays.asList("pieces"));
+        
+      Report tempRep = new Report();
+      tempRep.setReportName("Default Report 1");
+      tempRep.setReportId(1);
+      tempRep.addViewElement(e_1);
+      tempRep.addViewElement(e_2);
+      tempRep.addViewElement(e_3);
+      tempRep.addViewElement(e_4);
+      
+      reportList.add(tempRep);
+      
+      tempRep = new Report();
+      tempRep.setReportName("Default Report 2");
+      tempRep.setReportId(2);
+      reportList.add(tempRep);
+    
     }
 }
 
