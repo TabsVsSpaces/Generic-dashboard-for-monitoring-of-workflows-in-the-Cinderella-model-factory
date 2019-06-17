@@ -26,7 +26,7 @@ public class DatabaseViewController implements Initializable {
     @FXML
     private TextField password;
     @FXML
-    private TextField jdbcPort;
+    private TextField jdbcDriver;
 
 
     
@@ -39,8 +39,8 @@ public class DatabaseViewController implements Initializable {
     
         String[] connection = new String[4];
         
-        connection[0] = jdbcPort.getText();
-        connection[1] = dbURL.getText();
+        connection[0] = dbURL.getText();
+        connection[1] = jdbcDriver.getText();
         connection[2] = user.getText();
         connection[3] = password.getText();
        
@@ -51,7 +51,7 @@ public class DatabaseViewController implements Initializable {
     private void clearText(){
         
         dbURL.clear();
-        jdbcPort.clear();
+        jdbcDriver.clear();
         user.clear();
         password.clear();
     }
