@@ -110,6 +110,7 @@ public class AddViewElementController implements Initializable {
                 case "Tabelle": 
                     //setViewForTable();
                     disableFields();
+                    Diagrammtyp.setDisable(false);
                     break; 
                 default: 
                     LogHandler.add("Diagrammtyp konnte nicht erkannt werden im Event für Combobox");
