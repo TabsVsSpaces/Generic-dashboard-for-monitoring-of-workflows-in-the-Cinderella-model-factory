@@ -6,6 +6,7 @@
 package Model;
 
 import java.lang.Object;
+import oracle.jrockit.jfr.ProducerDescriptor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,14 +53,14 @@ public class DisplayElemConstrucTest {
     public void testGetColumns() {
         System.out.println("getColumns");
         //DisplayElemConstruc instance = null;
-        String[] expResult = null;
+        String[] expResult = {"pieces","product","oper","route","tool"};
         String[] result = instance.getColumns();
         for(int i=0;i<result.length;i++){
             System.out.println(result[i]);
         }
-        assertArrayEquals(expResult, result);
+        //assertArrayEquals(expResult, result);
+        assertArrayEquals(expResult,result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -74,7 +75,6 @@ public class DisplayElemConstrucTest {
         boolean result = instance.isColumnNumeric(column);
         assertNotEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
  
     
