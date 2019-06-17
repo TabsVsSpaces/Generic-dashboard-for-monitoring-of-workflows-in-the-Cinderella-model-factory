@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 
-import Charts.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -28,12 +27,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ToggleButton;
+import Charts.*;
+import Model.ViewElement;
 
 
 /**
@@ -95,16 +99,8 @@ public class MainController implements Initializable {
             }
         });
       
-      /*
-      // Register Change in selected Report used for determining which report should be displayed and which is choosen with the change option
-      ListViewReports.getSelectionModel().selectedItemProperty().addListener((InvalidationListener) new ChangeListener<String>() {
-                public void changed(ObservableValue<? extends String> ov, 
-                    String old_val, String new_val) {
-                        LogHandler.add(new_val);
-                        //Get Report Num
-            }
-        });
-        */
+     
+        
       Log.itemsProperty().bind(listProperty);
       listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
       
@@ -168,17 +164,6 @@ public class MainController implements Initializable {
         loadReportView(newReport = new Report());
     }
 
-    @FXML
-    private void databaseConnect(MouseEvent event) throws Exception {
-       
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseView.fxml"));
-        Parent root = loader.load();
-        DatabaseViewController databasecon = loader.getController();
-    
-        PaneView.getChildren().addAll(root);
-       
-    }
-
     public void loadReportView(Report report) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Report.fxml"));
         Parent root = loader.load();
@@ -231,6 +216,57 @@ public class MainController implements Initializable {
                     LogHandler.add("Report " + report.getReportName() + " wurde gelöscht.");
                 };
         }
+    }
+
+    @FXML
+    private void loadReport(MouseEvent event) {
+        
+    Report tempReport = ListViewReports.getSelectionModel().getSelectedItem();
+    LogHandler.add(tempReport.getReportName());
+    
+    PaneView.getChildren().clear();
+    for(int i = 0 ; i < tempReport.getListElementSize() ; i++)
+    {
+        ViewElement tempElement = tempReport.getViewEelementbyIndex(i);
+        switch(tempElement.getDiagramType()){ 
+        case "Kreisdiagramm":    
+            Pie_Chart p = new Pie_Chart(tempElement); 
+            PaneView.getChildren().addAll(p.getSceneWithChart().getRoot());
+            break; 
+            
+        case "Balkendiagramm":   
+            LogHandler.add("Balken");
+            Bar_Chart b = new Bar_Chart(tempElement); 
+            PaneView.getChildren().addAll(b.getSceneWithChart().getRoot());
+            LogHandler.add("Gezeichent");
+            break; 
+            
+        case "Liniendiagramm": 
+            Line_Chart l = new Line_Chart(tempElement); 
+            PaneView.getChildren().addAll(l.getSceneWithChart().getRoot());
+            break; 
+            
+        case "Tabelle": 
+            Table t = new Table(tempElement);
+            PaneView.getChildren().addAll(t.getSceneWithChart().getRoot());
+            break; 
+            
+        default: 
+            LogHandler.add("Diagrammtyp konnte nicht erkannt werden im AddViewElmentController.");
+        } 
+    
+    }
+    
+    }
+
+    @FXML
+    private void databaseConnect(ActionEvent event) throws Exception {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseView.fxml"));
+        Parent root = loader.load();
+        DatabaseViewController databasecon = loader.getController();
+    
+        PaneView.getChildren().addAll(root);
     }
 }
 
