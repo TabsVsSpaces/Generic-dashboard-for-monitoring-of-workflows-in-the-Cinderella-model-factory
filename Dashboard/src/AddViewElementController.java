@@ -71,7 +71,7 @@ public class AddViewElementController implements Initializable {
     
     private ReportController reportController;
     private ViewElement element;
-    private DisplayElemConstruc sqlResult;
+    private SQLHandler sqlResult;
     
     private ObservableList<String> diagrammList = FXCollections.observableArrayList();
             
@@ -205,7 +205,7 @@ public class AddViewElementController implements Initializable {
         Y_Achse.setItems(null);
         X_Achse.setItems(null);
         Diagrammtyp.setValue(null);
-        this.sqlResult = new DisplayElemConstruc(SQLStatement.getText());
+        this.sqlResult = new SQLHandler(SQLStatement.getText());
         LogHandler.add("Statment Korrekt");
         Diagrammtyp.setDisable(false);
     }
@@ -290,7 +290,7 @@ public class AddViewElementController implements Initializable {
         element.getXAxisValues();
         Aktualisierungsrate.setValue(element.getRefreshRate());
         Diagrammtyp.setValue(element.getDiagramtName());
-        this.sqlResult = new DisplayElemConstruc(SQLStatement.getText());
+        this.sqlResult = new SQLHandler(SQLStatement.getText());
         fillAxis();
         activateFields();
     }

@@ -9,7 +9,7 @@
  * @author sebastianring
  */
 
-import Model.DisplayElemConstruc;
+import Model.SQLHandler;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.SuiteDisplayName;

@@ -7,7 +7,6 @@ TODO
  */
 package Charts;
 
-import Model.DisplayElemConstruc;
 import Model.SQLHandler;
 import Model.ViewElement;
 import java.sql.ResultSet;

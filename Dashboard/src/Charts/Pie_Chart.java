@@ -5,7 +5,7 @@ TODO
  */
 package Charts;
 
-import Model.DisplayElemConstruc;
+import Model.SQLHandler;
 import Model.ViewElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class Pie_Chart {
     }
 
     private PieChart createChart(ViewElement element){
-        DisplayElemConstruc resultSet = new DisplayElemConstruc(element.getSqlStatement());
+        SQLHandler resultSet = new SQLHandler(element.getSqlStatement());
         
         //List<PieChart.Data> seriesList = new ArrayList<>();
         ObservableList<PieChart.Data> seriesList = FXCollections.observableArrayList();

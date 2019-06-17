@@ -21,7 +21,7 @@ import org.junit.jupiter.api.*;
 public class DisplayElemConstrucTest {
     
     private String sqlStatement = "select P.tool, sum(L.pieces) as pieces, L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
-    private DisplayElemConstruc instance = new DisplayElemConstruc(sqlStatement);
+    private SQLHandler instance = new SQLHandler(sqlStatement);
     
     
     public DisplayElemConstrucTest() {
@@ -69,7 +69,7 @@ public class DisplayElemConstrucTest {
     public void testIsColumnNumeric() {
         System.out.println("isColumnNumeric");
         String column = "";
-        DisplayElemConstruc instance = null;
+        SQLHandler instance = null;
         boolean expResult = false;
         boolean result = instance.isColumnNumeric(column);
         assertNotEquals(expResult, result);
