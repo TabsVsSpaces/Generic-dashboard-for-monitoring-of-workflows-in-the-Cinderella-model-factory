@@ -13,24 +13,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MainView" prefHeight="700.0" prefWidth="690.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+<AnchorPane id="AnchorPane" fx:id="MainView" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
    <children>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="284.0" style="-fx-background-color: lightgrey;">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="285.0" style="-fx-background-color: lightgrey;">
          <children>
-            <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="116.0" prefWidth="284.0">
+            <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="75.0" prefWidth="285.0">
                <children>
-                  <ImageView fitHeight="53.0" fitWidth="126.0" layoutX="41.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="53.0" fitWidth="126.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icons/logo.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="167.0" layoutY="43.0" text="Cinderella">
+                  <Label layoutX="169.0" layoutY="24.0" text="Cinderella">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                </children></Pane>
-            <ListView fx:id="ListViewReports" prefHeight="519.0" prefWidth="284.0" style="-fx-background-color: lightgrey;" />
+            <ListView fx:id="ListViewReports" prefHeight="507.0" prefWidth="285.0" style="-fx-background-color: lightgrey;" />
             <HBox prefHeight="26.0" prefWidth="290.0">
                <children>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#deleteReport" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
@@ -76,34 +76,30 @@
             </HBox>
             <ListView fx:id="Log" prefHeight="200.0" prefWidth="200.0" />
          </children></VBox>
-      <VBox layoutX="284.0" prefHeight="700.0" prefWidth="709.0">
+      <VBox layoutX="284.0" prefHeight="800.0" prefWidth="915.0">
          <children>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="709.0" style="-fx-background-color: rgb(249,155,28);">
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="916.0" style="-fx-background-color: rgb(249,155,28);">
                <children>
-                  <Label layoutX="14.0" layoutY="20.0" text="Dashboard" textFill="#7c8184">
+                  <Label layoutX="14.0" layoutY="24.0" text="Dashboard" textFill="#7c8184">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ToggleButton fx:id="ToggleStatus" layoutX="602.0" layoutY="11.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="49.0" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icons/icons8-datenbank-50.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></ToggleButton>
-                  <Button layoutX="651.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#databaseConnect" prefHeight="31.0" prefWidth="0.0" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icons/icons8-einstellungen-filled-50.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></Button>
+                  <ToggleButton fx:id="ToggleStatus" layoutX="602.0" layoutY="11.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="49.0" style="-fx-background-color: transparent;" />
+                  <Button layoutX="651.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#databaseConnect" prefHeight="31.0" prefWidth="0.0" style="-fx-background-color: transparent;" />
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="857.0" layoutY="22.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icons/icons8-einstellungen-filled-50.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="788.0" layoutY="22.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icons/icons8-datenbank-50.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="PaneView" prefHeight="638.0" prefWidth="675.0" />
+            <Pane fx:id="PaneView" prefHeight="731.0" prefWidth="915.0" />
          </children>
       </VBox>
    </children>

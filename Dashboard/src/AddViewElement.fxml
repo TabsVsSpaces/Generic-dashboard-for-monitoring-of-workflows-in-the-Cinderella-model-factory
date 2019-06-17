@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AddReport" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="700.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddViewElementController">
+<AnchorPane fx:id="AddReport" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.0" prefWidth="915.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddViewElementController">
    <children>
       <TextField fx:id="Diagrammname" layoutX="37.0" layoutY="66.0" prefHeight="31.0" prefWidth="276.0" promptText="Diagrammname" />
       <ComboBox fx:id="Aktualisierungsrate" layoutX="574.0" layoutY="68.0" prefHeight="25.0" prefWidth="97.0" />
@@ -23,8 +23,8 @@
       <TextField fx:id="NameY" layoutX="164.0" layoutY="480.0" prefHeight="25.0" prefWidth="150.0" promptText="Name der Y-Achse" />
       <TextField fx:id="MaßeinheitY" layoutX="164.0" layoutY="518.0" prefHeight="25.0" prefWidth="151.0" promptText="Maßeinheit" />
       <Button fx:id="previewButton" layoutX="225.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#genChart" prefHeight="31.0" prefWidth="89.0" text="Vorschau" />
-      <Button layoutX="463.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="31.0" prefWidth="98.0" text="Abbrechen" />
-      <Button fx:id="saveButton" layoutX="574.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#addViewElement" prefHeight="31.0" prefWidth="97.0" text="Hinzufügen" />
+      <Button layoutX="683.0" layoutY="677.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="31.0" prefWidth="98.0" text="Abbrechen" />
+      <Button fx:id="saveButton" layoutX="804.0" layoutY="677.0" mnemonicParsing="false" onMouseClicked="#addViewElement" prefHeight="31.0" prefWidth="97.0" text="Hinzufügen" />
       <Label layoutX="38.0" layoutY="454.0" text="Y-Achse" />
       <Label layoutX="38.0" layoutY="283.0" text="X-Achse" />
       <Label layoutX="38.0" layoutY="251.0" text="Diagrammtyp :" />

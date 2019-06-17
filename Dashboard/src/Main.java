@@ -24,7 +24,7 @@ public class Main extends Application {
         
         mainController.startLogThread(logThread = null);
         
-        Scene scene = new Scene(root, 1000, 690);
+        Scene scene = new Scene(root, 1200, 800);
     
         stage.setTitle("Generic Dashboard");
         stage.setScene(scene);
