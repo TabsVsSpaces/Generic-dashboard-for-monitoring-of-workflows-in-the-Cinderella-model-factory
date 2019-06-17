@@ -100,7 +100,8 @@ public class AddViewElementController implements Initializable {
        Diagrammtyp.valueProperty().addListener(new ChangeListener<String>(){
            public void changed(ObservableValue<? extends String> ov, String old_val, String new_val){
                 clearDiagrammPropertys();
-                
+                saveButton.setDisable(true);
+                chartArea.getChildren().clear();
                 switch(Diagrammtyp.getValue()){ 
                 case "Kreisdiagramm": 
                     setViewForPieChart();
@@ -114,12 +115,14 @@ public class AddViewElementController implements Initializable {
                 case "Tabelle": 
                     //setViewForTable();
                     disableFields();
-                    previewButton.setDisable(false);
                     Diagrammtyp.setDisable(false);
                     break; 
                 default: 
                     LogHandler.add("Diagrammtyp konnte nicht erkannt werden im Event für Combobox");
+                    return;
                 } 
+                
+                previewButton.setDisable(false);
                
            }
        
@@ -202,8 +205,6 @@ public class AddViewElementController implements Initializable {
         return target.getText();
     }
 
-    
-
     @FXML
     private void testSQL(MouseEvent event) {
         disableFields();
@@ -212,10 +213,9 @@ public class AddViewElementController implements Initializable {
         X_Achse.setItems(null);
         Diagrammtyp.setValue(null);
         this.sqlResult = new SQLHandler(SQLStatement.getText());
-        if (sqlResult.getResultMap() == null) {
+        if (sqlResult.getResultMap().isEmpty()) {
         } else {
             LogHandler.add("Statment Korrekt");
-            previewButton.setDisable(false);
             Diagrammtyp.setDisable(false);
         }
     }
@@ -225,12 +225,18 @@ public class AddViewElementController implements Initializable {
         List<String> selectedItemsXAxis =  (List<String>) X_Achse.getSelectionModel().getSelectedItems();
         List<String> selectedItemsYAxis =  (List<String>) Y_Achse.getSelectionModel().getSelectedItems();
         
+        if (!Diagrammtyp.getValue().equals("Tabelle")) {
+            if (!columesSelected(selectedItemsXAxis, selectedItemsYAxis)){
+                return;
+            }
+        }
+            
         saveViewElementData();
         switch(Diagrammtyp.getValue()){ 
         case "Kreisdiagramm": 
             System.out.println("Kreisdiagramm"); 
+            
             chartArea.getChildren().clear();
-            //Bar_Chart b = new Bar_Chart();  
             
             Pie_Chart p = new Pie_Chart(element); 
             
@@ -266,7 +272,7 @@ public class AddViewElementController implements Initializable {
         selectedItemsXAxis.forEach((s) -> {
             System.out.println("selected item " + s);
         });
-
+        saveButton.setDisable(false);
     }
 
     @FXML
@@ -307,6 +313,11 @@ public class AddViewElementController implements Initializable {
     private void saveViewElementData() throws Exception{
         if( element == null ) {
             LogHandler.add("ViewElemnt konnte nicht gespeichert werden da das Objekt leer ist.");
+            return;
+        }
+        
+        if (Diagrammname.getText().trim().isEmpty()){
+            LogHandler.add("Digrammname fehlt.");
             return;
         }
         
@@ -361,6 +372,20 @@ public class AddViewElementController implements Initializable {
         Y_Achse.setItems(null);
         X_Achse.setItems(null);
     
+    }
+    
+    private boolean columesSelected(List x, List y){
+        if (x.isEmpty()){
+            LogHandler.add("Bitt wählen Sie eine Splate für die x Achse aus.");
+            return false;
+        }
+        
+        if (y.isEmpty()){
+            LogHandler.add("Bitt wählen Sie eine Splate für die y Achse aus.");
+            return false;
+        }
+        
+        return true;
     }
     
 }
