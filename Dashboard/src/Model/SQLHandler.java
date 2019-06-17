@@ -22,6 +22,8 @@ public class SQLHandler {
     private Map<String, Integer> columnTypes;
     private final int[] SQLDataTypes;
     private String[] columns;
+    private Connection conn = null;
+    private Statement stmt = null;
 
     public SQLHandler(String sqlStatement) {
         this.sqlStatement = sqlStatement;
@@ -30,12 +32,12 @@ public class SQLHandler {
         this.columns = null;
         this.columnTypes = null;
         this.SQLDataTypes = new int[]{-6, -5, 2, 3, 4, 5, 6, 7, 8};
+        this.conn = null;
+        this.stmt=null;
         queryStatement();
     }
     //only temporary!
     public ResultSet getResultSet() {
-        Connection conn = null;
-        Statement stmt = null;
 
         try {
             BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
@@ -46,6 +48,22 @@ public class SQLHandler {
             LogHandler.add(se.getMessage());
         } 
         return rs;
+    }
+    
+    public void close(){
+    try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                LogHandler.add(se.getMessage());
+            }
     }
 
     public Map<String, List<Object>> getResultMap() {
@@ -86,10 +104,6 @@ public class SQLHandler {
     
     //Query SQLStatement + SQLException handling
     private void queryStatement() {
-
-        Connection conn = null;
-        Statement stmt = null;
-
         try {
             BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
             conn = basicDS.getConnection();

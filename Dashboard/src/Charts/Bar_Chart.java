@@ -41,7 +41,7 @@ public class Bar_Chart  {
     private BarChart createChart(ViewElement element) {
         SQLHandler resultSet = new SQLHandler(element.getSqlStatement());
         
-//Defining the axes              
+        //Defining the axes              
         CategoryAxis xAxis = new CategoryAxis();
         
         //Arrays.asList(resultSet.getValues(element.getXAxisValues().get(0)));
@@ -79,7 +79,6 @@ public class Bar_Chart  {
         
         //Setting the data to bar chart       
         barChart.getData().addAll(seriesList);
-        
         return barChart;
     }
     

@@ -32,6 +32,7 @@ import Charts.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -64,8 +65,10 @@ public class AddViewElementController implements Initializable {
     private TextField MaßeinheitY;
     @FXML
     private Pane chartArea;
-
-    
+    @FXML
+    private Button previewButton;
+    @FXML
+    private Button saveButton;
     
     private Map<String, List<Object>> map;
     
@@ -74,6 +77,7 @@ public class AddViewElementController implements Initializable {
     private SQLHandler sqlResult;
     
     private ObservableList<String> diagrammList = FXCollections.observableArrayList();
+
             
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,7 +87,7 @@ public class AddViewElementController implements Initializable {
         //test
         SQLStatement.setText("select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;");
         Aktualisierungsrate.setValue(2);
-       // disableFields();
+       disableFields();
         
        diagrammList.addAll(
                 "Kreisdiagramm",
@@ -96,7 +100,8 @@ public class AddViewElementController implements Initializable {
        Diagrammtyp.valueProperty().addListener(new ChangeListener<String>(){
            public void changed(ObservableValue<? extends String> ov, String old_val, String new_val){
                 clearDiagrammPropertys();
-                
+                saveButton.setDisable(true);
+                chartArea.getChildren().clear();
                 switch(Diagrammtyp.getValue()){ 
                 case "Kreisdiagramm": 
                     setViewForPieChart();
@@ -109,10 +114,15 @@ public class AddViewElementController implements Initializable {
                     break; 
                 case "Tabelle": 
                     //setViewForTable();
+                    disableFields();
+                    Diagrammtyp.setDisable(false);
                     break; 
                 default: 
                     LogHandler.add("Diagrammtyp konnte nicht erkannt werden im Event für Combobox");
+                    return;
                 } 
+                
+                previewButton.setDisable(false);
                
            }
        
@@ -195,8 +205,6 @@ public class AddViewElementController implements Initializable {
         return target.getText();
     }
 
-    
-
     @FXML
     private void testSQL(MouseEvent event) {
         disableFields();
@@ -205,8 +213,11 @@ public class AddViewElementController implements Initializable {
         X_Achse.setItems(null);
         Diagrammtyp.setValue(null);
         this.sqlResult = new SQLHandler(SQLStatement.getText());
-        LogHandler.add("Statment Korrekt");
-        Diagrammtyp.setDisable(false);
+        if (sqlResult.getResultMap().isEmpty()) {
+        } else {
+            LogHandler.add("Statment Korrekt");
+            Diagrammtyp.setDisable(false);
+        }
     }
 
     @FXML
@@ -214,12 +225,18 @@ public class AddViewElementController implements Initializable {
         List<String> selectedItemsXAxis =  (List<String>) X_Achse.getSelectionModel().getSelectedItems();
         List<String> selectedItemsYAxis =  (List<String>) Y_Achse.getSelectionModel().getSelectedItems();
         
+        if (!Diagrammtyp.getValue().equals("Tabelle")) {
+            if (!columesSelected(selectedItemsXAxis, selectedItemsYAxis)){
+                return;
+            }
+        }
+            
         saveViewElementData();
         switch(Diagrammtyp.getValue()){ 
         case "Kreisdiagramm": 
             System.out.println("Kreisdiagramm"); 
+            
             chartArea.getChildren().clear();
-            //Bar_Chart b = new Bar_Chart();  
             
             Pie_Chart p = new Pie_Chart(element); 
             
@@ -231,7 +248,6 @@ public class AddViewElementController implements Initializable {
             //Bar_Chart b = new Bar_Chart();  
             
             Bar_Chart b = new Bar_Chart(element); 
-            
             chartArea.getChildren().addAll(b.getSceneWithChart().getRoot());
             break; 
         case "Liniendiagramm": 
@@ -256,7 +272,7 @@ public class AddViewElementController implements Initializable {
         selectedItemsXAxis.forEach((s) -> {
             System.out.println("selected item " + s);
         });
-
+        saveButton.setDisable(false);
     }
 
     @FXML
@@ -300,6 +316,11 @@ public class AddViewElementController implements Initializable {
             return;
         }
         
+        if (Diagrammname.getText().trim().isEmpty()){
+            LogHandler.add("Digrammname fehlt.");
+            return;
+        }
+        
         element.setDiagramtName(Diagrammname.getText());
         element.setRefreshRate(Aktualisierungsrate.getValue());
         element.setDiagramType(Diagrammtyp.getValue());
@@ -333,6 +354,8 @@ public class AddViewElementController implements Initializable {
         MaßeinheitY.setDisable(true);
         NameX.setDisable(true);
         NameY.setDisable(true);
+        previewButton.setDisable(true);
+        saveButton.setDisable(true);
     }
     
     public void activateFields(){
@@ -349,6 +372,20 @@ public class AddViewElementController implements Initializable {
         Y_Achse.setItems(null);
         X_Achse.setItems(null);
     
+    }
+    
+    private boolean columesSelected(List x, List y){
+        if (x.isEmpty()){
+            LogHandler.add("Bitt wählen Sie eine Splate für die x Achse aus.");
+            return false;
+        }
+        
+        if (y.isEmpty()){
+            LogHandler.add("Bitt wählen Sie eine Splate für die y Achse aus.");
+            return false;
+        }
+        
+        return true;
     }
     
 }

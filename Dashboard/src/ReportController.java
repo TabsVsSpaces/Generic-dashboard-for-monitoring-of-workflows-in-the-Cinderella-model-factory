@@ -94,11 +94,16 @@ public class ReportController implements Initializable {
 
     @FXML
     private void addReport(MouseEvent event) {
+
+        if (Reportname.getText().trim().isEmpty()){
+            LogHandler.add("Reportname fehlt.");
+            return;
+        } else {
+            report.setReportName(Reportname.getText());
+        }
         
-        report.setReportName(Reportname.getText());
         //to -do Addview Elements 
         MainC.SaveReport(report);
-        LogHandler.add("Report gespeichert");
     }
 
     @FXML

@@ -85,9 +85,7 @@ public class Table {
 
             //FINALLY ADDED TO TableView
             tableView.setItems(data); 
-            if (resultSet != null) {
-                    resultSet.close();
-            }
+            sql.close();
             return tableView;
             
             
