@@ -32,6 +32,7 @@ import Charts.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -64,8 +65,10 @@ public class AddViewElementController implements Initializable {
     private TextField MaßeinheitY;
     @FXML
     private Pane chartArea;
-
-    
+    @FXML
+    private Button previewButton;
+    @FXML
+    private Button saveButton;
     
     private Map<String, List<Object>> map;
     
@@ -74,6 +77,7 @@ public class AddViewElementController implements Initializable {
     private SQLHandler sqlResult;
     
     private ObservableList<String> diagrammList = FXCollections.observableArrayList();
+
             
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,7 +87,7 @@ public class AddViewElementController implements Initializable {
         //test
         SQLStatement.setText("select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;");
         Aktualisierungsrate.setValue(2);
-       // disableFields();
+       disableFields();
         
        diagrammList.addAll(
                 "Kreisdiagramm",
@@ -110,6 +114,7 @@ public class AddViewElementController implements Initializable {
                 case "Tabelle": 
                     //setViewForTable();
                     disableFields();
+                    previewButton.setDisable(false);
                     Diagrammtyp.setDisable(false);
                     break; 
                 default: 
@@ -207,8 +212,12 @@ public class AddViewElementController implements Initializable {
         X_Achse.setItems(null);
         Diagrammtyp.setValue(null);
         this.sqlResult = new SQLHandler(SQLStatement.getText());
-        LogHandler.add("Statment Korrekt");
-        Diagrammtyp.setDisable(false);
+        if (sqlResult.getResultMap() == null) {
+        } else {
+            LogHandler.add("Statment Korrekt");
+            previewButton.setDisable(false);
+            Diagrammtyp.setDisable(false);
+        }
     }
 
     @FXML
@@ -233,7 +242,6 @@ public class AddViewElementController implements Initializable {
             //Bar_Chart b = new Bar_Chart();  
             
             Bar_Chart b = new Bar_Chart(element); 
-            
             chartArea.getChildren().addAll(b.getSceneWithChart().getRoot());
             break; 
         case "Liniendiagramm": 
@@ -335,6 +343,8 @@ public class AddViewElementController implements Initializable {
         MaßeinheitY.setDisable(true);
         NameX.setDisable(true);
         NameY.setDisable(true);
+        previewButton.setDisable(true);
+        saveButton.setDisable(true);
     }
     
     public void activateFields(){
