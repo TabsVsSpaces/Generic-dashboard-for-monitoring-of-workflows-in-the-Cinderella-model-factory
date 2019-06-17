@@ -1,3 +1,4 @@
+import Helper.DataManager;
 import Helper.LogHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,6 +15,7 @@ import Model.*;
  * @author Tom
  */
 public class DatabaseViewController implements Initializable {
+    private static final String PROP_NAME = "DBconnection.properties";
 
     @FXML
     private AnchorPane DatabaseView;
@@ -71,9 +73,11 @@ public class DatabaseViewController implements Initializable {
 
     @FXML
     private void setConnection(MouseEvent event) {
-        String[] connection = getTextfield();
-        // set Database conn and save (jdbc-pool)
         
-    }
-    
+        String[] connection = getTextfield();
+        DataManager.getProperties(PROP_NAME).setProperty("DB_URL", connection[0]);
+        DataManager.getProperties(PROP_NAME).setProperty("JDBC_DRIVER", connection[1]);
+        DataManager.getProperties(PROP_NAME).setProperty("USER", connection[2]);
+        DataManager.getProperties(PROP_NAME).setProperty("PASS", connection[3]);    
+    } 
 }
