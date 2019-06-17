@@ -317,12 +317,19 @@ public class MainController implements Initializable {
       tempRep.addViewElement(e_2);
       tempRep.addViewElement(e_3);
       tempRep.addViewElement(e_4);
-      
       reportList.add(tempRep);
       
       tempRep = new Report();
       tempRep.setReportName("Default Report 2");
       tempRep.setReportId(2);
+      tempRep.addViewElement(e_1);
+      tempRep.addViewElement(e_2);
+      reportList.add(tempRep);
+      
+      tempRep = new Report();
+      tempRep.setReportName("Default Report 3");
+      tempRep.setReportId(2);
+      tempRep.addViewElement(e_1);
       reportList.add(tempRep);
     
     }
