@@ -101,7 +101,7 @@ public class SQLHandler {
         }
         return null;
     }
-
+    
     //Query SQLStatement + SQLException handling
     private void queryStatement() {
         try {

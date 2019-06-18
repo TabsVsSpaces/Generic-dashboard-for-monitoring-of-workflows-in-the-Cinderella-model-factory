@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -30,7 +35,7 @@
                </VBox.margin>
             </TextField>
       
-            <TextField fx:id="jdbcPort" prefHeight="25.0" prefWidth="223.0" promptText="80">
+            <TextField fx:id="jdbcDriver" prefHeight="25.0" prefWidth="223.0" promptText="80">
                <VBox.margin>
                   <Insets bottom="40.0" />
                </VBox.margin>
