@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AddReport" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.0" prefWidth="915.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddViewElementController">
+   <children>
+      <TextField fx:id="Diagrammname" layoutX="37.0" layoutY="66.0" prefHeight="31.0" prefWidth="276.0" promptText="Diagrammname" />
+      <ComboBox fx:id="Aktualisierungsrate" layoutX="574.0" layoutY="68.0" prefHeight="25.0" prefWidth="97.0" />
+      <Button layoutX="574.0" layoutY="210.0" mnemonicParsing="false" onMouseClicked="#testSQL" prefHeight="25.0" prefWidth="97.0" text="Test" />
+      <ComboBox fx:id="Diagrammtyp" layoutX="163.0" layoutY="249.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField fx:id="SQLStatement" alignment="TOP_LEFT" layoutX="36.0" layoutY="116.0" prefHeight="112.0" prefWidth="509.0" promptText="SELECT * FROM &lt;tabelle&gt; WHERE ..." />
+      <ListView fx:id="X_Achse" layoutX="36.0" layoutY="312.0" prefHeight="132.0" prefWidth="117.0" />
+      <TextField fx:id="NameX" layoutX="164.0" layoutY="312.0" prefHeight="25.0" prefWidth="150.0" promptText="Name der X-Achse" />
+      <TextField fx:id="MaßeinheitX" layoutX="165.0" layoutY="352.0" prefHeight="31.0" prefWidth="150.0" promptText="Maßeinheit" />
+      <ListView fx:id="Y_Achse" layoutX="37.0" layoutY="480.0" prefHeight="132.0" prefWidth="117.0" />
+      <TextField fx:id="NameY" layoutX="164.0" layoutY="480.0" prefHeight="25.0" prefWidth="150.0" promptText="Name der Y-Achse" />
+      <TextField fx:id="MaßeinheitY" layoutX="164.0" layoutY="518.0" prefHeight="25.0" prefWidth="151.0" promptText="Maßeinheit" />
+      <Button fx:id="previewButton" layoutX="225.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#genChart" prefHeight="31.0" prefWidth="89.0" text="Vorschau" />
+      <Button layoutX="683.0" layoutY="677.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="31.0" prefWidth="98.0" text="Abbrechen" />
+      <Button fx:id="saveButton" layoutX="804.0" layoutY="677.0" mnemonicParsing="false" onMouseClicked="#addViewElement" prefHeight="31.0" prefWidth="97.0" text="Hinzufügen" />
+      <Label layoutX="38.0" layoutY="454.0" text="Y-Achse" />
+      <Label layoutX="38.0" layoutY="283.0" text="X-Achse" />
+      <Label layoutX="38.0" layoutY="251.0" text="Diagrammtyp :" />
+      <Label layoutX="352.0" layoutY="70.0" prefHeight="21.0" prefWidth="219.0" text="Aktualisierungsrate in Sekunden:" />
+      <Label layoutX="26.0" layoutY="24.0" prefHeight="27.0" prefWidth="219.0" text="Anzeige-Element anlegen">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Pane fx:id="chartArea" layoutX="333.0" layoutY="249.0" prefHeight="330.0" prefWidth="350.0" />
+   </children>
+</AnchorPane>
