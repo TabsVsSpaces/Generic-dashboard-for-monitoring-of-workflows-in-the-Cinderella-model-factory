@@ -22,13 +22,8 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -38,10 +33,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ToggleButton;
 import Charts.*;
 import Model.ViewElement;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import javafx.application.Platform;
+import javafx.scene.layout.GridPane;
 
 
 /**
@@ -209,7 +203,10 @@ public class MainController implements Initializable {
     private void loadReport(MouseEvent event) {
         
     Report tempReport = ListViewReports.getSelectionModel().getSelectedItem();
-    LogHandler.add(tempReport.getReportName());
+    
+    GridPane elementGrid = new GridPane();
+    int row = 0;
+    int column = 1;
     
     PaneView.getChildren().clear();
     for(int i = 0 ; i < tempReport.getListElementSize() ; i++)
@@ -217,32 +214,44 @@ public class MainController implements Initializable {
         ViewElement tempElement = tempReport.getViewEelementbyIndex(i);
         switch(tempElement.getDiagramType()){ 
         case "Kreisdiagramm":    
-            Pie_Chart p = new Pie_Chart(tempElement); 
-            PaneView.getChildren().addAll(p.getSceneWithChart().getRoot());
+            Pie_Chart p = new Pie_Chart(tempElement);
+            elementGrid.add(p.getSceneWithChart().getRoot(),column,row);
+            //PaneView.getChildren().addAll(p.getSceneWithChart().getRoot());
             break; 
             
         case "Balkendiagramm":   
-            LogHandler.add("Balken");
-            Bar_Chart b = new Bar_Chart(tempElement); 
-            PaneView.getChildren().addAll(b.getSceneWithChart().getRoot());
-            LogHandler.add("Gezeichent");
+            Bar_Chart b = new Bar_Chart(tempElement);
+            elementGrid.add(b.getSceneWithChart().getRoot(),column,row);
+           // PaneView.getChildren().addAll(b.getSceneWithChart().getRoot()); 
             break; 
             
         case "Liniendiagramm": 
             Line_Chart l = new Line_Chart(tempElement); 
-            PaneView.getChildren().addAll(l.getSceneWithChart().getRoot());
+            elementGrid.add(l.getSceneWithChart().getRoot(),column,row);
+           // PaneView.getChildren().addAll(l.getSceneWithChart().getRoot());
             break; 
             
         case "Tabelle": 
             Table t = new Table(tempElement);
-            PaneView.getChildren().addAll(t.getSceneWithChart().getRoot());
+            elementGrid.add(t.getSceneWithChart().getRoot(),column,row);
+           // PaneView.getChildren().addAll(t.getSceneWithChart().getRoot());
             break; 
             
         default: 
             LogHandler.add("Diagrammtyp konnte nicht erkannt werden im AddViewElmentController.");
         } 
     
+        if (row == 0 )
+        { 
+            row++;
+        }
+        else
+        {
+            column++;
+            row = 0;
+        }
     }
+    PaneView.getChildren().add(elementGrid);
     
     }
 
