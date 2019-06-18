@@ -41,6 +41,7 @@ import Model.ViewElement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javafx.application.Platform;
 
 
 /**
@@ -65,7 +66,6 @@ public class MainController implements Initializable {
     private ToggleButton ToggleStatus;
     
     private ObservableList<Report> reportList = FXCollections.observableArrayList();
-    
     private Report newReport;
 
     @Override
@@ -74,7 +74,7 @@ public class MainController implements Initializable {
       if (reportList.isEmpty()){
           createDefaultReport();
       }
-
+      
       ListViewReports.setItems(reportList);
       ListViewReports.setCellFactory(param -> new ListCell<Report>() {
             @Override
@@ -94,30 +94,26 @@ public class MainController implements Initializable {
       Log.itemsProperty().bind(listProperty);
       listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
       
-      Runnable runnable = new Runnable() {
-      public void run() {
-          
-     // myLog.itemsProperty().bind(listProperty);
-      listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
-      }
-    };
-    
-    ScheduledExecutorService service = Executors
-                    .newSingleThreadScheduledExecutor();
-    service.scheduleAtFixedRate(runnable, 0, 5, TimeUnit.SECONDS);
-
     }    
-    
+   
     
     public void startLogThread(Thread logThread){
         logThread = new Thread(){
+            
+            @Override
             public void run() {
-                
                 while (true) {                    
+                    
+                    Platform.runLater(new Runnable() {
+                       @Override
+                        public void run() {
+                    // entsprechende UI Komponente updaten
                     listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
+                    }
+                    });
                     
                     try {
-                        sleep(1000);
+                        sleep(2000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -125,7 +121,8 @@ public class MainController implements Initializable {
 
             }
         };
-    
+        
+        logThread.start();
     }
 
     @FXML

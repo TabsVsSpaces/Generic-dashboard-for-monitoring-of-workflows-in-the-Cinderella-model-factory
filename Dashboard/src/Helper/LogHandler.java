@@ -18,12 +18,12 @@ public class LogHandler {
     private static final ArrayList<String> ERROR_LOG = new ArrayList<>();
 
     public static synchronized void add(String Fehler) {
-        ERROR_LOG.add(getCurrDate() + "    " + Fehler);
 
+        ERROR_LOG.add(0,getCurrDate() + "    " + Fehler);
         //prune the list to n elements (n=LOG_SIZE)     
         if (ERROR_LOG.size() > LOG_SIZE) {
             while (ERROR_LOG.size() > LOG_SIZE) {
-                ERROR_LOG.remove(0);
+                ERROR_LOG.remove(ERROR_LOG.size() -1);
             }
         }
     }
