@@ -14,13 +14,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    Thread logThread;
+        MainController mainController;
+        Thread logThread;
 
   @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
         Parent root = loader.load();
-        MainController mainController = loader.getController();
+        this.mainController = loader.getController();
         
         mainController.startLogThread(logThread = null);
         
@@ -48,7 +49,9 @@ public class Main extends Application {
     @Override
     public void stop(){
     System.out.println("Stage is closing");
+    mainController.closeMainController();
     logThread.interrupt();
+    
     JDBCPool pool = JDBCPool.getInstance();
     try{pool.close();}
     catch(SQLException e)

@@ -259,6 +259,10 @@ public class MainController implements Initializable {
         PaneView.getChildren().addAll(root);
     }
     
+    public void closeMainController(){
+       System.out.println("Programm wird beendet.");
+    }
+
     public void createDefaultReport(){
       String sqlStm = "select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
         
