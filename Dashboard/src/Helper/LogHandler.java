@@ -11,7 +11,7 @@ import java.text.*;
 
 public class LogHandler {
 
-    private static final String PROP_NAME = "Application.properties";
+    private static final String PROP_NAME = "./src/properties/Application.properties";
     private static final int LOG_SIZE = Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("LogSize"));
 
     //ArrayList for dynamic add of strings

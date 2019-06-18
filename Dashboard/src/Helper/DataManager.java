@@ -20,51 +20,59 @@ import java.util.Properties;
 
 public class DataManager {
 
-    private static final String XML_FILE = "/Dashboard/dataStorage/reports.xml";
+    private static final String XML_FILE = "./src/dataStorage/reports.xml";
     private Report report;
     private ViewElement viewElement;
-    
-    public static Properties getProperties(String PropertyName) {
 
-        Properties props = new Properties();
-        try {
-            InputStream input = DataManager.class.getClassLoader().getResourceAsStream(PropertyName);
-            props.load(input);
-            input.close();
-        } catch (FileNotFoundException ex) {
-            LogHandler.add(PropertyName + " nicht gefunden!");
-        } catch (IOException ex) {
-            LogHandler.add(ex.getMessage());
+    public static Properties getProperties(String propertyFile) {
+        Properties prop = new Properties();
+
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(new File(propertyFile)))) {
+            prop.load(bis);
+            bis.close();
+        } catch (Exception e) {
+            LogHandler.add("ERROR: Properties konnten nicht geladen werden!");
         }
-        return props;
+        return prop;
+    }
+
+    public static void setProperties(String propertyFile, String propertyName, String propertyValue) {
+        Properties prop = getProperties(propertyFile);
+        
+        prop.setProperty(propertyName, propertyValue);
+        
+        try (BufferedOutputStream bis = new BufferedOutputStream(new FileOutputStream(new File(propertyFile)))) {
+            prop.store(bis, null);
+        } catch (Exception e) {
+            LogHandler.add("ERROR: Properties konnten nicht gespeichert werden!");
+        }
     }
 
     public static void saveReport(Report report, ViewElement viewElement) {
-        
+
         XStream xstream = new XStream();
         xstream.alias("report", Report.class);
         xstream.alias("viewElement", ViewElement.class);
-        
-        try{
+
+        try {
             FileOutputStream fs = new FileOutputStream(XML_FILE);
             xstream.toXML(report, fs);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             LogHandler.add("ERROR: Report konnte nicht gespeichert werden!");
         }
-        
+
     }
-    //what is the input? reportId? load all?
+
+    //load all
     public Report loadReport() {
         XStream xstream = new XStream(new DomDriver());
         Report newReport = new Report();
-        
-        try{
+
+        try {
             FileInputStream fis = new FileInputStream(XML_FILE);
             xstream.fromXML(fis, newReport);
             return newReport;
-        }    
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             LogHandler.add("ERROR: Report konnte nicht geladen werden!");
         }
         return newReport;

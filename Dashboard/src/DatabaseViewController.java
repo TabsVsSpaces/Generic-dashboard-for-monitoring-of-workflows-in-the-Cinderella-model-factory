@@ -1,3 +1,4 @@
+
 import Helper.DataManager;
 import Helper.LogHandler;
 import java.net.URL;
@@ -15,8 +16,8 @@ import Model.*;
  * @author Tom
  */
 public class DatabaseViewController implements Initializable {
-    
-    private static final String PROP_NAME = "DBconnection.properties";
+
+    private static final String PROP_NAME = "./src/properties/DBconnection.properties";
 
     @FXML
     private AnchorPane DatabaseView;
@@ -29,61 +30,56 @@ public class DatabaseViewController implements Initializable {
     @FXML
     private TextField jdbcDriver;
 
-
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /* 
-        PromptText?
-        jdbcDriver.setPromptText(DataManager.getProperties(PROP_NAME).getProperty("JDBC_DRIVER"));
-        dbURL.setPromptText(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
-        user.setPromptText(DataManager.getProperties(PROP_NAME).getProperty("PASS"));
-        password.setPromptText(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
-        */
-    }    
-    
-    private String[] getTextfield(){
-    
+
+        jdbcDriver.setText(DataManager.getProperties(PROP_NAME).getProperty("JDBC_DRIVER"));
+        dbURL.setText(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
+        user.setText(DataManager.getProperties(PROP_NAME).getProperty("USER"));
+        password.setText(DataManager.getProperties(PROP_NAME).getProperty("PASS"));
+
+    }
+
+    private String[] getTextfield() {
+
         String[] connection = new String[4];
-        
+
         connection[0] = jdbcDriver.getText();
         connection[1] = dbURL.getText();
         connection[2] = user.getText();
         connection[3] = password.getText();
-        
+
         return connection;
     }
+
     //really necessary?
-    private void clearText(){
-        
+    private void clearText() {
+
         dbURL.clear();
         jdbcDriver.clear();
         user.clear();
         password.clear();
     }
-    
+
     @FXML
-    private void testConnection(MouseEvent event)throws Exception {
+    private void testConnection(MouseEvent event) throws Exception {
 
         String[] connection = getTextfield();
 
-        
-        if ( !connection[0].isEmpty() && !connection[1].isEmpty() && !connection[2].isEmpty() && !connection[3].isEmpty())
-        {
+        if (!connection[0].isEmpty() && !connection[1].isEmpty() && !connection[2].isEmpty() && !connection[3].isEmpty()) {
             JDBCTest.getState(connection[0], connection[1], connection[2], connection[3]);
-        }
-        else {
-           LogHandler.add("Bitte alle Fenster ausfüllen");
+        } else {
+            LogHandler.add("Bitte alle Fenster ausfüllen");
         }
     }
 
     @FXML
     private void setConnection(MouseEvent event) {
-        
+
         String[] connection = getTextfield();
-        DataManager.getProperties(PROP_NAME).setProperty("JDBC_DRIVER", connection[0]);
-        DataManager.getProperties(PROP_NAME).setProperty("DB_URL", connection[1]);
-        DataManager.getProperties(PROP_NAME).setProperty("USER", connection[2]);
-        DataManager.getProperties(PROP_NAME).setProperty("PASS", connection[3]);    
-    } 
+        DataManager.setProperties(PROP_NAME, "JDBC_DRIVER", connection[0]);
+        DataManager.setProperties(PROP_NAME, "DB_URL", connection[1]);
+        DataManager.setProperties(PROP_NAME, "USER", connection[2]);
+        DataManager.setProperties(PROP_NAME, "PASS", connection[3]);
+    }
 }

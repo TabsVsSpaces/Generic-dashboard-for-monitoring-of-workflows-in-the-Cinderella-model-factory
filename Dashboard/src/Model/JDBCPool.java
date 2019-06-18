@@ -15,7 +15,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class JDBCPool {
 
-    private static final String PROP_NAME = "DBconnection.properties";
+    private static final String PROP_NAME = "./src/properties/DBconnection.properties";
 
     private static JDBCPool pool;
     private BasicDataSource basicDS = new BasicDataSource();
@@ -26,7 +26,7 @@ public class JDBCPool {
         basicDS.setUsername(DataManager.getProperties(PROP_NAME).getProperty("USER"));
         basicDS.setPassword(DataManager.getProperties(PROP_NAME).getProperty("PASS"));
         basicDS.setUrl(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
-
+        
         basicDS.setInitialSize(Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("initialSize")));
         basicDS.setMaxTotal(Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("maxSize")));
         basicDS.setMinIdle(Integer.parseInt(DataManager.getProperties(PROP_NAME).getProperty("minIdle")));

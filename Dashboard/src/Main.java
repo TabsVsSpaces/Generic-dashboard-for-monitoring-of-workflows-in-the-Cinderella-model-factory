@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
         MainController mainController;
         Thread logThread;
+        static JDBCPool pool;
 
   @Override
     public void start(Stage stage) throws Exception {
@@ -37,7 +38,7 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         //initiates the JDBC ConnectionPool
-        JDBCPool pool = JDBCPool.getInstance();
+        pool = JDBCPool.getInstance();
         
         launch(args);
         
@@ -52,7 +53,7 @@ public class Main extends Application {
     mainController.closeMainController();
     logThread.interrupt();
     
-    JDBCPool pool = JDBCPool.getInstance();
+    //JDBCPool pool = JDBCPool.getInstance();
     try{pool.close();}
     catch(SQLException e)
     { System.out.println(e.toString());}
