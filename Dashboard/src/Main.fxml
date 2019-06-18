@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MainView" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+<AnchorPane id="AnchorPane" fx:id="MainView" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="285.0" style="-fx-background-color: lightgrey;">
          <children>
@@ -44,6 +45,9 @@
                      <HBox.margin>
                         <Insets right="30.0" />
                      </HBox.margin>
+                     <tooltip>
+                        <Tooltip text="Report entfernen" />
+                     </tooltip>
                   </Button>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#changeReport" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                      <graphic>
@@ -56,6 +60,9 @@
                      <HBox.margin>
                         <Insets left="50.0" right="80.0" />
                      </HBox.margin>
+                     <tooltip>
+                        <Tooltip text="Report bearbeiten" />
+                     </tooltip>
                   </Button>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#addReport" prefHeight="32.0" prefWidth="38.0" style="-fx-background-color: transparent;">
                      <graphic>
@@ -68,6 +75,9 @@
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
+                     <tooltip>
+                        <Tooltip text="Neuer Report erstellen" />
+                     </tooltip>
                   </Button>
                </children>
                <VBox.margin>
@@ -86,12 +96,17 @@
                      </font>
                   </Label>
                   <ToggleButton fx:id="ToggleStatus" layoutX="779.0" layoutY="16.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="49.0" style="-fx-background-color: transparent;" />
-                  <Button layoutX="857.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#databaseConnect" onMouseClicked="#databaseConnect" prefHeight="32.0" prefWidth="30.0" style="-fx-background-color: transparent;" />
-                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="857.0" layoutY="22.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icons/icons8-einstellungen-filled-50.png" />
-                     </image>
-                  </ImageView>
+                  <Button layoutX="857.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#databaseConnect" onMouseClicked="#databaseConnect" prefHeight="32.0" prefWidth="30.0" style="-fx-background-color: transparent;">
+                     <tooltip>
+                        <Tooltip text="Datenbank konfigurieren" />
+                     </tooltip>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/icons8-einstellungen-filled-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                   <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="788.0" layoutY="22.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icons/icons8-datenbank-50.png" />
