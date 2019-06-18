@@ -15,6 +15,7 @@ import Model.*;
  * @author Tom
  */
 public class DatabaseViewController implements Initializable {
+    
     private static final String PROP_NAME = "DBconnection.properties";
 
     @FXML
@@ -32,22 +33,27 @@ public class DatabaseViewController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        /* 
+        PromptText?
+        jdbcDriver.setPromptText(DataManager.getProperties(PROP_NAME).getProperty("JDBC_DRIVER"));
+        dbURL.setPromptText(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
+        user.setPromptText(DataManager.getProperties(PROP_NAME).getProperty("PASS"));
+        password.setPromptText(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
+        */
     }    
     
     private String[] getTextfield(){
     
         String[] connection = new String[4];
         
-        connection[0] = dbURL.getText();
-        connection[1] = jdbcDriver.getText();
+        connection[0] = jdbcDriver.getText();
+        connection[1] = dbURL.getText();
         connection[2] = user.getText();
         connection[3] = password.getText();
-       
-       
+        
         return connection;
     }
-
+    //really necessary?
     private void clearText(){
         
         dbURL.clear();
@@ -75,8 +81,8 @@ public class DatabaseViewController implements Initializable {
     private void setConnection(MouseEvent event) {
         
         String[] connection = getTextfield();
-        DataManager.getProperties(PROP_NAME).setProperty("DB_URL", connection[0]);
-        DataManager.getProperties(PROP_NAME).setProperty("JDBC_DRIVER", connection[1]);
+        DataManager.getProperties(PROP_NAME).setProperty("JDBC_DRIVER", connection[0]);
+        DataManager.getProperties(PROP_NAME).setProperty("DB_URL", connection[1]);
         DataManager.getProperties(PROP_NAME).setProperty("USER", connection[2]);
         DataManager.getProperties(PROP_NAME).setProperty("PASS", connection[3]);    
     } 

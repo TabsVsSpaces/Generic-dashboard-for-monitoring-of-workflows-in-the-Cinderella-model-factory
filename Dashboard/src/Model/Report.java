@@ -8,15 +8,25 @@ package Model;
 
 import Model.ViewElement;
 import Helper.LogHandler;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import java.util.ArrayList;
 import java.util.List;
 
 
-
+@XStreamAlias("report")
 public class Report {
+    
+    @XStreamAlias("maxElements")
     private final int maxElements;
+    
+    @XStreamAlias("reportName")
     private String reportName;
+    
+    @XStreamAlias("reportId")
     private int reportId;
+    
+    @XStreamImplicit(itemFieldName="elementList")
     private List<ViewElement> elementList = new ArrayList<>();
 
     //Constructor

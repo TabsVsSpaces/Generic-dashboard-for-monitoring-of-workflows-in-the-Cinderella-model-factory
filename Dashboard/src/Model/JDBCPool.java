@@ -34,7 +34,7 @@ public class JDBCPool {
 
     }
 
-    public static JDBCPool getInstance() {
+    public static synchronized JDBCPool getInstance() {
         if (pool == null) {
             pool = new JDBCPool();
         }

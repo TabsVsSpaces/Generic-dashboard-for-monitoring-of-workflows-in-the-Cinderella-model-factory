@@ -6,6 +6,8 @@
 
 package Model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.chart.Chart;
@@ -14,18 +16,43 @@ import javafx.scene.chart.Chart;
  *
  * @author Thanados
  */
+@XStreamAlias("viewElement")
 public class ViewElement {
+    
+    @XStreamAlias("diagramId")
     private int diagramId;
+     
+    @XStreamAlias("refreshRate")
     private int refreshRate;
+    
+    @XStreamAlias("DiagramtName")
     private String DiagramtName;
+    
+    @XStreamAlias("sqlStatement")
     private String sqlStatement;
+    
+    @XStreamAlias("diagramType")
     private String diagramType;
+    
+    @XStreamAlias("xAxisName")
     private String xAxisName;
+    
+    @XStreamAlias("xAxisMeasure")
     private String xAxisMeasure;
+    
+    @XStreamAlias("yAxisName")
     private String yAxisName;
+    
+    @XStreamAlias("YAxisMeasure")
     private String YAxisMeasure;
+    
+    @XStreamImplicit(itemFieldName="XAxisValues")
     private List<String> XAxisValues= new ArrayList<>();
+    
+    @XStreamImplicit(itemFieldName="YAxisValues")
     private List<String> YAxisValues = new ArrayList<>();
+    
+    @XStreamAlias("viewElementChart")
     private Chart viewElementChart;
 
     //setter -----------------------------------------------------

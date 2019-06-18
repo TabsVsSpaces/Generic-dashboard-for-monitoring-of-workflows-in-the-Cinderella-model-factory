@@ -2,6 +2,7 @@
 TODO
     -unification of own written Exceptions and SQLExceptions (format)
     - Erklärung Liste: https://docs.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html ; http://www.codeadventurer.de/?p=1751
+    -singleton class?
  */
 package Helper;
 
@@ -16,7 +17,7 @@ public class LogHandler {
     //ArrayList for dynamic add of strings
     private static final ArrayList<String> ERROR_LOG = new ArrayList<>();
 
-    public static void add(String Fehler) {
+    public static synchronized void add(String Fehler) {
         ERROR_LOG.add(getCurrDate() + "    " + Fehler);
 
         //prune the list to n elements (n=LOG_SIZE)     
