@@ -12,8 +12,6 @@ TODO
 package Helper;
 
 import Model.*;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.io.*;
 import javax.xml.bind.*;
 import java.util.Properties;
@@ -48,35 +46,13 @@ public class DataManager {
         }
     }
     
-    //call in ReportController ->add viewElement() //input reportList in MainController?
     public static void saveReportToXML(Report report) {
-
-        XStream xstream = new XStream();
-        xstream.alias("report", Report.class);
-        xstream.alias("viewElement", ViewElement.class);
-
-        try {
-            FileOutputStream fs = new FileOutputStream(XML_FILE);
-            xstream.toXML(report, fs);
-        } catch (FileNotFoundException e) {
-            LogHandler.add("ERROR: Report konnte nicht gespeichert werden!");
-        }
 
     }
 
     //load all 
-    public Report loadReportFromXML() {
-        XStream xstream = new XStream(new DomDriver());
-        Report newReport = new Report();
+    public void loadReportFromXML() {
 
-        try {
-            FileInputStream fis = new FileInputStream(XML_FILE);
-            xstream.fromXML(fis, newReport);
-            return newReport;
-        } catch (FileNotFoundException e) {
-            LogHandler.add("ERROR: Report konnte nicht geladen werden!");
-        }
-        return newReport;
     }
 
     public void deleteReport() {

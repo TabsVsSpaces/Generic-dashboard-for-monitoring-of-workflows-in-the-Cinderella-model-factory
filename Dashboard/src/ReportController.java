@@ -148,8 +148,6 @@ public class ReportController implements Initializable {
         } else {
             LogHandler.add("ViewElement wurde aktualisiert.");
         }
-        
-         //DataManager.saveReportToXML(report);
     }
     
     public void loadViewElements(){
