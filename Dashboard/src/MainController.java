@@ -5,7 +5,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -37,19 +36,18 @@ import java.util.Arrays;
 import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
 
-
 /**
  * FXML Controller class
  *
  * @author Tom
  */
 public class MainController implements Initializable {
-
+    
     @FXML
     private AnchorPane MainView;
     @FXML
     private Pane PaneView;
-
+    
     protected ListProperty<String> listProperty = new SimpleListProperty<>();
     
     @FXML
@@ -61,20 +59,20 @@ public class MainController implements Initializable {
     
     private ObservableList<Report> reportList = FXCollections.observableArrayList();
     private Report newReport;
-
+    
     @Override
-    public void initialize(URL url, ResourceBundle rb)  {
+    public void initialize(URL url, ResourceBundle rb) {
         
-      if (reportList.isEmpty()){
-          createDefaultReport();
-      }
-      
-      ListViewReports.setItems(reportList);
-      ListViewReports.setCellFactory(param -> new ListCell<Report>() {
+        if (reportList.isEmpty()) {
+            createDefaultReport();
+        }
+        
+        ListViewReports.setItems(reportList);
+        ListViewReports.setCellFactory(param -> new ListCell<Report>() {
             @Override
             protected void updateItem(Report item, boolean empty) {
                 super.updateItem(item, empty);
-
+                
                 if (empty || item == null || item.getReportName() == null) {
                     setText(null);
                 } else {
@@ -82,28 +80,25 @@ public class MainController implements Initializable {
                 }
             }
         });
-      
-     
         
-      Log.itemsProperty().bind(listProperty);
-      listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
-      
+        Log.itemsProperty().bind(listProperty);
+        listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
+        
     }    
-   
     
-    public void startLogThread(Thread logThread){
-        logThread = new Thread(){
+    public void startLogThread(Thread logThread) {
+        logThread = new Thread() {
             
             @Override
             public void run() {
                 while (true) {                    
                     
                     Platform.runLater(new Runnable() {
-                       @Override
+                        @Override
                         public void run() {
-                    // entsprechende UI Komponente updaten
-                    listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
-                    }
+                            // entsprechende UI Komponente updaten
+                            listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
+                        }
                     });
                     
                     try {
@@ -112,46 +107,45 @@ public class MainController implements Initializable {
                         Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-
+                
             }
         };
         
         logThread.start();
     }
-
+    
     @FXML
-    private void deleteReport(MouseEvent event) throws Exception{
+    private void deleteReport(MouseEvent event) throws Exception {
         Report removeReport = ListViewReports.getSelectionModel().getSelectedItem();
         
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Report löschen bestätigen Dialog");
-        alert.setHeaderText("Sie sind dabei den Report mit dem Namen: " + 
-                removeReport.getReportName() + " zu löschen.");
+        alert.setHeaderText("Sie sind dabei den Report mit dem Namen: "
+                + removeReport.getReportName() + " zu löschen.");
         alert.setContentText("Wollen Sie den Report wirklich löschen?");
-
+        
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             deleteReport(removeReport);
-        } 
+        }        
     }
-
+    
     @FXML
-    private void changeReport(MouseEvent event) throws Exception{
+    private void changeReport(MouseEvent event) throws Exception {
         loadReportView(ListViewReports.getSelectionModel().getSelectedItem());
     }
-
+    
     @FXML
-    private void addReport(MouseEvent event) throws Exception{
+    private void addReport(MouseEvent event) throws Exception {
         loadReportView(newReport = new Report());
     }
-
-    public void loadReportView(Report report) throws Exception{
+    
+    public void loadReportView(Report report) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Report.fxml"));
         Parent root = loader.load();
         ReportController repcon = loader.getController();
-        
+
         //LogHandler.add(String.valueOf(report.getListElement().size()));
-        
         repcon.SetMainControleller(this);
         repcon.setReport(report);
         repcon.loadViewElements();
@@ -159,191 +153,182 @@ public class MainController implements Initializable {
         PaneView.getChildren().addAll(root);
     }
     
-    public void SaveReport(Report toSaveReport)
-    {
-        if(toSaveReport.getReportId() == 0)
-        {
+    public void SaveReport(Report toSaveReport) {
+        if (toSaveReport.getReportId() == 0) {
             toSaveReport.setReportId(createReportID());
             LogHandler.add("Neuer Report wurde hinzugefügt.");
             reportList.add(toSaveReport);
         } else {
             LogHandler.add("Report wurde aktualisiert.");
         }
-                
+        
     }
     
-        private int createReportID(){
+    private int createReportID() {
         int id = 1;
-        boolean search=true;
+        boolean search = true;
         
-        while(search){ 
-            for (int i = 0 ; i < reportList.size(); i++) {
-                if (reportList.get(i).getReportId()== id) {
+        while (search) {            
+            for (int i = 0; i < reportList.size(); i++) {
+                if (reportList.get(i).getReportId() == id) {
                     id++;
                     break;
                 };
             }
             
-            search=false;
+            search = false;
         }
-
+        
         return id;
     }
-  
-    private void deleteReport(Report report){
-        for (int i = 0 ; i < reportList.size(); i++) {
-                if (reportList.get(i).getReportId()== report.getReportId()) {
-                    reportList.remove(i);
-                    LogHandler.add("Report " + report.getReportName() + " wurde gelöscht.");
-                };
+    
+    private void deleteReport(Report report) {
+        for (int i = 0; i < reportList.size(); i++) {
+            if (reportList.get(i).getReportId() == report.getReportId()) {
+                reportList.remove(i);
+                LogHandler.add("Report " + report.getReportName() + " wurde gelöscht.");
+            };
         }
     }
-
+    
     @FXML
     private void loadReport(MouseEvent event) {
         
-    Report tempReport = ListViewReports.getSelectionModel().getSelectedItem();
-    
-    GridPane elementGrid = new GridPane();
-    int row = 0;
-    int column = 1;
-    
-    PaneView.getChildren().clear();
-    for(int i = 0 ; i < tempReport.getListElementSize() ; i++)
-    {
-        ViewElement tempElement = tempReport.getViewEelementbyIndex(i);
-        switch(tempElement.getDiagramType()){ 
-        case "Kreisdiagramm":    
-            Pie_Chart p = new Pie_Chart(tempElement);
-            elementGrid.add(p.getSceneWithChart().getRoot(),column,row);
-            //PaneView.getChildren().addAll(p.getSceneWithChart().getRoot());
-            break; 
+        Report tempReport = ListViewReports.getSelectionModel().getSelectedItem();
+        
+        GridPane elementGrid = new GridPane();
+        int row = 0;
+        int column = 1;
+        
+        PaneView.getChildren().clear();
+        for (int i = 0; i < tempReport.getListElementSize(); i++) {
+            ViewElement tempElement = tempReport.getViewEelementbyIndex(i);
+            switch (tempElement.getDiagramType()) {                
+                case "Kreisdiagramm":                    
+                    Pie_Chart p = new Pie_Chart(tempElement);
+                    elementGrid.add(p.getSceneWithChart().getRoot(), column, row);
+                    //PaneView.getChildren().addAll(p.getSceneWithChart().getRoot());
+                    break;                
+                
+                case "Balkendiagramm":                    
+                    Bar_Chart b = new Bar_Chart(tempElement);
+                    elementGrid.add(b.getSceneWithChart().getRoot(), column, row);
+                    // PaneView.getChildren().addAll(b.getSceneWithChart().getRoot()); 
+                    break;                
+                
+                case "Liniendiagramm":                    
+                    Line_Chart l = new Line_Chart(tempElement);                    
+                    elementGrid.add(l.getSceneWithChart().getRoot(), column, row);
+                    // PaneView.getChildren().addAll(l.getSceneWithChart().getRoot());
+                    break;                
+                
+                case "Tabelle":                    
+                    Table t = new Table(tempElement);
+                    elementGrid.add(t.getSceneWithChart().getRoot(), column, row);
+                    // PaneView.getChildren().addAll(t.getSceneWithChart().getRoot());
+                    break;                
+                
+                default:                    
+                    LogHandler.add("Diagrammtyp konnte nicht erkannt werden im AddViewElmentController.");
+            }            
             
-        case "Balkendiagramm":   
-            Bar_Chart b = new Bar_Chart(tempElement);
-            elementGrid.add(b.getSceneWithChart().getRoot(),column,row);
-           // PaneView.getChildren().addAll(b.getSceneWithChart().getRoot()); 
-            break; 
-            
-        case "Liniendiagramm": 
-            Line_Chart l = new Line_Chart(tempElement); 
-            elementGrid.add(l.getSceneWithChart().getRoot(),column,row);
-           // PaneView.getChildren().addAll(l.getSceneWithChart().getRoot());
-            break; 
-            
-        case "Tabelle": 
-            Table t = new Table(tempElement);
-            elementGrid.add(t.getSceneWithChart().getRoot(),column,row);
-           // PaneView.getChildren().addAll(t.getSceneWithChart().getRoot());
-            break; 
-            
-        default: 
-            LogHandler.add("Diagrammtyp konnte nicht erkannt werden im AddViewElmentController.");
-        } 
-    
-        if (row == 0 )
-        { 
-            row++;
+            if (row == 0) {                
+                row++;
+            } else {
+                column++;
+                row = 0;
+            }
         }
-        else
-        {
-            column++;
-            row = 0;
-        }
+        PaneView.getChildren().add(elementGrid);
+        
     }
-    PaneView.getChildren().add(elementGrid);
     
-    }
-
     @FXML
     private void databaseConnect(ActionEvent event) throws Exception {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseView.fxml"));
         Parent root = loader.load();
         DatabaseViewController databasecon = loader.getController();
-    
+        
         PaneView.getChildren().addAll(root);
     }
     
-    public void closeMainController(){
-       System.out.println("Programm wird beendet.");
+    public void closeMainController() {
+        System.out.println("Programm wird beendet.");
     }
-
-    public void createDefaultReport(){
-      String sqlStm = "select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
-        
-      ViewElement e_1 = new ViewElement();
-      e_1.setDiagramtName("Element 1");
-      e_1.setDiagramType("Kreisdiagramm");
-      e_1.setRefreshRate(2);
-      e_1.setSqlStatement(sqlStm);
-      e_1.setxAxisName("x Achse");
-      e_1.setyAxisName("y Achse");
-      e_1.setYAxisMeasure("Y Mess");
-      e_1.setxAxisMeasure("X Mess");
-      e_1.setXAxisValues(Arrays.asList("route"));
-      e_1.setYAxisValues(Arrays.asList("pieces"));
-        
-      ViewElement e_2 = new ViewElement();
-      e_2.setDiagramtName("Element 2");
-      e_2.setDiagramType("Balkendiagramm");
-      e_2.setRefreshRate(2);
-      e_2.setSqlStatement(sqlStm);
-      e_2.setxAxisName("x Achse");
-      e_2.setyAxisName("y Achse");
-      e_2.setYAxisMeasure("Y Mess");
-      e_2.setxAxisMeasure("X Mess");
-      e_2.setXAxisValues(Arrays.asList("route"));
-      e_2.setYAxisValues(Arrays.asList("pieces"));
-      
-      ViewElement e_3 = new ViewElement();
-      e_3.setDiagramtName("Element 3");
-      e_3.setDiagramType("Liniendiagramm");
-      e_3.setRefreshRate(2);
-      e_3.setSqlStatement(sqlStm);
-      e_3.setxAxisName("x Achse");
-      e_3.setyAxisName("y Achse");
-      e_3.setYAxisMeasure("Y Mess");
-      e_3.setxAxisMeasure("X Mess");
-      e_3.setXAxisValues(Arrays.asList("pieces"));
-      e_3.setYAxisValues(Arrays.asList("pieces"));
-      
-      ViewElement e_4 = new ViewElement();
-      e_4.setDiagramtName("Element 4");
-      e_4.setDiagramType("Tabelle");
-      e_4.setRefreshRate(2);
-      e_4.setSqlStatement(sqlStm);
-      e_4.setxAxisName("x Achse");
-      e_4.setyAxisName("y Achse");
-      e_4.setYAxisMeasure("Y Mess");
-      e_4.setxAxisMeasure("X Mess");
-      e_4.setXAxisValues(Arrays.asList("route"));
-      e_4.setYAxisValues(Arrays.asList("pieces"));
-        
-      Report tempRep = new Report();
-      tempRep.setReportName("Default Report 1");
-      tempRep.setReportId(1);
-      tempRep.addViewElement(e_1);
-      tempRep.addViewElement(e_2);
-      tempRep.addViewElement(e_3);
-      tempRep.addViewElement(e_4);
-      reportList.add(tempRep);
-      
-      tempRep = new Report();
-      tempRep.setReportName("Default Report 2");
-      tempRep.setReportId(2);
-      tempRep.addViewElement(e_1);
-      tempRep.addViewElement(e_2);
-      reportList.add(tempRep);
-      
-      tempRep = new Report();
-      tempRep.setReportName("Default Report 3");
-      tempRep.setReportId(2);
-      tempRep.addViewElement(e_1);
-      reportList.add(tempRep);
     
+    public void createDefaultReport() {
+        String sqlStm = "select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
+        
+        ViewElement e_1 = new ViewElement();
+        e_1.setDiagramtName("Element 1");
+        e_1.setDiagramType("Kreisdiagramm");
+        e_1.setRefreshRate(2);
+        e_1.setSqlStatement(sqlStm);
+        e_1.setxAxisName("x Achse");
+        e_1.setyAxisName("y Achse");
+        e_1.setYAxisMeasure("Y Mess");
+        e_1.setxAxisMeasure("X Mess");
+        e_1.setXAxisValues(Arrays.asList("route"));
+        e_1.setYAxisValues(Arrays.asList("pieces"));
+        
+        ViewElement e_2 = new ViewElement();
+        e_2.setDiagramtName("Element 2");
+        e_2.setDiagramType("Balkendiagramm");
+        e_2.setRefreshRate(2);
+        e_2.setSqlStatement(sqlStm);
+        e_2.setxAxisName("x Achse");
+        e_2.setyAxisName("y Achse");
+        e_2.setYAxisMeasure("Y Mess");
+        e_2.setxAxisMeasure("X Mess");
+        e_2.setXAxisValues(Arrays.asList("route"));
+        e_2.setYAxisValues(Arrays.asList("pieces"));
+        
+        ViewElement e_3 = new ViewElement();
+        e_3.setDiagramtName("Element 3");
+        e_3.setDiagramType("Liniendiagramm");
+        e_3.setRefreshRate(2);
+        e_3.setSqlStatement(sqlStm);
+        e_3.setxAxisName("x Achse");
+        e_3.setyAxisName("y Achse");
+        e_3.setYAxisMeasure("Y Mess");
+        e_3.setxAxisMeasure("X Mess");
+        e_3.setXAxisValues(Arrays.asList("pieces"));
+        e_3.setYAxisValues(Arrays.asList("pieces"));
+        
+        ViewElement e_4 = new ViewElement();
+        e_4.setDiagramtName("Element 4");
+        e_4.setDiagramType("Tabelle");
+        e_4.setRefreshRate(2);
+        e_4.setSqlStatement(sqlStm);
+        e_4.setxAxisName("x Achse");
+        e_4.setyAxisName("y Achse");
+        e_4.setYAxisMeasure("Y Mess");
+        e_4.setxAxisMeasure("X Mess");
+        e_4.setXAxisValues(Arrays.asList("route"));
+        e_4.setYAxisValues(Arrays.asList("pieces"));
+        
+        Report tempRep = new Report();
+        tempRep.setReportName("Default Report 1");
+        tempRep.setReportId(1);
+        tempRep.addViewElement(e_1);
+        tempRep.addViewElement(e_2);
+        tempRep.addViewElement(e_3);
+        tempRep.addViewElement(e_4);
+        reportList.add(tempRep);
+        
+        tempRep = new Report();
+        tempRep.setReportName("Default Report 2");
+        tempRep.setReportId(2);
+        tempRep.addViewElement(e_1);
+        tempRep.addViewElement(e_2);
+        reportList.add(tempRep);
+        
+        tempRep = new Report();
+        tempRep.setReportName("Default Report 3");
+        tempRep.setReportId(2);
+        tempRep.addViewElement(e_1);
+        reportList.add(tempRep);
+        
     }
 }
-
-    
-

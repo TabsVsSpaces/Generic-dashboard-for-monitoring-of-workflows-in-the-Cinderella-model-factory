@@ -215,7 +215,7 @@ public class AddViewElementController implements Initializable {
         this.sqlResult = new SQLHandler(SQLStatement.getText());
         if (sqlResult.getResultMap().isEmpty()) {
         } else {
-            LogHandler.add("Statment Korrekt");
+            LogHandler.add("Statement korrekt");
             Diagrammtyp.setDisable(false);
         }
     }
@@ -312,12 +312,12 @@ public class AddViewElementController implements Initializable {
     
     private void saveViewElementData() throws Exception{
         if( element == null ) {
-            LogHandler.add("ViewElemnt konnte nicht gespeichert werden da das Objekt leer ist.");
+            LogHandler.add("ViewElemnt konnte nicht gespeichert werden, weil das Objekt leer ist.");
             return;
         }
         
         if (Diagrammname.getText().trim().isEmpty()){
-            LogHandler.add("Digrammname fehlt.");
+            LogHandler.add("Diagrammname fehlt.");
             return;
         }
         
@@ -376,12 +376,12 @@ public class AddViewElementController implements Initializable {
     
     private boolean columesSelected(List x, List y){
         if (x.isEmpty()){
-            LogHandler.add("Bitt wählen Sie eine Splate für die x Achse aus.");
+            LogHandler.add("Bitte wählen Sie eine Spalte für die x-Achse aus.");
             return false;
         }
         
         if (y.isEmpty()){
-            LogHandler.add("Bitt wählen Sie eine Splate für die y Achse aus.");
+            LogHandler.add("Bitte wählen Sie eine Spalte für die y-Achse aus.");
             return false;
         }
         

@@ -47,8 +47,9 @@ public class DataManager {
             LogHandler.add("ERROR: Properties konnten nicht gespeichert werden!");
         }
     }
-
-    public static void saveReport(Report report, ViewElement viewElement) {
+    
+    //call in ReportController ->add viewElement() //input reportList in MainController?
+    public static void saveReportToXML(Report report) {
 
         XStream xstream = new XStream();
         xstream.alias("report", Report.class);
@@ -63,8 +64,8 @@ public class DataManager {
 
     }
 
-    //load all
-    public Report loadReport() {
+    //load all 
+    public Report loadReportFromXML() {
         XStream xstream = new XStream(new DomDriver());
         Report newReport = new Report();
 

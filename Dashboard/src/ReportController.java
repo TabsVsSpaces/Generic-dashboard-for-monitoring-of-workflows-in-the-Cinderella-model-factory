@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import Helper.DataManager;
 import Helper.LogHandler;
 import Model.Report;
 import Model.ViewElement;
@@ -147,6 +148,8 @@ public class ReportController implements Initializable {
         } else {
             LogHandler.add("ViewElement wurde aktualisiert.");
         }
+        
+         //DataManager.saveReportToXML(report);
     }
     
     public void loadViewElements(){
