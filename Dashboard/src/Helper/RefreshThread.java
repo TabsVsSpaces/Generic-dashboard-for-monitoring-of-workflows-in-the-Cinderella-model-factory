@@ -43,6 +43,7 @@ public class RefreshThread extends Thread {
            
     @Override
     public void run() {
+        int rate = getLowestRefreshRate();
         while (isrunning()) {                    
             System.err.println("Thread is running for report : " + tempReport.getReportName());
             GridPane elementGrid = refreshView();
@@ -58,7 +59,7 @@ public class RefreshThread extends Thread {
             
             System.err.println("thread is running");
                     try {
-                        sleep(3000);
+                        sleep(rate);
                     } catch (InterruptedException ex) {
                         //Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -66,6 +67,21 @@ public class RefreshThread extends Thread {
 
     }
             
+    private int getLowestRefreshRate(){
+        int rate = 0;
+        
+        for(int i = 0 ; i < tempReport.getListElementSize() ; i++)
+        {
+            if (rate == 0) {
+                rate = tempReport.getViewEelementbyIndex(i).getRefreshRate();
+            }else {
+                if (tempReport.getViewEelementbyIndex(i).getRefreshRate() < rate){
+                    rate = tempReport.getViewEelementbyIndex(i).getRefreshRate();
+                }
+            }
+        }
+        return rate;
+    }
             
     private GridPane refreshView(){
     
