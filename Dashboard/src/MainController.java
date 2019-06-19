@@ -33,6 +33,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ToggleButton;
 import Charts.*;
 import Model.ViewElement;
+import static java.lang.Thread.sleep;
 import java.util.Arrays;
 import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
@@ -61,10 +62,12 @@ public class MainController implements Initializable {
     
     private ObservableList<Report> reportList = FXCollections.observableArrayList();
     private Report newReport;
+    private RefreshThread frefreshThread=null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)  {
         
+      //load reports  
       if (reportList.isEmpty()){
           createDefaultReport();
       }
@@ -155,7 +158,7 @@ public class MainController implements Initializable {
         repcon.SetMainControleller(this);
         repcon.setReport(report);
         repcon.loadViewElements();
-        
+        stopRefreashThread();
         PaneView.getChildren().addAll(root);
     }
     
@@ -197,67 +200,23 @@ public class MainController implements Initializable {
                     LogHandler.add("Report " + report.getReportName() + " wurde gelöscht.");
                 };
         }
+        stopRefreashThread();
     }
 
     @FXML
     private void loadReport(MouseEvent event) {
+        Report tempReport = ListViewReports.getSelectionModel().getSelectedItem();
         
-    Report tempReport = ListViewReports.getSelectionModel().getSelectedItem();
-    
-    GridPane elementGrid = new GridPane();
-    int row = 0;
-    int column = 1;
-    
-    PaneView.getChildren().clear();
-    for(int i = 0 ; i < tempReport.getListElementSize() ; i++)
-    {
-        ViewElement tempElement = tempReport.getViewEelementbyIndex(i);
-        switch(tempElement.getDiagramType()){ 
-        case "Kreisdiagramm":    
-            Pie_Chart p = new Pie_Chart(tempElement);
-            elementGrid.add(p.getSceneWithChart().getRoot(),column,row);
-            //PaneView.getChildren().addAll(p.getSceneWithChart().getRoot());
-            break; 
-            
-        case "Balkendiagramm":   
-            Bar_Chart b = new Bar_Chart(tempElement);
-            elementGrid.add(b.getSceneWithChart().getRoot(),column,row);
-           // PaneView.getChildren().addAll(b.getSceneWithChart().getRoot()); 
-            break; 
-            
-        case "Liniendiagramm": 
-            Line_Chart l = new Line_Chart(tempElement); 
-            elementGrid.add(l.getSceneWithChart().getRoot(),column,row);
-           // PaneView.getChildren().addAll(l.getSceneWithChart().getRoot());
-            break; 
-            
-        case "Tabelle": 
-            Table t = new Table(tempElement);
-            elementGrid.add(t.getSceneWithChart().getRoot(),column,row);
-           // PaneView.getChildren().addAll(t.getSceneWithChart().getRoot());
-            break; 
-            
-        default: 
-            LogHandler.add("Diagrammtyp konnte nicht erkannt werden im AddViewElmentController.");
-        } 
-    
-        if (row == 0 )
-        { 
-            row++;
-        }
-        else
-        {
-            column++;
-            row = 0;
-        }
-    }
-    PaneView.getChildren().add(elementGrid);
-    
+        stopRefreashThread();
+
+        frefreshThread = new RefreshThread(tempReport, PaneView);
+        frefreshThread.start();
+
     }
 
     @FXML
     private void databaseConnect(ActionEvent event) throws Exception {
-        
+        stopRefreashThread();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseView.fxml"));
         Parent root = loader.load();
         DatabaseViewController databasecon = loader.getController();
@@ -267,6 +226,11 @@ public class MainController implements Initializable {
     
     public void closeMainController(){
        System.out.println("Programm wird beendet.");
+       
+       stopRefreashThread();
+       
+       
+       //save reports
     }
 
     public void createDefaultReport(){
@@ -343,6 +307,15 @@ public class MainController implements Initializable {
       reportList.add(tempRep);
     
     }
+    
+    private void stopRefreashThread(){
+        if (frefreshThread != null) {
+            frefreshThread.stopping();
+        } 
+    }
+    
+    
+    
 }
 
     
