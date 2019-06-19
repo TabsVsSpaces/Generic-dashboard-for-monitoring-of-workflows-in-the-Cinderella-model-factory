@@ -303,7 +303,7 @@ public class AddViewElementController implements Initializable {
         MaßeinheitX.setText(element.getxAxisMeasure());
         MaßeinheitY.setText(element.getYAxisMeasure());
         element.getXAxisValues();
-        Aktualisierungsrate.setValue(element.getRefreshRate());
+        Aktualisierungsrate.setValue(element.getRefreshRate()/1000);
         Diagrammtyp.setValue(element.getDiagramtName());
         this.sqlResult = new SQLHandler(SQLStatement.getText());
         fillAxis();
@@ -322,7 +322,7 @@ public class AddViewElementController implements Initializable {
         }
         
         element.setDiagramtName(Diagrammname.getText());
-        element.setRefreshRate(Aktualisierungsrate.getValue());
+        element.setRefreshRate(Aktualisierungsrate.getValue()*1000);
         element.setDiagramType(Diagrammtyp.getValue());
         element.setSqlStatement(SQLStatement.getText());
         element.setxAxisName(NameX.getText());
