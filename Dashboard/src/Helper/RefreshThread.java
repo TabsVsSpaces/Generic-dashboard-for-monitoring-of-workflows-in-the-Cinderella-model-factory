@@ -10,6 +10,7 @@ import Charts.Bar_Chart;
 import Charts.Line_Chart;
 import Charts.Pie_Chart;
 import Charts.Table;
+import Model.JDBCPool;
 //import MainController;
 import Model.Report;
 import Model.ViewElement;
@@ -46,26 +47,35 @@ public class RefreshThread extends Thread {
         int rate = getLowestRefreshRate();
         while (isrunning()) {                    
             System.err.println("Thread is running for report : " + tempReport.getReportName());
-            GridPane elementGrid = refreshView();
-                    
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    // entsprechende UI Komponente updaten
-                    PaneView.getChildren().clear();
-                    PaneView.getChildren().add(elementGrid);
-                }});
-                    
-            
-            System.err.println("thread is running");
+
+            JDBCPool jp = new JDBCPool();
+            if (jp.getPoolHealth()){
+                    GridPane elementGrid = refreshView();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                        // entsprechende UI Komponente updaten
+                        //call toggle db is up (true)
+                        PaneView.getChildren().clear();
+                        PaneView.getChildren().add(elementGrid);
+                        }});
+            } else {
+                    System.err.println("DB cannot reach:");    
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                           //call toggle db is down (false)
+                           System.err.println("DB cannot reach:");
+                        }});
+                }
+            }
                     try {
                         sleep(rate);
                     } catch (InterruptedException ex) {
                         //Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-        }
-
     }
+
             
     private int getLowestRefreshRate(){
         int rate = 0;
