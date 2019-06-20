@@ -241,7 +241,7 @@ public class MainController implements Initializable {
       ViewElement e_1 = new ViewElement();
       e_1.setDiagramtName("Element 1");
       e_1.setDiagramType("Kreisdiagramm");
-      e_1.setRefreshRate(2000);
+      e_1.setRefreshRate(5000);
       e_1.setSqlStatement(sqlStm);
       e_1.setxAxisName("x Achse");
       e_1.setyAxisName("y Achse");
@@ -253,7 +253,7 @@ public class MainController implements Initializable {
       ViewElement e_2 = new ViewElement();
       e_2.setDiagramtName("Element 2");
       e_2.setDiagramType("Balkendiagramm");
-      e_2.setRefreshRate(2000);
+      e_2.setRefreshRate(5000);
       e_2.setSqlStatement(sqlStm);
       e_2.setxAxisName("x Achse");
       e_2.setyAxisName("y Achse");
@@ -265,7 +265,7 @@ public class MainController implements Initializable {
       ViewElement e_3 = new ViewElement();
       e_3.setDiagramtName("Element 3");
       e_3.setDiagramType("Liniendiagramm");
-      e_3.setRefreshRate(2000);
+      e_3.setRefreshRate(5000);
       e_3.setSqlStatement(sqlStm);
       e_3.setxAxisName("x Achse");
       e_3.setyAxisName("y Achse");
@@ -277,7 +277,7 @@ public class MainController implements Initializable {
       ViewElement e_4 = new ViewElement();
       e_4.setDiagramtName("Element 4");
       e_4.setDiagramType("Tabelle");
-      e_4.setRefreshRate(2000);
+      e_4.setRefreshRate(5000);
       e_4.setSqlStatement(sqlStm);
       e_4.setxAxisName("x Achse");
       e_4.setyAxisName("y Achse");
