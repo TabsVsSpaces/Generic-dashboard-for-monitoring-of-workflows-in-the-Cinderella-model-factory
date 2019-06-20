@@ -46,11 +46,11 @@ public class Line_Chart  {
         
         //Defining the x axis             
         CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setLabel(element.getxAxisName());
+        xAxis.setLabel(element.getxAxisName() + " in " + element.getxAxisMeasure());
 
         //Defining the y axis   
         NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel(element.getyAxisName());
+        yAxis.setLabel(element.getyAxisName() + " in " + element.getYAxisMeasure());
 
         //Creating the line chart 
         LineChart linechart = new LineChart(xAxis, yAxis);

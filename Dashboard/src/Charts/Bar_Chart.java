@@ -48,10 +48,10 @@ public class Bar_Chart  {
         
         //String[] xValues = resultSet.getValues(element.getXAxisValues().get(0)).toArray(new String[0]);      
         xAxis.setCategories(FXCollections.<String>observableArrayList(element.getYAxisValues()));
-        xAxis.setLabel(element.getxAxisName());
+        xAxis.setLabel(element.getxAxisName() + " in " + element.getxAxisMeasure());
 
         NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel(element.getyAxisName());
+        yAxis.setLabel(element.getyAxisName()+ " in " + element.getYAxisMeasure());
 
         //Creating the Bar chart
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
@@ -79,6 +79,9 @@ public class Bar_Chart  {
         
         //Setting the data to bar chart       
         barChart.getData().addAll(seriesList);
+        
+        barChart.setAnimated(false);
+        
         return barChart;
     }
     
