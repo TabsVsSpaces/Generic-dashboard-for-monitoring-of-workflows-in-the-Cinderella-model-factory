@@ -33,11 +33,16 @@ import org.testfx.framework.junit5.*;
 import org.loadui.testfx.utils.FXTestUtils;
 import static org.loadui.testfx.GuiTest.find;
 import org.assertj.core.api.*;
+import javafx.scene.Node;
+import javafx.scene.control.ListView;
+
 
 // Import SRC-Class
 import Model.Report;
 import Model.ViewElement;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import static oracle.sql.NUMBER.e;
 
 /**
  *
@@ -85,11 +90,14 @@ public class TestFX_Suite extends ApplicationTest {
     
     @Test
     public void checkMainComponents(){
-        ListView Reports = find("ListViewReports");
-        assertNotNull(Reports);
+        //ListView Reports = find("ListViewReports");
+        //assertNotNull(Reports);
+        final Button button = find("#BtnMainAddReport");
         
-        clickOn("#BtnMainAddReport");
-        assertThat(targetWindow("AddViewElement"));
+       clickOn(button);
+       verifyThat("#BtnMainAddReport");
+        
+        //assertNull(stage);
         
         
     }
