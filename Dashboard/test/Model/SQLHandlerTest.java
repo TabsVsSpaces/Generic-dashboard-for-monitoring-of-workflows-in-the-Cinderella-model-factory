@@ -50,8 +50,6 @@ public class SQLHandlerTest {
     /**
      * Test of getResultMap method, of class SQLHandler.
      */
-    
-    
     @org.junit.Test
     public void testGetResultMap() {
         System.out.println("Funktion - 2");
