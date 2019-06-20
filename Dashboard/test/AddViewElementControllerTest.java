@@ -96,5 +96,19 @@ public class AddViewElementControllerTest {
         instance.activateFields();
         // TODO review the generated test code and remove the default call to fail.
     }
+
+    /**
+     * Test of initialize method, of class AddViewElementController.
+     */
+    @Test
+    public void testInitialize() {
+        System.out.println("initialize");
+        URL url = null;
+        ResourceBundle rb = null;
+        AddViewElementController instance = new AddViewElementController();
+        instance.initialize(url, rb);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }
