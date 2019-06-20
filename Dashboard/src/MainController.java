@@ -86,7 +86,7 @@ public class MainController implements Initializable {
 
         Log.itemsProperty().bind(listProperty);
         listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
-
+        loadReprot();
     }
 
     public void startLogThread(Thread logThread) {
@@ -164,7 +164,7 @@ public class MainController implements Initializable {
         } else {
             LogHandler.add("Report wurde aktualisiert.");
         }
-
+        loadReprot();
     }
 
     private int createReportID() {
@@ -197,13 +197,22 @@ public class MainController implements Initializable {
 
     @FXML
     private void loadReport(MouseEvent event) {
-        Report tempReport = ListViewReports.getSelectionModel().getSelectedItem();
+        loadReprot();
+    }
+    
+    public void loadReprot(){
+        Report tempReport=null;
+        if (ListViewReports.getSelectionModel().isEmpty()){
+            tempReport = ListViewReports.getItems().get(0);
+        } else {
+            tempReport = ListViewReports.getSelectionModel().getSelectedItem();
+        }
         
         stopRefreashThread();
+        
 
         frefreshThread = new RefreshThread(tempReport, PaneView);
         frefreshThread.start();
-
     }
 
     @FXML
@@ -212,7 +221,8 @@ public class MainController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseView.fxml"));
         Parent root = loader.load();
         DatabaseViewController databasecon = loader.getController();
-
+        databasecon.SetMainControleller(this);
+        
         PaneView.getChildren().addAll(root);
     }
     

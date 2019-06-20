@@ -29,6 +29,8 @@ public class DatabaseViewController implements Initializable {
     private TextField password;
     @FXML
     private TextField jdbcDriver;
+    
+    private MainController MainC;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -39,7 +41,12 @@ public class DatabaseViewController implements Initializable {
         password.setText(DataManager.getProperties(PROP_NAME).getProperty("PASS"));
 
     }
-
+    
+    public void SetMainControleller(MainController Main)
+    {
+        MainC = Main;
+    }
+    
     private String[] getTextfield() {
 
         String[] connection = new String[4];
@@ -81,5 +88,7 @@ public class DatabaseViewController implements Initializable {
         DataManager.setProperties(PROP_NAME, "DB_URL", connection[1]);
         DataManager.setProperties(PROP_NAME, "USER", connection[2]);
         DataManager.setProperties(PROP_NAME, "PASS", connection[3]);
+        LogHandler.add("Servereinstellungen gespeichert.");
+        MainC.loadReprot();
     }
 }
