@@ -89,32 +89,35 @@ public class MainController implements Initializable {
         loadReprot();
     }
 
-    public void startLogThread(Thread logThread) {
+    public Thread startLogThread() {
+        Thread logThread;
         logThread = new Thread() {
 
             @Override
             public void run() {
-                while (true) {
+                try {
+                    while (!Thread.currentThread().isInterrupted()) {
 
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            // entsprechende UI Komponente updaten
-                            listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
-                        }
-                    });
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                // entsprechende UI Komponente updaten
+                                listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
+                            }
+                        });
 
-                    try {
                         sleep(2000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
 
+                    }
+
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                    //Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         };
-
         logThread.start();
+        return logThread;
     }
 
     @FXML
@@ -230,7 +233,6 @@ public class MainController implements Initializable {
        System.out.println("Programm wird beendet.");
        
        stopRefreashThread();
-       
        
        //save reports
     }

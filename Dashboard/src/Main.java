@@ -23,7 +23,7 @@ public class Main extends Application {
         Parent root = loader.load();
         this.mainController = loader.getController();
 
-        mainController.startLogThread(logThread = null);
+        logThread = mainController.startLogThread();
 
         Scene scene = new Scene(root, 1200, 800);
 
@@ -43,10 +43,9 @@ public class Main extends Application {
 
     @Override
     public void stop() {
-
-        mainController.closeMainController();
         logThread.interrupt();
-
+        mainController.closeMainController();
+        
         if (pool != null) {
             try {
                 pool.close();
