@@ -54,9 +54,4 @@ public class JDBCPool {
             basicDS.close();
         }
     }
-
-    public boolean getPoolHealth() {
-        //true if connections created by this datasource will fast fail validation
-        return basicDS.getFastFailValidation() != true;
-    }
 }

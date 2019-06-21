@@ -5,14 +5,9 @@
  */
 package Helper;
 
-import Charts.Bar_Chart;
-import Charts.Line_Chart;
-import Charts.Pie_Chart;
-import Charts.Table;
-import Model.JDBCPool;
+import Charts.*;
+import Model.*;
 //import MainController;
-import Model.Report;
-import Model.ViewElement;
 import com.sun.org.apache.bcel.internal.generic.ICONST;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
@@ -56,8 +51,7 @@ public class RefreshThread extends Thread {
         while (isrunning()) {
             System.err.println("Thread is running for report : " + tempReport.getReportName());
 
-            JDBCPool jp = JDBCPool.getInstance();
-            if (jp.getPoolHealth()) {
+            if (JDBCTest.getState()) {
                 GridPane elementGrid = refreshView();
                 Platform.runLater(new Runnable() {
                     @Override
