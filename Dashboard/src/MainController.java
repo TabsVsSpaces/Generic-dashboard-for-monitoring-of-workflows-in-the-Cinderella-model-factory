@@ -35,6 +35,7 @@ import Model.ViewElement;
 import static java.lang.Thread.sleep;
 import java.util.Arrays;
 import javafx.application.Platform;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -56,7 +57,7 @@ public class MainController implements Initializable {
     @FXML
     private ListView Log;
     @FXML
-    private ToggleButton ToggleStatus;
+    private ImageView ToggleStatus;
 
     private ObservableList<Report> reportList = FXCollections.observableArrayList();
     private Report newReport;
@@ -214,7 +215,7 @@ public class MainController implements Initializable {
         stopRefreashThread();
         
 
-        frefreshThread = new RefreshThread(tempReport, PaneView);
+        frefreshThread = new RefreshThread(tempReport, PaneView,ToggleStatus);
         frefreshThread.start();
     }
 
@@ -317,6 +318,7 @@ public class MainController implements Initializable {
             frefreshThread.stopping();
         } 
     }
+
     
     
     

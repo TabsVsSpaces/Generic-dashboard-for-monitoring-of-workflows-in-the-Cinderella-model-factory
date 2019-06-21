@@ -13,12 +13,16 @@ import Model.JDBCPool;
 //import MainController;
 import Model.Report;
 import Model.ViewElement;
+import com.sun.org.apache.bcel.internal.generic.ICONST;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+
 
 /**
  *
@@ -28,11 +32,13 @@ public class RefreshThread extends Thread {
 
     Report tempReport = null;
     Pane PaneView;
+    ImageView ToggleStatus;
     boolean keeprunning = true;
 
-    public RefreshThread(Report tempReport, Pane PaneView) {
+    public RefreshThread(Report tempReport, Pane PaneView,ImageView ToggleStatus) {
         this.tempReport = tempReport;
         this.PaneView = PaneView;
+        this.ToggleStatus = ToggleStatus;
     }
 
     public void stopping() {
@@ -56,8 +62,8 @@ public class RefreshThread extends Thread {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        // entsprechende UI Komponente updaten
-                        //call toggle db is up (true)
+                        // Icons to create Tom will do that
+                        //ToggleStatus.setImage(new Image("Icons/lamp.png"));
                         PaneView.getChildren().clear();
                         PaneView.getChildren().add(elementGrid);
                     }
@@ -67,7 +73,7 @@ public class RefreshThread extends Thread {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        //call toggle db is down (false)
+                        //ToggleStatus.setImage(new Image("Icons/edit.png"));
                         System.err.println("DB cannot reach:");
                     }
                 });

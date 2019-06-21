@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import Model.*;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -31,6 +32,8 @@ public class DatabaseViewController implements Initializable {
     private TextField jdbcDriver;
     
     private MainController MainC;
+    @FXML
+    private Button saveDBCon;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -39,6 +42,7 @@ public class DatabaseViewController implements Initializable {
         dbURL.setText(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
         user.setText(DataManager.getProperties(PROP_NAME).getProperty("USER"));
         password.setText(DataManager.getProperties(PROP_NAME).getProperty("PASS"));
+        saveDBCon.setDisable(true);
 
     }
     
@@ -75,6 +79,7 @@ public class DatabaseViewController implements Initializable {
 
         if (!connection[0].isEmpty() && !connection[1].isEmpty() && !connection[2].isEmpty() && !connection[3].isEmpty()) {
             JDBCTest.getState(connection[0], connection[1], connection[2], connection[3]);
+            saveDBCon.setDisable(false);
         } else {
             LogHandler.add("Bitte alle Fenster ausfüllen");
         }
