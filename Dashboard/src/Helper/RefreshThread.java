@@ -62,8 +62,7 @@ public class RefreshThread extends Thread {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        // Icons to create Tom will do that
-                        //ToggleStatus.setImage(new Image("Icons/lamp.png"));
+                        ToggleStatus.setImage(new Image("Icons/dbconGood.png"));
                         PaneView.getChildren().clear();
                         PaneView.getChildren().add(elementGrid);
                     }
@@ -73,7 +72,7 @@ public class RefreshThread extends Thread {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        //ToggleStatus.setImage(new Image("Icons/edit.png"));
+                        ToggleStatus.setImage(new Image("Icons/dbconBad.png"));
                         System.err.println("DB cannot reach:");
                     }
                 });

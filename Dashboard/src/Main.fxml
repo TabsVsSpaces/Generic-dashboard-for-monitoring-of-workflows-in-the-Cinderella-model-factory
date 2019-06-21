@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MainView" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+<AnchorPane id="AnchorPane" fx:id="MainView" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EEE9E9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="285.0" style="-fx-background-color: lightgrey;">
          <children>
@@ -35,7 +35,7 @@
                <children>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#deleteReport" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/icons8-minus-24.png" />
                            </image>
@@ -50,7 +50,7 @@
                   </Button>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#changeReport" prefHeight="32.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/icons8-einstellungen-filled-50.png" />
                            </image>
@@ -65,7 +65,7 @@
                   </Button>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#addReport" prefHeight="32.0" prefWidth="38.0" style="-fx-background-color: transparent;">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/icons8-plus-24.png" />
                            </image>
@@ -99,13 +99,13 @@
                         <Tooltip text="Datenbank konfigurieren" />
                      </tooltip>
                      <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/icons8-einstellungen-filled-50.png" />
                            </image>
                         </ImageView>
                      </graphic></Button>
-                  <ImageView fx:id="ToggleStatus" fitHeight="30.0" fitWidth="30.0" layoutX="808.0" layoutY="23.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ToggleStatus" fitHeight="30.0" fitWidth="30.0" layoutX="808.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icons/icons8-datenbank-50.png" />
                      </image>
