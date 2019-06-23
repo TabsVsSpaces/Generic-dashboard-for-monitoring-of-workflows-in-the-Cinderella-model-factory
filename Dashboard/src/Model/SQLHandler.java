@@ -1,6 +1,6 @@
 /*
 
- */
+*/
 package Model;
 
 import Helper.*;
@@ -12,8 +12,8 @@ public class SQLHandler {
 
     private final String sqlStatement;
     private ResultSet rs;
-    private Map<String, List<Object>> resultMap;
-    private Map<String, Integer> columnTypes;
+    private LinkedHashMap<String, List<Object>> resultMap;
+    private LinkedHashMap<String, Integer> columnTypes;
     private final int[] SQLDataTypes;
     private String[] columns;
     private Connection conn = null;
@@ -33,36 +33,6 @@ public class SQLHandler {
 
     public Map<String, List<Object>> getResultMap() {
         return resultMap;
-    }
-
-    //only temporary!
-    public ResultSet getResultSet() {
-
-        try {
-            BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
-            conn = basicDS.getConnection();
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sqlStatement);
-        } catch (SQLException se) {
-            LogHandler.add(se.getMessage());
-        }
-        return rs;
-    }
-
-    public void close() {
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException se) {
-            LogHandler.add(se.getMessage());
-        }
     }
 
     public String[] getColumns() {
@@ -131,8 +101,8 @@ public class SQLHandler {
         try {
             ResultSetMetaData md = rs.getMetaData();
             int columns = md.getColumnCount();
-            resultMap = new HashMap<>(columns);
-            columnTypes = new HashMap<>(columns);
+            resultMap = new LinkedHashMap<>(columns);
+            columnTypes = new LinkedHashMap<>(columns);
             for (int i = 1; i <= columns; ++i) {
                 resultMap.put(md.getColumnName(i), new ArrayList<>());
             }

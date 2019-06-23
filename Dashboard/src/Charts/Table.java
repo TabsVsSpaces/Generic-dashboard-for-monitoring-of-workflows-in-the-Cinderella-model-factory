@@ -21,71 +21,75 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class Table {
+
     ViewElement element;
-    
-    public Table(ViewElement element){
-        this.element=element;
+
+    public Table(ViewElement element) {
+        this.element = element;
     }
-    
+
     public Scene getSceneWithChart() {
         //Creating a Group object 
         //Group root = new Group(createTable(element));
-        Scene scene = new Scene(createTable(element)); 
+        Scene scene = new Scene(createTable(element));
         //Creating a scene object
         //Scene scene = new Scene(root, 350, 330);
-        
+
         return scene;
     }
-    
-    
-    private TableView createTable(ViewElement element){
-        try{
+
+    private TableView createTable(ViewElement element) {
+
+        try {
             SQLHandler sql = new SQLHandler(element.getSqlStatement());
-            ResultSet resultSet = sql.getResultSet();
+
+            String[] columns = sql.getColumns();
+            String[] values = sql.getValues(columns[0]).toArray(new String[0]);
+
             ObservableList<ObservableList> data = FXCollections.observableArrayList();
-        
+
             TableView tableView = new TableView();
 
-            /**********************************
-            * TABLE COLUMN ADDED DYNAMICALLY *
-            **********************************/
-            for(int i=0 ; i<resultSet.getMetaData().getColumnCount(); i++){
+            /**
+             * ********************************
+             * TABLE COLUMN ADDED DYNAMICALLY * ********************************
+             */
+            for (int i = 0; i < columns.length; i++) {
                 //We are using non property style for making dynamic table
-                final int j = i;                
-                TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i+1));
-                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList,String>,ObservableValue<String>>(){                    
-                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {                                                                                              
-                        return new SimpleStringProperty(param.getValue().get(j).toString());                        
-                    }                    
+                final int j = i;
+                TableColumn col = new TableColumn(columns[i]);
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
                 });
 
                 tableView.getColumns().addAll(col);
             }
-            
-            /********************************
-             * Data added to ObservableList *
-             ********************************/
-            while(resultSet.next()){
+
+            /**
+             * ******************************
+             * Data added to ObservableList * ******************************
+             */
+            for (int j = 0; j < values.length; j++) {
                 //Iterate Row
-                ObservableList<String> row = FXCollections.observableArrayList();
-                for(int i=1 ; i<=resultSet.getMetaData().getColumnCount(); i++){
+                ObservableList<Object> row = FXCollections.observableArrayList();
+                for (String column : columns) {
                     //Iterate Column
-                    row.add(resultSet.getString(i));
+                    row.add(sql.getValues(column).get(j));
                 }
-                System.out.println("Row [1] added "+row );
+                System.out.println("Row [1] added " + row);
                 data.add(row);
             }
 
             //FINALLY ADDED TO TableView
-            tableView.setItems(data); 
-            sql.close();
+            tableView.setItems(data);
             return tableView;
-            
-            
-         }catch(Exception e){
-              e.printStackTrace();
-              System.out.println("Error on Building Data");             
-        }   
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
         return null;
     }
 }

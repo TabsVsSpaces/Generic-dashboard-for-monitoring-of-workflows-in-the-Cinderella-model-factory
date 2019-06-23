@@ -79,7 +79,7 @@ public class SQLHandlerTest {
     public void testGetColumns() {
         System.out.println("getColumns");
         //DisplayElemConstruc instance = null;
-        String[] expResult = {"pieces","product","oper","route","tool"};
+        String[] expResult = {"tool","pieces","product","route","oper"};
         String[] result = instance.getColumns();
         for(int i=0;i<result.length;i++){
             System.out.println(result[i]);
@@ -108,6 +108,7 @@ public class SQLHandlerTest {
     /**
      * Test of close method, of class SQLHandler.
      */
+    /*
     @org.junit.Test
     public void testClose() {
         System.out.println("close");
@@ -116,7 +117,8 @@ public class SQLHandlerTest {
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
-
+    */
+    
     /**
      * Test of getValues method, of class SQLHandler.
      */
