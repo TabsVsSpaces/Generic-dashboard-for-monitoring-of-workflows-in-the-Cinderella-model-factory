@@ -97,15 +97,17 @@
                   <Button layoutX="852.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#databaseConnect" onMouseClicked="#databaseConnect" prefHeight="32.0" prefWidth="30.0" style="-fx-background-color: transparent;">
                      <tooltip>
                         <Tooltip text="Datenbank konfigurieren" />
-                     </tooltip></Button>
+                     </tooltip>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/icons8-einstellungen-filled-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                   <ImageView fx:id="ToggleStatus" fitHeight="30.0" fitWidth="30.0" layoutX="780.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icons/icons8-datenbank-50.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="852.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icons/icons8-einstellungen-filled-50.png" />
                      </image>
                   </ImageView>
                </children>

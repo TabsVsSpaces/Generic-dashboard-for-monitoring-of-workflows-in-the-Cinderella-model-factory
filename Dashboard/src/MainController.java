@@ -148,8 +148,7 @@ public class MainController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Report.fxml"));
         Parent root = loader.load();
         ReportController repcon = loader.getController();
-
-        //LogHandler.add(String.valueOf(report.getListElement().size()));
+        PaneView.getChildren().clear();
         repcon.SetMainControleller(this);
         repcon.setReport(report);
         repcon.loadViewElements();
@@ -222,7 +221,7 @@ public class MainController implements Initializable {
         Parent root = loader.load();
         DatabaseViewController databasecon = loader.getController();
         databasecon.SetMainControleller(this);
-
+        PaneView.getChildren().clear();
         PaneView.getChildren().addAll(root);
     }
 
