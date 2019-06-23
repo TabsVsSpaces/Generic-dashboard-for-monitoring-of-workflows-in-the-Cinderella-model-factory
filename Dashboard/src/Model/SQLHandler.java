@@ -1,7 +1,5 @@
 /*
-TODO
-    -https://alvinalexander.com/java/edu/pj/jdbc/recipes/ResultSet-ColumnType.shtml
-     select sum(L.pieces) as pieces, L.route from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.pieces, L.route order by pieces desc;
+
  */
 package Model;
 
