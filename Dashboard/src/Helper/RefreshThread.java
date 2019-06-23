@@ -7,11 +7,7 @@ package Helper;
 
 import Charts.*;
 import Model.*;
-//import MainController;
-import com.sun.org.apache.bcel.internal.generic.ICONST;
 import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

@@ -59,16 +59,16 @@ public class Line_Chart  {
         List<XYChart.Series<String, Number>> seriesList = new ArrayList<>();
         
         
-        for(int i=0; i < element.getYAxisValues().size(); i++){
+        for(int i=0; i < element.getYAxisColumn().size(); i++){
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             //Series<String, Number> series = new Series<String, Number>();
-            String name = element.getYAxisValues().get(i).toString();
+            String name = element.getYAxisColumn().get(i).toString();
             series.setName(name);
             
-            for (int j = 0; j < resultSet.getValues(element.getYAxisValues().get(0)).size(); j++) {
-                Number vNumber = (Number) resultSet.getValues(element.getYAxisValues().get(i)).get(j);
+            for (int j = 0; j < resultSet.getValues(element.getYAxisColumn().get(0)).size(); j++) {
+                Number vNumber = (Number) resultSet.getValues(element.getYAxisColumn().get(i)).get(j);
                 series.getData().add(new XYChart.Data<>(
-                        resultSet.getValues(element.getXAxisValues().get(0)).get(j).toString(), 
+                        resultSet.getValues(element.getXAxisColumn().get(0)).get(j).toString(), 
                         vNumber
                 ));
             }

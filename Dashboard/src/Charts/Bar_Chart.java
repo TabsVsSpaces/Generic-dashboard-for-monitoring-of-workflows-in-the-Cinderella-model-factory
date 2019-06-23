@@ -47,7 +47,7 @@ public class Bar_Chart  {
         //Arrays.asList(resultSet.getValues(element.getXAxisValues().get(0)));
         
         //String[] xValues = resultSet.getValues(element.getXAxisValues().get(0)).toArray(new String[0]);      
-        xAxis.setCategories(FXCollections.<String>observableArrayList(element.getYAxisValues()));
+        xAxis.setCategories(FXCollections.<String>observableArrayList(element.getYAxisColumn()));
         xAxis.setLabel(element.getxAxisName() + " in " + element.getxAxisMeasure());
 
         NumberAxis yAxis = new NumberAxis();
@@ -61,15 +61,15 @@ public class Bar_Chart  {
         
         List<XYChart.Series<String, Number>> seriesList = new ArrayList<>();
         
-        for(int i=0; i < resultSet.getValues(element.getXAxisValues().get(0)).size(); i++){
+        for(int i=0; i < resultSet.getValues(element.getXAxisColumn().get(0)).size(); i++){
             XYChart.Series<String, Number> series = new XYChart.Series<>();
-            String name = resultSet.getValues(element.getXAxisValues().get(0)).get(i).toString();
+            String name = resultSet.getValues(element.getXAxisColumn().get(0)).get(i).toString();
             series.setName(name);
             
-            for (int j = 0; j < element.getYAxisValues().size(); j++) {
-                Number vNumber = (Number) resultSet.getValues(element.getYAxisValues().get(j)).get(i);
+            for (int j = 0; j < element.getYAxisColumn().size(); j++) {
+                Number vNumber = (Number) resultSet.getValues(element.getYAxisColumn().get(j)).get(i);
                 series.getData().add(new XYChart.Data<>(
-                        element.getYAxisValues().get(j), 
+                        element.getYAxisColumn().get(j), 
                         vNumber
                 ));
             }

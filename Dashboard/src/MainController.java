@@ -21,22 +21,17 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ToggleButton;
-import Charts.*;
 import Model.ViewElement;
 import static java.lang.Thread.sleep;
 import java.util.Arrays;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 
 /**
  * FXML Controller class
@@ -61,18 +56,20 @@ public class MainController implements Initializable {
 
     private ObservableList<Report> reportList = FXCollections.observableArrayList();
     private Report newReport;
-    private RefreshThread frefreshThread=null;
+    private RefreshThread frefreshThread = null;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)  {
-        
-      //load reports  
-      if (reportList.isEmpty()){
-          createDefaultReport();
-      }
-      
-      ListViewReports.setItems(reportList);
-      ListViewReports.setCellFactory(param -> new ListCell<Report>() {
+    public void initialize(URL url, ResourceBundle rb) {
+
+        //load reports
+        reportList = DataManager.loadReport();
+
+        if (reportList.isEmpty()) {
+            createDefaultReport();
+        }
+
+        ListViewReports.setItems(reportList);
+        ListViewReports.setCellFactory(param -> new ListCell<Report>() {
             @Override
             protected void updateItem(Report item, boolean empty) {
                 super.updateItem(item, empty);
@@ -203,19 +200,18 @@ public class MainController implements Initializable {
     private void loadReport(MouseEvent event) {
         loadReprot();
     }
-    
-    public void loadReprot(){
-        Report tempReport=null;
-        if (ListViewReports.getSelectionModel().isEmpty()){
+
+    public void loadReprot() {
+        Report tempReport = null;
+        if (ListViewReports.getSelectionModel().isEmpty()) {
             tempReport = ListViewReports.getItems().get(0);
         } else {
             tempReport = ListViewReports.getSelectionModel().getSelectedItem();
         }
-        
-        stopRefreashThread();
-        
 
-        frefreshThread = new RefreshThread(tempReport, PaneView,ToggleStatus);
+        stopRefreashThread();
+
+        frefreshThread = new RefreshThread(tempReport, PaneView, ToggleStatus);
         frefreshThread.start();
     }
 
@@ -226,100 +222,62 @@ public class MainController implements Initializable {
         Parent root = loader.load();
         DatabaseViewController databasecon = loader.getController();
         databasecon.SetMainControleller(this);
-        
+
         PaneView.getChildren().addAll(root);
     }
-    
-    public void closeMainController(){
-       System.out.println("Programm wird beendet.");
-       
-       stopRefreashThread();
-       
-       //save reports
+
+    public void closeMainController() {
+        System.out.println("Programm wird beendet.");
+
+        stopRefreashThread();
+
+        //save reports
+        //DataManager.saveReport(newReport.toString());
+        DataManager.saveReport(reportList);
     }
 
-    public void createDefaultReport(){
-      String sqlStm = "select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
-        
-      ViewElement e_1 = new ViewElement();
-      e_1.setDiagramtName("Element 1");
-      e_1.setDiagramType("Kreisdiagramm");
-      e_1.setRefreshRate(5000);
-      e_1.setSqlStatement(sqlStm);
-      e_1.setxAxisName("x Achse");
-      e_1.setyAxisName("y Achse");
-      e_1.setYAxisMeasure("Y Mess");
-      e_1.setxAxisMeasure("X Mess");
-      e_1.setXAxisValues(Arrays.asList("route"));
-      e_1.setYAxisValues(Arrays.asList("pieces"));
-        
-      ViewElement e_2 = new ViewElement();
-      e_2.setDiagramtName("Element 2");
-      e_2.setDiagramType("Balkendiagramm");
-      e_2.setRefreshRate(5000);
-      e_2.setSqlStatement(sqlStm);
-      e_2.setxAxisName("x Achse");
-      e_2.setyAxisName("y Achse");
-      e_2.setYAxisMeasure("Y Mess");
-      e_2.setxAxisMeasure("X Mess");
-      e_2.setXAxisValues(Arrays.asList("route"));
-      e_2.setYAxisValues(Arrays.asList("pieces"));
-      
-      ViewElement e_3 = new ViewElement();
-      e_3.setDiagramtName("Element 3");
-      e_3.setDiagramType("Liniendiagramm");
-      e_3.setRefreshRate(5000);
-      e_3.setSqlStatement(sqlStm);
-      e_3.setxAxisName("x Achse");
-      e_3.setyAxisName("y Achse");
-      e_3.setYAxisMeasure("Y Mess");
-      e_3.setxAxisMeasure("X Mess");
-      e_3.setXAxisValues(Arrays.asList("pieces"));
-      e_3.setYAxisValues(Arrays.asList("pieces"));
-      
-      ViewElement e_4 = new ViewElement();
-      e_4.setDiagramtName("Element 4");
-      e_4.setDiagramType("Tabelle");
-      e_4.setRefreshRate(5000);
-      e_4.setSqlStatement(sqlStm);
-      e_4.setxAxisName("x Achse");
-      e_4.setyAxisName("y Achse");
-      e_4.setYAxisMeasure("Y Mess");
-      e_4.setxAxisMeasure("X Mess");
-      e_4.setXAxisValues(Arrays.asList("route"));
-      e_4.setYAxisValues(Arrays.asList("pieces"));
-        
-      Report tempRep = new Report();
-      tempRep.setReportName("Default Report 1");
-      tempRep.setReportId(1);
-      tempRep.addViewElement(e_1);
-      tempRep.addViewElement(e_2);
-      tempRep.addViewElement(e_3);
-      tempRep.addViewElement(e_4);
-      reportList.add(tempRep);
-      
-      tempRep = new Report();
-      tempRep.setReportName("Default Report 2");
-      tempRep.setReportId(2);
-      tempRep.addViewElement(e_1);
-      tempRep.addViewElement(e_2);
-      reportList.add(tempRep);
-      
-      tempRep = new Report();
-      tempRep.setReportName("Default Report 3");
-      tempRep.setReportId(2);
-      tempRep.addViewElement(e_1);
-      reportList.add(tempRep);
-    
+    public void createDefaultReport() {
+        String sqlStm = "select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product,L.route, L.oper "
+                + "from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product "
+                + "group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
+
+        ViewElement e_1 = new ViewElement(1, "Element 1", 5000, sqlStm, "Kreisdiagramm", "x Achse", "X Mess", "y Achse", "Y Mess");
+        e_1.setXAxisColumn(Arrays.asList("route"));
+        e_1.setYAxisColumn(Arrays.asList("pieces"));
+
+        ViewElement e_2 = new ViewElement(2, "Element 2", 5000, sqlStm, "Balkendiagramm", "x Achse", "X Mess", "y Achse", "Y Mess");
+        e_2.setXAxisColumn(Arrays.asList("route"));
+        e_2.setYAxisColumn(Arrays.asList("pieces"));
+
+        ViewElement e_3 = new ViewElement(3, "Element 3", 5000, sqlStm, "Liniendiagramm", "x Achse", "X Mess", "y Achse", "Y Mess");
+        e_3.setXAxisColumn(Arrays.asList("pieces"));
+        e_3.setYAxisColumn(Arrays.asList("pieces"));
+
+        ViewElement e_4 = new ViewElement(4, "Element 4", 5000, sqlStm, "Tabelle", "x Achse", "X Mess", "y Achse", "Y Mess");
+        e_4.setXAxisColumn(Arrays.asList("route"));
+        e_4.setYAxisColumn(Arrays.asList("pieces"));
+
+        Report tempRep = new Report(1, "Default Report 1");
+        tempRep.addViewElement(e_1);
+        tempRep.addViewElement(e_2);
+        tempRep.addViewElement(e_3);
+        tempRep.addViewElement(e_4);
+        reportList.add(tempRep);
+
+        tempRep = new Report(2, "Default Report 2");
+        tempRep.addViewElement(e_1);
+        tempRep.addViewElement(e_2);
+        reportList.add(tempRep);
+
+        tempRep = new Report(3, "Default Report 3");
+        tempRep.addViewElement(e_1);
+        reportList.add(tempRep);
+
     }
-    
-    private void stopRefreashThread(){
+
+    private void stopRefreashThread() {
         if (frefreshThread != null) {
             frefreshThread.stopping();
-        } 
+        }
     }
-
-    
-    
-    
 }

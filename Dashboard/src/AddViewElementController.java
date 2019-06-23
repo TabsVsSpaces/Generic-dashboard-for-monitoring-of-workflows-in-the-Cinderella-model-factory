@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,23 +20,13 @@ import java.util.List;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.SubScene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import Charts.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentEvent.EventType;
+
 
 /**
  * FXML Controller class
@@ -313,7 +302,7 @@ public class AddViewElementController implements Initializable {
         NameY.setText(element.getyAxisName());
         MaßeinheitX.setText(element.getxAxisMeasure());
         MaßeinheitY.setText(element.getYAxisMeasure());
-        element.getXAxisValues();
+        element.getXAxisColumn();
         Aktualisierungsrate.setValue(element.getRefreshRate() / 1000);
 
         this.sqlResult = new SQLHandler(SQLStatement.getText());
@@ -343,8 +332,8 @@ public class AddViewElementController implements Initializable {
         element.setyAxisName(NameY.getText());
         element.setxAxisMeasure(MaßeinheitX.getText());
         element.setYAxisMeasure(MaßeinheitY.getText());
-        element.setXAxisValues((List<String>) X_Achse.getSelectionModel().getSelectedItems());
-        element.setYAxisValues((List<String>) Y_Achse.getSelectionModel().getSelectedItems());
+        element.setXAxisColumn((List<String>) X_Achse.getSelectionModel().getSelectedItems());
+        element.setYAxisColumn((List<String>) Y_Achse.getSelectionModel().getSelectedItems());
     }
 
     private void closeWithSave() throws Exception {

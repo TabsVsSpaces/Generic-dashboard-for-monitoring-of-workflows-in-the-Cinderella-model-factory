@@ -9,7 +9,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class JDBCTest {
 
-    public static void testConn (String JDBC_Driver, String DB_URL, String User, String Password) {
+    public static void testConn(String JDBC_Driver, String DB_URL, String User, String Password) {
 
         Connection testConn = null;
 
@@ -25,28 +25,39 @@ public class JDBCTest {
                     testConn.close();
                 }
             } catch (SQLException se) {
-                LogHandler.add(se.getMessage());
             }
         }
     }
 
-    public static boolean getState () {
-        
-        Connection poolConn;
-        Statement stmt;
-        ResultSet rs;
-        
-        try {           
+    public static boolean getState() {
+
+        Connection poolConn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
             BasicDataSource basicDS = JDBCPool.getInstance().getBasicDS();
             poolConn = basicDS.getConnection();
             stmt = poolConn.createStatement();
             rs = stmt.executeQuery("select 1");
-            rs.close();
-            stmt.close();
-            poolConn.close();
             return true;
         } catch (SQLException e) {
             //LogHandler.add("ERROR: Datenbankverbindung verloren!");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+
+                if (stmt != null) {
+                    stmt.close();
+                }
+
+                if (poolConn != null) {
+                    poolConn.close();
+                }
+            } catch (SQLException e) {
+            }
         }
         return false;
     }
