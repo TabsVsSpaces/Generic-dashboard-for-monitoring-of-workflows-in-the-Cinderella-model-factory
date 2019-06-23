@@ -22,7 +22,7 @@ public class Report {
     //Constructor
     public Report () {
         this.reportId = 0;
-        this.reportName = " ";
+        this.reportName = "";
         this.maxElements = 4;
         this.elementList = new ArrayList<>();
     }

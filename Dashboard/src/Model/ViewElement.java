@@ -33,9 +33,8 @@ public class ViewElement {
 
     private String yAxisMeasure;
 
-    //private String XAxisColumn;
-    //private String YAxisColumn;
     private List<String> XAxisColumn;
+
     private List<String> YAxisColumn;
 
     private Chart viewElementChart;
@@ -43,13 +42,13 @@ public class ViewElement {
     public ViewElement() {
         this.diagramId = 0;
         this.refreshRate = 60000;
-        this.DiagramName = " ";
-        this.sqlStatement = " ";
-        this.diagramType = " ";
-        this.xAxisName = " ";
-        this.xAxisMeasure = " ";
-        this.yAxisName = " ";
-        this.yAxisMeasure = " ";
+        this.DiagramName = "";
+        this.sqlStatement = "";
+        this.diagramType = "";
+        this.xAxisName = "";
+        this.xAxisMeasure = "";
+        this.yAxisName = "";
+        this.yAxisMeasure = "";
         this.XAxisColumn = new ArrayList<>();
         this.YAxisColumn = new ArrayList<>();
     }

@@ -42,6 +42,7 @@ public class DataManager {
     }
     
     //härten gegen fehlende achsenbeschriftung
+    //siehe save ->Tabelle
     public static void saveReport(ObservableList<Report> report) {
         BufferedWriter bw = null;
 
@@ -84,7 +85,7 @@ public class DataManager {
                 Report report = new Report(Integer.parseInt(array[0]), array[1]);
                 System.out.println(report.toString());
 
-                for (i = 2; i < array.length; i += 11) { //+11
+                for (i = 2; i < array.length; i += 11) {
                     System.out.println(array.length);
                     System.out.println("i start: " + i);
                     ViewElement viewelement = new ViewElement(
