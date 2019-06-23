@@ -78,7 +78,7 @@ public class DatabaseViewController implements Initializable {
         String[] connection = getTextfield();
 
         if (!connection[0].isEmpty() && !connection[1].isEmpty() && !connection[2].isEmpty() && !connection[3].isEmpty()) {
-            JDBCTest.getState(connection[0], connection[1], connection[2], connection[3]);
+            JDBCTest.testConn(connection[0], connection[1], connection[2], connection[3]);
             saveDBCon.setDisable(false);
         } else {
             LogHandler.add("Bitte alle Fenster ausfüllen");
