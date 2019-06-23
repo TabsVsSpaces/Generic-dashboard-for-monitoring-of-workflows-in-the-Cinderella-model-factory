@@ -40,7 +40,7 @@ public class DataManager {
             LogHandler.add("ERROR: Properties konnten nicht gespeichert werden!");
         }
     }
-    
+
     //härten gegen fehlende achsenbeschriftung
     //siehe save ->Tabelle
     public static void saveReport(ObservableList<Report> report) {
@@ -54,6 +54,7 @@ public class DataManager {
                 bw.write(currReport.toString().replaceAll("\\[", "").replaceAll("]", "").replaceAll("/, ", "/"));
                 bw.newLine();
             }
+
         } catch (Exception e) {
             LogHandler.add("ERROR: Reports konnten nicht gespeichter werden!");
         } finally {
@@ -83,11 +84,8 @@ public class DataManager {
                 String[] array = line.split("/");
 
                 Report report = new Report(Integer.parseInt(array[0]), array[1]);
-                System.out.println(report.toString());
 
                 for (i = 2; i < array.length; i += 11) {
-                    System.out.println(array.length);
-                    System.out.println("i start: " + i);
                     ViewElement viewelement = new ViewElement(
                             Integer.parseInt(array[i]), array[i + 1],
                             Integer.parseInt(array[i + 2]), array[i + 3],
@@ -98,7 +96,6 @@ public class DataManager {
                     viewelement.setYAxisColumn(Arrays.asList(array[i + 10]));
 
                     report.addViewElement(viewelement);
-                    System.out.println(viewelement.toString());
                 }
                 reportList.add(report);
             }

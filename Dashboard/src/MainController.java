@@ -232,7 +232,6 @@ public class MainController implements Initializable {
         stopRefreashThread();
 
         //save reports
-        //DataManager.saveReport(newReport.toString());
         DataManager.saveReport(reportList);
     }
 

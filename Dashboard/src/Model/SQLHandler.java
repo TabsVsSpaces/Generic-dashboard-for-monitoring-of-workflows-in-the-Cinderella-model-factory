@@ -1,11 +1,7 @@
 /*
 TODO
-    -implements runnable
-    -secure queryStatement(); call
     -https://alvinalexander.com/java/edu/pj/jdbc/recipes/ResultSet-ColumnType.shtml
-    -grouping by missing 
-        ->möglich über collectors https://www.mkyong.com/java8/java-8-collectors-groupingby-and-mapping-example/
-         select sum(L.pieces) as pieces, L.route from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.pieces, L.route order by pieces desc;
+     select sum(L.pieces) as pieces, L.route from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.pieces, L.route order by pieces desc;
  */
 package Model;
 
@@ -33,9 +29,14 @@ public class SQLHandler {
         this.columnTypes = null;
         this.SQLDataTypes = new int[]{-6, -5, 2, 3, 4, 5, 6, 7, 8};
         this.conn = null;
-        this.stmt=null;
+        this.stmt = null;
         queryStatement();
     }
+
+    public Map<String, List<Object>> getResultMap() {
+        return resultMap;
+    }
+
     //only temporary!
     public ResultSet getResultSet() {
 
@@ -46,28 +47,24 @@ public class SQLHandler {
             rs = stmt.executeQuery(sqlStatement);
         } catch (SQLException se) {
             LogHandler.add(se.getMessage());
-        } 
+        }
         return rs;
     }
-    
-    public void close(){
-    try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException se) {
-                LogHandler.add(se.getMessage());
-            }
-    }
 
-    public Map<String, List<Object>> getResultMap() {
-        return resultMap;
+    public void close() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException se) {
+            LogHandler.add(se.getMessage());
+        }
     }
 
     public String[] getColumns() {
@@ -87,7 +84,7 @@ public class SQLHandler {
         }
         return false;
     }
-    //needs to be reworked with group by functionality
+
     public List<Object> getValues(String ColumnName) {
         if (resultMap.isEmpty()) {
             return null;
@@ -101,7 +98,7 @@ public class SQLHandler {
         }
         return null;
     }
-    
+
     //Query SQLStatement + SQLException handling
     private void queryStatement() {
         try {
@@ -109,7 +106,9 @@ public class SQLHandler {
             conn = basicDS.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sqlStatement);
+
             resultSetToArrayList();
+
         } catch (SQLException se) {
             LogHandler.add(se.getMessage());
         } finally {
@@ -138,7 +137,6 @@ public class SQLHandler {
             columnTypes = new HashMap<>(columns);
             for (int i = 1; i <= columns; ++i) {
                 resultMap.put(md.getColumnName(i), new ArrayList<>());
-                //columnTypes.put(md.getColumnName(i), 0);
             }
             while (rs.next()) {
                 for (int i = 1; i <= columns; ++i) {
