@@ -1,8 +1,4 @@
-/*
-TODO
-    -this is an example, Adaption is nessecary
-    -https://www.tutorialspoint.com/javafx/line_chart.htm
- */
+
 package Charts;
 
 import Model.SQLHandler;

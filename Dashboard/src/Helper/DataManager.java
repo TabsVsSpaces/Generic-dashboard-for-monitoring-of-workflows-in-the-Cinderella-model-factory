@@ -1,8 +1,5 @@
 /*
 Manages properties and report files
-
-    -https://stackoverflow.com/questions/7775364/how-can-i-remove-a-substring-from-a-given-string
-    -https://stackoverflow.com/questions/30413227/how-to-read-and-write-an-object-to-a-text-file-in-java
  */
 package Helper;
 
@@ -66,7 +63,7 @@ public class DataManager {
     }
 
     public static ObservableList<Report> loadReport() {
-        final int NUMBER_ATTRIBUTES = 11;
+        int NUMBER_ATTRIBUTES = 11;
         int i;
 
         ObservableList<Report> reportList = FXCollections.observableArrayList();
