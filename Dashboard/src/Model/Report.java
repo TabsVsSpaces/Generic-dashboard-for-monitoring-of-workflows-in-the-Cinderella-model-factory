@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Model;
 
 import Helper.LogHandler;
@@ -20,13 +16,13 @@ public class Report {
     private List<ViewElement> elementList;
 
     //Constructor
-    public Report () {
+    public Report() {
         this.reportId = 0;
         this.reportName = "";
         this.maxElements = 4;
         this.elementList = new ArrayList<>();
     }
-    
+
     public Report(int reportId, String reportName) {
         this.reportId = reportId;
         this.reportName = reportName;

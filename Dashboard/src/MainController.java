@@ -1,10 +1,4 @@
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -110,7 +104,6 @@ public class MainController implements Initializable {
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
-                    //Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
@@ -178,10 +171,8 @@ public class MainController implements Initializable {
                     break;
                 };
             }
-
             search = false;
         }
-
         return id;
     }
 
@@ -270,7 +261,6 @@ public class MainController implements Initializable {
         tempRep = new Report(3, "Default Report 3");
         tempRep.addViewElement(e_1);
         reportList.add(tempRep);
-
     }
 
     private void stopRefreashThread() {

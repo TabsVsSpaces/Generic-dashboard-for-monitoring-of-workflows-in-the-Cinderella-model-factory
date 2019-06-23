@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
  */
 public class DatabaseViewController implements Initializable {
 
-    private static final String PROP_NAME = "./src/properties/DBconnection.properties";
+    private static final String PROP_FILE = "./src/properties/DBconnection.properties";
 
     @FXML
     private AnchorPane DatabaseView;
@@ -30,7 +30,7 @@ public class DatabaseViewController implements Initializable {
     private TextField password;
     @FXML
     private TextField jdbcDriver;
-    
+
     private MainController MainC;
     @FXML
     private Button saveDBCon;
@@ -38,19 +38,18 @@ public class DatabaseViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        jdbcDriver.setText(DataManager.getProperties(PROP_NAME).getProperty("JDBC_DRIVER"));
-        dbURL.setText(DataManager.getProperties(PROP_NAME).getProperty("DB_URL"));
-        user.setText(DataManager.getProperties(PROP_NAME).getProperty("USER"));
-        password.setText(DataManager.getProperties(PROP_NAME).getProperty("PASS"));
+        jdbcDriver.setText(DataManager.getProperties(PROP_FILE).getProperty("JDBC_DRIVER"));
+        dbURL.setText(DataManager.getProperties(PROP_FILE).getProperty("DB_URL"));
+        user.setText(DataManager.getProperties(PROP_FILE).getProperty("USER"));
+        password.setText(DataManager.getProperties(PROP_FILE).getProperty("PASS"));
         saveDBCon.setDisable(true);
 
     }
-    
-    public void SetMainControleller(MainController Main)
-    {
+
+    public void SetMainControleller(MainController Main) {
         MainC = Main;
     }
-    
+
     private String[] getTextfield() {
 
         String[] connection = new String[4];
@@ -63,7 +62,6 @@ public class DatabaseViewController implements Initializable {
         return connection;
     }
 
-    //really necessary?
     private void clearText() {
 
         dbURL.clear();
@@ -89,10 +87,10 @@ public class DatabaseViewController implements Initializable {
     private void setConnection(MouseEvent event) {
 
         String[] connection = getTextfield();
-        DataManager.setProperties(PROP_NAME, "JDBC_DRIVER", connection[0]);
-        DataManager.setProperties(PROP_NAME, "DB_URL", connection[1]);
-        DataManager.setProperties(PROP_NAME, "USER", connection[2]);
-        DataManager.setProperties(PROP_NAME, "PASS", connection[3]);
+        DataManager.setProperties(PROP_FILE, "JDBC_DRIVER", connection[0]);
+        DataManager.setProperties(PROP_FILE, "DB_URL", connection[1]);
+        DataManager.setProperties(PROP_FILE, "USER", connection[2]);
+        DataManager.setProperties(PROP_FILE, "PASS", connection[3]);
         LogHandler.add("Servereinstellungen gespeichert.");
         MainC.loadReprot();
     }

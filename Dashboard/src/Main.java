@@ -1,7 +1,4 @@
-/*
-TODO
-    -event which registrates the closing of the application
- */
+
 import Model.*;
 
 import java.sql.SQLException;
@@ -45,7 +42,7 @@ public class Main extends Application {
     public void stop() {
         logThread.interrupt();
         mainController.closeMainController();
-        
+
         if (pool != null) {
             try {
                 pool.close();

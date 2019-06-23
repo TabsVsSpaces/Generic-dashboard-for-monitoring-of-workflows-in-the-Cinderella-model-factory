@@ -41,8 +41,6 @@ public class DataManager {
         }
     }
 
-    //härten gegen fehlende achsenbeschriftung
-    //siehe save ->Tabelle
     public static void saveReport(ObservableList<Report> report) {
         BufferedWriter bw = null;
 
@@ -67,12 +65,12 @@ public class DataManager {
         }
     }
 
-    //Problem der Variablen länge
-    //[ ] führen zu Problem
     public static ObservableList<Report> loadReport() {
+        final int NUMBER_ATTRIBUTES = 11;
+        int i;
+
         ObservableList<Report> reportList = FXCollections.observableArrayList();
         BufferedReader br = null;
-        int i;
 
         try {
             FileInputStream fis = new FileInputStream(REPORT_FILE);
@@ -81,19 +79,19 @@ public class DataManager {
 
             String line = null;
             while ((line = br.readLine()) != null) {
-                String[] array = line.split("/");
+                String[] tmpArray = line.split("/");
 
-                Report report = new Report(Integer.parseInt(array[0]), array[1]);
+                Report report = new Report(Integer.parseInt(tmpArray[0]), tmpArray[1]);
 
-                for (i = 2; i < array.length; i += 11) {
+                for (i = 2; i < tmpArray.length; i += NUMBER_ATTRIBUTES) {
                     ViewElement viewelement = new ViewElement(
-                            Integer.parseInt(array[i]), array[i + 1],
-                            Integer.parseInt(array[i + 2]), array[i + 3],
-                            array[i + 4], array[i + 5], array[i + 6],
-                            array[i + 7], array[i + 8]);
+                            Integer.parseInt(tmpArray[i]), tmpArray[i + 1],
+                            Integer.parseInt(tmpArray[i + 2]), tmpArray[i + 3],
+                            tmpArray[i + 4], tmpArray[i + 5], tmpArray[i + 6],
+                            tmpArray[i + 7], tmpArray[i + 8]);
 
-                    viewelement.setXAxisColumn(Arrays.asList(array[i + 9]));
-                    viewelement.setYAxisColumn(Arrays.asList(array[i + 10]));
+                    viewelement.setXAxisColumn(Arrays.asList(tmpArray[i + 9]));
+                    viewelement.setYAxisColumn(Arrays.asList(tmpArray[i + 10]));
 
                     report.addViewElement(viewelement);
                 }

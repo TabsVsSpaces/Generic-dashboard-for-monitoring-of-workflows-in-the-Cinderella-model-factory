@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Helper;
 
 import Charts.*;
@@ -13,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-
 
 /**
  *
@@ -26,7 +20,7 @@ public class RefreshThread extends Thread {
     ImageView ToggleStatus;
     boolean keeprunning = true;
 
-    public RefreshThread(Report tempReport, Pane PaneView,ImageView ToggleStatus) {
+    public RefreshThread(Report tempReport, Pane PaneView, ImageView ToggleStatus) {
         this.tempReport = tempReport;
         this.PaneView = PaneView;
         this.ToggleStatus = ToggleStatus;
@@ -73,9 +67,7 @@ public class RefreshThread extends Thread {
             } catch (InterruptedException ex) {
                 //Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
-
     }
 
     private int getLowestRefreshRate() {

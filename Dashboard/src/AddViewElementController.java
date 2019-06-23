@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import Helper.LogHandler;
 import java.net.URL;
@@ -26,7 +21,6 @@ import Charts.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
-
 
 /**
  * FXML Controller class
@@ -295,7 +289,7 @@ public class AddViewElementController implements Initializable {
     }
 
     private void loadElmentData() {
-        
+
         Diagrammname.setText(element.getDiagramtName());
         SQLStatement.setText(element.getSqlStatement());
         NameX.setText(element.getxAxisName());
@@ -309,7 +303,7 @@ public class AddViewElementController implements Initializable {
         fillAxis();
         Diagrammtyp.setDisable(false);
         Diagrammtyp.setValue(element.getDiagramType());
-        
+
         //activateFields();
     }
 
