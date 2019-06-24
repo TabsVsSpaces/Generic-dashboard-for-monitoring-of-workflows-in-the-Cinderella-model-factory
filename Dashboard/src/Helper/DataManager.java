@@ -40,13 +40,16 @@ public class DataManager {
 
     public static void saveReport(ObservableList<Report> report) {
         BufferedWriter bw = null;
+        String tmpString;
 
         try {
             File file = new File(REPORT_FILE);
             FileOutputStream fos = new FileOutputStream(file);
             bw = new BufferedWriter(new OutputStreamWriter(fos));
             for (Report currReport : report) {
-                bw.write(currReport.toString().replaceAll("\\[", "").replaceAll("]", "").replaceAll("/, ", "/"));
+                tmpString = currReport.toString().replaceAll("\\[", "").replaceAll("]", "");
+                tmpString = tmpString.replaceAll("/, ", "/").replaceAll("///////", "///// / /");
+                bw.write(tmpString);
                 bw.newLine();
             }
 

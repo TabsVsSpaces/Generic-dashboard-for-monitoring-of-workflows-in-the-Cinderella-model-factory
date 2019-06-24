@@ -23,7 +23,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import Model.ViewElement;
 import static java.lang.Thread.sleep;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
@@ -161,15 +164,24 @@ public class MainController implements Initializable {
     }
 
     private int createReportID() {
-        int id = 1;
+        int id = 0;
+        List<Integer> IDs = new ArrayList<>();
+
         boolean search = true;
 
         while (search) {
             for (int i = 0; i < reportList.size(); i++) {
-                if (reportList.get(i).getReportId() == id) {
+                IDs.add(reportList.get(i).getReportId());
+            }
+
+            Collections.sort(IDs);
+
+            for (int i = 0; i < IDs.size(); i++) {
+                if (id == IDs.get(i)) {
                     id++;
+                } else {
                     break;
-                };
+                }
             }
             search = false;
         }

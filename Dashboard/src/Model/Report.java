@@ -1,8 +1,8 @@
-
 package Model;
 
 import Helper.LogHandler;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Report {
@@ -63,7 +63,7 @@ public class Report {
             elementList.add(newElement);
             return true;
         } else {
-            LogHandler.add("Maximale Anzahl (" + Integer.toString(maxElements) + ") an Einzeigeelemente erreicht.");
+            LogHandler.add("Maximale Anzahl (" + Integer.toString(maxElements) + ") an Anzeigeelementen erreicht.");
             return false;
         }
     }
@@ -73,7 +73,7 @@ public class Report {
             elementList.remove(removeElement);
             return true;
         } else {
-            LogHandler.add("Keine Einzeigeelemente vorhanden.");
+            LogHandler.add("Keine Anzeigeelemente vorhanden.");
             return false;
         }
     }
@@ -86,15 +86,24 @@ public class Report {
     }
 
     private int createViewElementID() {
-        int id = 1;
+        int id = 0;
+        List<Integer> IDs = new ArrayList<>();
+
         boolean search = true;
 
         while (search) {
             for (int i = 0; i < getListElementSize(); i++) {
-                if (getViewEelementbyIndex(i).getDiagramId() == id) {
+                IDs.add(getViewEelementbyIndex(i).getDiagramId());
+            }
+
+            Collections.sort(IDs);
+
+            for (int i = 0; i < IDs.size(); i++) {
+                if (id == IDs.get(i)) {
                     id++;
+                } else {
                     break;
-                };
+                }
             }
             search = false;
         }
