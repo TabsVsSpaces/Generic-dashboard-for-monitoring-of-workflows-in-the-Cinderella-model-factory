@@ -18,7 +18,6 @@ public class RefreshThread extends Thread {
     Report tempReport = null;
     Pane PaneView;
     ImageView ToggleStatus;
-    boolean keeprunning = true;
 
     public RefreshThread(Report tempReport, Pane PaneView, ImageView ToggleStatus) {
         this.tempReport = tempReport;
@@ -26,47 +25,41 @@ public class RefreshThread extends Thread {
         this.ToggleStatus = ToggleStatus;
     }
 
-    public void stopping() {
-        this.keeprunning = false;
-    }
-
-    private boolean isrunning() {
-        return this.keeprunning;
-    }
-
     @Override
     public void run() {
         int rate = getLowestRefreshRate();
         System.err.println("Refreshrate: " + rate);
-        while (isrunning()) {
-            System.err.println("Thread is running for report : " + tempReport.getReportName());
 
-            if (JDBCTest.getState()) {
-                GridPane elementGrid = refreshView();
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToggleStatus.setImage(new Image("Icons/dbconGood.png"));
-                        PaneView.getChildren().clear();
-                        PaneView.getChildren().add(elementGrid);
-                    }
-                });
-            } else {
-                System.err.println("DB cannot reach:");
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToggleStatus.setImage(new Image("Icons/dbconBad.png"));
-                        System.err.println("DB cannot reach:");
-                    }
-                });
-            }
+        try {
+            while (!Thread.currentThread().isInterrupted()) {
+                System.err.println("Thread is running for report : " + tempReport.getReportName());
 
-            try {
+                if (JDBCTest.getState()) {
+                    GridPane elementGrid = refreshView();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToggleStatus.setImage(new Image("Icons/dbconGood.png"));
+                            PaneView.getChildren().clear();
+                            PaneView.getChildren().add(elementGrid);
+                        }
+                    });
+                } else {
+                    System.err.println("DB cannot reach:");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToggleStatus.setImage(new Image("Icons/dbconBad.png"));
+                            System.err.println("DB cannot reach:");
+                        }
+                    });
+                }
+
                 sleep(rate);
-            } catch (InterruptedException ex) {
-                //Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+
             }
+        } catch (InterruptedException ex) {
+            //Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -131,4 +124,5 @@ public class RefreshThread extends Thread {
         }
         return elementGrid;
     }
+
 }

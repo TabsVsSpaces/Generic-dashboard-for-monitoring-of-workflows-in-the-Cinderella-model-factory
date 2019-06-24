@@ -265,7 +265,7 @@ public class MainController implements Initializable {
 
     private void stopRefreashThread() {
         if (frefreshThread != null) {
-            frefreshThread.stopping();
+            frefreshThread.interrupt();
         }
     }
 }
