@@ -58,10 +58,13 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //load reports
-        try {    
+        try {
             reportList = DataManager.loadReport();
+
+            if (reportList == null || reportList.isEmpty()) {
+                createDefaultReport();
+            }
         } catch (Exception e) {
-            createDefaultReport();
         }
 
         ListViewReports.setItems(reportList);
