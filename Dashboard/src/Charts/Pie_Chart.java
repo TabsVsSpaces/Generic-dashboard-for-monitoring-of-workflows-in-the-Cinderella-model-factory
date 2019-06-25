@@ -38,8 +38,7 @@ public class Pie_Chart {
         for(int i=0; i < resultSet.getValues(element.getXAxisColumn().get(0)).size(); i++){
             String nameValue = resultSet.getValues(element.getXAxisColumn().get(0)).get(i).toString();
             Number vNumber = (Number) resultSet.getValues(element.getYAxisColumn().get(0)).get(i);
-              
-            System.out.println(nameValue + " : " + vNumber); 
+            
             seriesList.add(new PieChart.Data(nameValue, vNumber.doubleValue()));
         }
 

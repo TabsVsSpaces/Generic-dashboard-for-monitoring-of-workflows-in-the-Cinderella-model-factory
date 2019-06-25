@@ -44,6 +44,7 @@ public class Table {
                 //We are using non property style for making dynamic table
                 final int j = i;
                 TableColumn col = new TableColumn(columns[i]);
+                
                 col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
                     public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
                         return new SimpleStringProperty(param.getValue().get(j).toString());
@@ -59,7 +60,6 @@ public class Table {
                     //Iterate Column
                     row.add(sql.getValues(column).get(j));
                 }
-                System.out.println("Row [1] added " + row);
                 data.add(row);
             }
             tableView.setItems(data);
@@ -67,7 +67,6 @@ public class Table {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error on Building Data");
         }
         return null;
     }
