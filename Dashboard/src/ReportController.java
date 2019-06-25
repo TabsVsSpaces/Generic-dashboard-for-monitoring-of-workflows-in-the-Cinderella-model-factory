@@ -63,17 +63,6 @@ public class ReportController implements Initializable {
             }
         });
 
-        /*
-            ListViewElement.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener<String>() {
-                public void changed(ObservableValue<? extends String> ov, 
-                    String old_val, String new_val) {
-                        LogHandler.add(new_val);
-                        
-            }
-        });
-        
-         */
     }
 
     @FXML

@@ -30,34 +30,54 @@ import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 /**
- * FXML Controller class
- *
+ * FXML Main View Controller class <br>
+ * This class controlls the main view, is initialised once on programm start and closed with the programm <br>
+ * Also holds the list of all created reports including view elements <br>
+ * Starts all Threads 
  * @author Tom
  */
 public class MainController implements Initializable {
 
     @FXML
     private AnchorPane MainView;
+    
+    /**
+     * Pane in which charts will be displayed
+     */
     @FXML
     private Pane PaneView;
 
     protected ListProperty<String> listProperty = new SimpleListProperty<>();
 
+    /**
+     * Used to register report selection <br>
+     */
     @FXML
     private ListView<Report> ListViewReports;
+     /**
+     * GUI Item <br>
+     */
     @FXML
     private ListView Log;
     @FXML
     private ImageView ToggleStatus;
 
+    /**
+     * Holds all Reports and their individual view elements <br>
+     */
     private ObservableList<Report> reportList = FXCollections.observableArrayList();
     private Report newReport;
     private RefreshThread frefreshThread = null;
 
+    /**
+     * Log is initialised and set up with an ObservableList <br>
+     * ObservableList allow to set a property upon the list so changes can be registered <br>
+     * @param url default <br>
+     * @param rb  default <br>
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //load reports
         reportList = DataManager.loadReport();
 
         if (reportList.isEmpty()) {
@@ -80,9 +100,12 @@ public class MainController implements Initializable {
 
         Log.itemsProperty().bind(listProperty);
         listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
-        loadReprot();
+        loadReport();
     }
-
+    /**
+     * Starts Thread which checks for new log entrys every 2 seconds <br>
+     * @return Log Thread <br>
+     */
     public Thread startLogThread() {
         Thread logThread;
         logThread = new Thread() {
@@ -95,7 +118,6 @@ public class MainController implements Initializable {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                // entsprechende UI Komponente updaten
                                 listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
                             }
                         });
@@ -110,6 +132,11 @@ public class MainController implements Initializable {
         return logThread;
     }
 
+    /**
+     * Deletes reports via getting the selected report from the ObservableList <br>
+     * @param event Button event <br>
+     * @throws Exception required option <br>
+     */
     @FXML
     private void deleteReport(MouseEvent event) throws Exception {
         Report removeReport = ListViewReports.getSelectionModel().getSelectedItem();
@@ -126,16 +153,30 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * @param event Button event <br>
+     * @throws Exception required option <br>
+     */
     @FXML
     private void changeReport(MouseEvent event) throws Exception {
         loadReportView(ListViewReports.getSelectionModel().getSelectedItem());
     }
 
+    /**
+     * 
+     * @param event Button event <br>
+     * @throws Exception required option <br>
+     */
     @FXML
     private void addReport(MouseEvent event) throws Exception {
         loadReportView(newReport = new Report());
     }
 
+    /**
+     * Displays report view and gives the current instance of the MainController to the ReportController <br>
+     * @param report gets currently selected report <br>
+     * @throws Exception required option <br>
+     */
     public void loadReportView(Report report) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Report.fxml"));
         Parent root = loader.load();
@@ -148,6 +189,11 @@ public class MainController implements Initializable {
         PaneView.getChildren().addAll(root);
     }
 
+    /**
+     * Saves the report <br>
+     * Is called from the ReportController <br>
+     * @param toSaveReport currently selected report <br>
+     */
     public void SaveReport(Report toSaveReport) {
         if (toSaveReport.getReportId() == 0) {
             toSaveReport.setReportId(createReportID());
@@ -156,9 +202,13 @@ public class MainController implements Initializable {
         } else {
             LogHandler.add("Report wurde aktualisiert.");
         }
-        loadReprot();
+        loadReport();
     }
 
+    /**
+     * 
+     * @return creates ID
+     */
     private int createReportID() {
         int id = 0;
         List<Integer> IDs = new ArrayList<>();
@@ -184,6 +234,10 @@ public class MainController implements Initializable {
         return id;
     }
 
+    /**
+     * 
+     * @param report gets currently selected report <br>
+     */
     private void deleteReport(Report report) {
         for (int i = 0; i < reportList.size(); i++) {
             if (reportList.get(i).getReportId() == report.getReportId()) {
@@ -194,12 +248,19 @@ public class MainController implements Initializable {
         stopRefreashThread();
     }
 
+    /**
+     * 
+     * @param event Button event <br>
+     */
     @FXML
     private void loadReport(MouseEvent event) {
-        loadReprot();
+        loadReport();
     }
 
-    public void loadReprot() {
+    /**
+     * Loads Report from ReportList <br>
+     */
+    public void loadReport() {
         Report tempReport = null;
         if (ListViewReports.getSelectionModel().isEmpty()) {
             tempReport = ListViewReports.getItems().get(0);
@@ -213,6 +274,11 @@ public class MainController implements Initializable {
         frefreshThread.start();
     }
 
+    /**
+     * 
+     * @param event Button event <br>
+     * @throws Exception required option <br>
+     */
     @FXML
     private void databaseConnect(ActionEvent event) throws Exception {
         stopRefreashThread();
@@ -224,15 +290,21 @@ public class MainController implements Initializable {
         PaneView.getChildren().addAll(root);
     }
 
+    /**
+     * Stops refreshThread and initializes saving of ReportList 
+     */
     public void closeMainController() {
         System.out.println("Programm wird beendet.");
 
         stopRefreashThread();
 
-        //save reports
         DataManager.saveReport(reportList);
     }
 
+    
+    /**
+     * Used when ReportList is empty 
+     */
     public void createDefaultReport() {
         String sqlStm = "select P.tool, sum(L.pieces) as pieces, sum(L.pieces) as pieces2,L.product,L.route, L.oper "
                 + "from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product "
@@ -271,6 +343,9 @@ public class MainController implements Initializable {
         reportList.add(tempRep);
     }
 
+    /**
+     * 
+     */
     private void stopRefreashThread() {
         if (frefreshThread != null) {
             frefreshThread.interrupt();

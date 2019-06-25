@@ -91,6 +91,6 @@ public class DatabaseViewController implements Initializable {
         DataManager.setProperties(PROP_FILE, "USER", connection[2]);
         DataManager.setProperties(PROP_FILE, "PASS", connection[3]);
         LogHandler.add("Servereinstellungen gespeichert.");
-        MainC.loadReprot();
+        MainC.loadReport();
     }
 }
