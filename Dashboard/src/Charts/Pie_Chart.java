@@ -1,7 +1,5 @@
 /*
-TODO
-    -this is an example, Adaption is nessecary
-    -https://www.tutorialspoint.com/javafx/pie_chart.htm
+
  */
 package Charts;
 

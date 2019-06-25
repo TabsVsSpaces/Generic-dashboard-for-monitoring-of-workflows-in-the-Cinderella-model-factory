@@ -1,4 +1,11 @@
 
+import static java.lang.Thread.sleep;
+import Helper.*;
+import Model.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -8,8 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import Helper.*;
-import Model.Report;
 import java.util.Optional;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -21,12 +26,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
-import Model.ViewElement;
-import static java.lang.Thread.sleep;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
@@ -100,11 +99,8 @@ public class MainController implements Initializable {
                                 listProperty.set(FXCollections.observableArrayList(LogHandler.show()));
                             }
                         });
-
                         sleep(2000);
-
                     }
-
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }

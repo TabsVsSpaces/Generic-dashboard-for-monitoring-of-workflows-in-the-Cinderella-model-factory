@@ -1,15 +1,9 @@
 /*
-TODO
-    -this is an example, Adaption is nessecary
-    -https://javabeginners.de/Frameworks/JavaFX/Nodes/TableView/Tabelle_erstellen.php
-    -http://tutorials.jenkov.com/javafx/tableview.html
-    -https://gist.github.com/james-d/be5bbd6255a4640a5357
+
  */
 package Charts;
 
-import Model.SQLHandler;
-import Model.ViewElement;
-import java.sql.ResultSet;
+import Model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,11 +23,7 @@ public class Table {
     }
 
     public Scene getSceneWithChart() {
-        //Creating a Group object 
-        //Group root = new Group(createTable(element));
         Scene scene = new Scene(createTable(element));
-        //Creating a scene object
-        //Scene scene = new Scene(root, 350, 330);
 
         return scene;
     }
@@ -50,10 +40,6 @@ public class Table {
 
             TableView tableView = new TableView();
 
-            /**
-             * ********************************
-             * TABLE COLUMN ADDED DYNAMICALLY * ********************************
-             */
             for (int i = 0; i < columns.length; i++) {
                 //We are using non property style for making dynamic table
                 final int j = i;
@@ -63,14 +49,9 @@ public class Table {
                         return new SimpleStringProperty(param.getValue().get(j).toString());
                     }
                 });
-
                 tableView.getColumns().addAll(col);
             }
 
-            /**
-             * ******************************
-             * Data added to ObservableList * ******************************
-             */
             for (int j = 0; j < values.length; j++) {
                 //Iterate Row
                 ObservableList<Object> row = FXCollections.observableArrayList();
@@ -81,8 +62,6 @@ public class Table {
                 System.out.println("Row [1] added " + row);
                 data.add(row);
             }
-
-            //FINALLY ADDED TO TableView
             tableView.setItems(data);
             return tableView;
 

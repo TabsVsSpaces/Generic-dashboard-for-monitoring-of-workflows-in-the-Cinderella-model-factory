@@ -1,14 +1,11 @@
 /*
-TODO
-    -this is an example, Adaption is nessecary
-    -https://www.tutorialspoint.com/javafx/bar_chart.htm
+
  */
 package Charts;
 
 import Model.SQLHandler;
 import Model.ViewElement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.scene.Group;
@@ -41,10 +38,7 @@ public class Bar_Chart  {
         
         //Defining the axes              
         CategoryAxis xAxis = new CategoryAxis();
-        
-        //Arrays.asList(resultSet.getValues(element.getXAxisValues().get(0)));
-        
-        //String[] xValues = resultSet.getValues(element.getXAxisValues().get(0)).toArray(new String[0]);      
+             
         xAxis.setCategories(FXCollections.<String>observableArrayList(element.getYAxisColumn()));
         xAxis.setLabel(element.getxAxisName() + " in " + element.getxAxisMeasure());
 

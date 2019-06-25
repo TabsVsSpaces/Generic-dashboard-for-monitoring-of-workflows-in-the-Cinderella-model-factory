@@ -1,8 +1,9 @@
+/*
 
+*/
 package Charts;
 
-import Model.SQLHandler;
-import Model.ViewElement;
+import Model.*;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
@@ -54,8 +55,7 @@ public class Line_Chart  {
         
         for(int i=0; i < element.getYAxisColumn().size(); i++){
             XYChart.Series<String, Number> series = new XYChart.Series<>();
-            //Series<String, Number> series = new Series<String, Number>();
-            String name = element.getYAxisColumn().get(i).toString();
+            String name = element.getYAxisColumn().get(i);
             series.setName(name);
             
             for (int j = 0; j < resultSet.getValues(element.getYAxisColumn().get(0)).size(); j++) {
@@ -64,11 +64,9 @@ public class Line_Chart  {
                         resultSet.getValues(element.getXAxisColumn().get(0)).get(j).toString(), 
                         vNumber
                 ));
-            }
-            
+            }           
             seriesList.add(series);
-        }
-    
+        }    
         linechart.getData().addAll(seriesList);
         return linechart;
     }

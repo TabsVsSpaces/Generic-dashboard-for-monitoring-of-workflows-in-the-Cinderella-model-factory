@@ -1,7 +1,6 @@
 
 import Helper.LogHandler;
-import Model.Report;
-import Model.ViewElement;
+import Model.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;

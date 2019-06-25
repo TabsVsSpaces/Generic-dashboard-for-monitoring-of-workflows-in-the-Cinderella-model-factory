@@ -1,6 +1,6 @@
 
-import Helper.DataManager;
-import Helper.LogHandler;
+import Helper.*;
+import Model.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import Model.*;
 import javafx.scene.control.Button;
 
 /**
