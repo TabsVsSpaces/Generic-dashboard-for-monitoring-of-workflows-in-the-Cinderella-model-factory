@@ -58,9 +58,9 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //load reports
-        reportList = DataManager.loadReport();
-
-        if (reportList.isEmpty()) {
+        try {    
+            reportList = DataManager.loadReport();
+        } catch (Exception e) {
             createDefaultReport();
         }
 
