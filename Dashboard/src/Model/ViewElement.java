@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package Model;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.chart.Chart;
@@ -16,94 +9,111 @@ import javafx.scene.chart.Chart;
  *
  * @author Thanados
  */
-@XStreamAlias("viewElement")
 public class ViewElement {
-    
-    @XStreamAlias("diagramId")
+
     private int diagramId;
-     
-    @XStreamAlias("refreshRate")
+
     private int refreshRate;
-    
-    @XStreamAlias("DiagramtName")
-    private String DiagramtName;
-    
-    @XStreamAlias("sqlStatement")
+
+    private String DiagramName;
+
     private String sqlStatement;
-    
-    @XStreamAlias("diagramType")
+
     private String diagramType;
-    
-    @XStreamAlias("xAxisName")
+
     private String xAxisName;
-    
-    @XStreamAlias("xAxisMeasure")
+
     private String xAxisMeasure;
-    
-    @XStreamAlias("yAxisName")
+
     private String yAxisName;
-    
-    @XStreamAlias("YAxisMeasure")
-    private String YAxisMeasure;
-    
-    @XStreamImplicit(itemFieldName="XAxisValues")
-    private List<String> XAxisValues= new ArrayList<>();
-    
-    @XStreamImplicit(itemFieldName="YAxisValues")
-    private List<String> YAxisValues = new ArrayList<>();
-    
-    @XStreamAlias("viewElementChart")
+
+    private String yAxisMeasure;
+
+    private List<String> XAxisColumn;
+
+    private List<String> YAxisColumn;
+
     private Chart viewElementChart;
+
+    public ViewElement() {
+        this.diagramId = 0;
+        this.refreshRate = 60000;
+        this.DiagramName = "";
+        this.sqlStatement = "";
+        this.diagramType = "";
+        this.xAxisName = "";
+        this.xAxisMeasure = "";
+        this.yAxisName = "";
+        this.yAxisMeasure = "";
+        this.XAxisColumn = new ArrayList<>();
+        this.YAxisColumn = new ArrayList<>();
+    }
+
+    public ViewElement(int diagramId, String DiagramName, int refreshRate, String sqlStatement,
+            String diagramType, String xAxisName, String xAxisMeasure, String yAxisName, String yAxisMeasure) {
+
+        this.diagramId = diagramId;
+        this.refreshRate = refreshRate;
+        this.DiagramName = DiagramName;
+        this.sqlStatement = sqlStatement;
+        this.diagramType = diagramType;
+        this.xAxisName = xAxisName;
+        this.xAxisMeasure = xAxisMeasure;
+        this.yAxisName = yAxisName;
+        this.yAxisMeasure = yAxisMeasure;
+        this.XAxisColumn = new ArrayList<>();
+        this.YAxisColumn = new ArrayList<>();
+    }
 
     //setter -----------------------------------------------------
     public void setDiagramId(int diagramId) {
         this.diagramId = diagramId;
     }
-    
+
     public void setRefreshRate(int refreshRate) {
         this.refreshRate = refreshRate;
     }
-    
+
     public void setDiagramtName(String DiagramtName) {
-        this.DiagramtName = DiagramtName;
+        this.DiagramName = DiagramtName;
     }
-    
+
     public void setSqlStatement(String sqlStatement) {
         this.sqlStatement = sqlStatement;
     }
-    
+
     public void setDiagramType(String diagramType) {
         this.diagramType = diagramType;
     }
-    
+
     public void setxAxisName(String xAxisName) {
         this.xAxisName = xAxisName;
     }
-    
+
     public void setxAxisMeasure(String xAxisMeasure) {
         this.xAxisMeasure = xAxisMeasure;
     }
-    
-        public void setyAxisName(String yAxisName) {
+
+    public void setyAxisName(String yAxisName) {
         this.yAxisName = yAxisName;
     }
-        
+
     public void setYAxisMeasure(String YAxisMeasure) {
-        this.YAxisMeasure = YAxisMeasure;
-    }    
-    
-    public void setXAxisValues(List<String> xAxisValues) {
-        this.XAxisValues = xAxisValues;
+        this.yAxisMeasure = YAxisMeasure;
     }
-    
-    public void setYAxisValues(List<String> YAxisValues) {
-        this.YAxisValues = YAxisValues;
+
+    public void setXAxisColumn(List<String> xAxisValues) {
+        this.XAxisColumn = xAxisValues;
     }
-        
-    public void setViewElementChart(Chart newChart){
+
+    public void setYAxisColumn(List<String> YAxisColumn) {
+        this.YAxisColumn = YAxisColumn;
+    }
+
+    public void setViewElementChart(Chart newChart) {
         this.viewElementChart = newChart;
     }
-    
+
     // getter -----------------------------------------------------
     public int getDiagramId() {
         return diagramId;
@@ -114,7 +124,7 @@ public class ViewElement {
     }
 
     public String getDiagramtName() {
-        return DiagramtName;
+        return DiagramName;
     }
 
     public String getSqlStatement() {
@@ -138,18 +148,33 @@ public class ViewElement {
     }
 
     public String getYAxisMeasure() {
-        return YAxisMeasure;
+        return yAxisMeasure;
     }
 
-    public List<String> getXAxisValues() {
-        return XAxisValues;
+    public List<String> getXAxisColumn() {
+        return XAxisColumn;
     }
 
-    public List<String> getYAxisValues() {
-        return YAxisValues;
+    public List<String> getYAxisColumn() {
+        return YAxisColumn;
     }
 
-    public Chart getViewElementChart(){
+    public Chart getViewElementChart() {
         return viewElementChart;
+    }
+
+    @Override
+    public String toString() {
+        return diagramId + "/"
+                + DiagramName + "/"
+                + refreshRate + "/"
+                + sqlStatement + "/"
+                + diagramType + "/"
+                + xAxisName + "/"
+                + xAxisMeasure + "/"
+                + yAxisName + "/"
+                + yAxisMeasure + "/"
+                + XAxisColumn + "/"
+                + YAxisColumn + "/";
     }
 }

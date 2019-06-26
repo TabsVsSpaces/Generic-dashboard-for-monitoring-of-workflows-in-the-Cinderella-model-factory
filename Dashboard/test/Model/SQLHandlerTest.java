@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -20,14 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class SQLHandlerTest {
     
-    public static void main(String[] args){
-        
-        System.out.println("First_Line");
-        SQLHandlerTest test = new SQLHandlerTest();
-        test.testNew();
-        test.testGetResultMap();
-        System.out.println("End_Line");
-    }
+    private String sqlStatement = "select P.tool, sum(L.pieces) as pieces, L.product, L.route, L.oper from lot L, ptime P where L.state='WAIT' AND L.route=P.route AND L.oper=P.oper AND L.product=p.product group by L.route, L.oper, L.product, P.tool order by pieces desc limit 10;";
+    private SQLHandler instance = new SQLHandler(sqlStatement);
+    
     
     public SQLHandlerTest() {
     }
@@ -49,16 +46,11 @@ public class SQLHandlerTest {
     }
 
     
-    @Test
-    public void testNew(){
-        System.out.println("Funktion - 1");
-    }
+    
     /**
      * Test of getResultMap method, of class SQLHandler.
      */
-    
-    
-    @Test
+    @org.junit.Test
     public void testGetResultMap() {
         System.out.println("Funktion - 2");
         System.out.println("getResultMap");
@@ -80,7 +72,80 @@ public class SQLHandlerTest {
         //fail("Keine Datenbankverbindung");
     }
     
+    /**
+     * Test of testGetColumns method, of class SQLHandler.
+     */
+    @org.junit.Test
+    public void testGetColumns() {
+        System.out.println("getColumns");
+        //DisplayElemConstruc instance = null;
+        String[] expResult = {"tool","pieces","product","route","oper"};
+        String[] result = instance.getColumns();
+        for(int i=0;i<result.length;i++){
+            System.out.println(result[i]);
+        }
+        assertArrayEquals(expResult, result);
+        //assertArrayEquals(expResult,result);
+        // TODO review the generated test code and remove the default call to fail.
+    }
+
+    /**
+     * Test of isColumnNumeric method, of class SQLHandler.
+     */
+    @org.junit.Test
+    public void testIsColumnNumeric() {
+        System.out.println("isColumnNumeric");
+        String column = "pieces"; // is known by the test SQL statement and is numeric
+        //SQLHandler instance = null;
+        boolean expResult = false;
+        boolean result = instance.isColumnNumeric(column);
+        assertNotEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+    }
     
+   
+
+    /**
+     * Test of close method, of class SQLHandler.
+     */
+    /*
+    @org.junit.Test
+    public void testClose() {
+        System.out.println("close");
+        SQLHandler newInstance = null;
+        instance.close();
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+    */
+    
+    /**
+     * Test of getValues method, of class SQLHandler.
+     */
+    @org.junit.Test
+    public void testGetValues() {
+        System.out.println("getValues");
+        String ColumnName = "pieces";
+        //SQLHandler instance = null;
+        List<Object> expResult = null;
+        List<Object> result = instance.getValues(ColumnName);
+        assertNotEquals(expResult, result);
+        // Values are not Equal when values in result, which values in result is not import, because these are changeing in ja Live System
+        //fail("The test case is a prototype.");
+    }
+    
+    public static void main(String[] args){
+        
+        System.out.println("First_Line");
+        SQLHandlerTest testClass = new SQLHandlerTest();
+        System.out.println("Second_Line");
+        testClass.testGetResultMap();
+        System.out.println("Third_Line");
+        testClass.testGetColumns();
+        System.out.println("Fourth_Line");
+        System.out.println("End_Line");
+    }
+
 }
 
 
